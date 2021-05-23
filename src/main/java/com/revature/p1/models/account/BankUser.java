@@ -83,4 +83,16 @@ public class BankUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("BankUser{");
+        sb.append("fName='").append(fName).append('\'');
+        sb.append(", lName='").append(lName).append('\'');
+        sb.append(", uName='").append(uName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

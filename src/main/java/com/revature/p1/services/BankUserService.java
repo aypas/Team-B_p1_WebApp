@@ -1,10 +1,15 @@
 package com.revature.p1.services;
 
 import com.revature.p1.daos.UserDAO;
+import com.revature.p1.exceptions.EmailUnavailableException;
 import com.revature.p1.exceptions.InvalidRequestException;
 import com.revature.p1.exceptions.ResourcePersistenceException;
+import com.revature.p1.exceptions.UsernameUnavailableException;
 import com.revature.p1.models.account.BankUser;
+import com.revature.p1.util.factory.ConnectionFactory;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,24 +35,33 @@ public class BankUserService {
      * @param newUser
      * @return BankUser
      * @throws InvalidRequestException
-     *
+
      */
-    public BankUser register(BankUser newUser) throws InvalidRequestException, ResourcePersistenceException {
-        System.out.println("in bankuserwervice register");
+    public void register(BankUser newUser) {
+        System.out.println("in bankuserwervice register " + newUser.toString());
+
+
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid new user data provided!");
         }
 
-        if (!userDao.isUsernameAvailable(newUser.getuName())) {
-            throw new ResourcePersistenceException("The provided username is already taken!");
-        }
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            if (!userDao.isUsernameAvailable(newUser.getuName())) {
+                throw new UsernameUnavailableException();
+            }
 
-        if (!userDao.isEmailAvailable(newUser.getEmail())) {
-            throw new ResourcePersistenceException("The provided email is already taken!");
-        }
-        System.out.println("in bankuserwervice register before return");
-        return userDao.save(newUser);
+            if (!userDao.isEmailAvailable(newUser.getEmail())) {
+                throw new EmailUnavailableException();
+            }
+            System.out.println("in bankuserwervice register before return");
 
+            userDao.save(conn, newUser);
+        } catch (SQLException e){
+            e.printStackTrace();
+//            throw new ResourcePersistenceException();
+        } catch(UsernameUnavailableException | EmailUnavailableException e){
+            e.printStackTrace();
+        }
     }
 
     /**

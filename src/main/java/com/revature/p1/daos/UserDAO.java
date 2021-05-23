@@ -1,5 +1,6 @@
 package com.revature.p1.daos;
 
+import com.revature.p1.exceptions.DataSourceException;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
 
@@ -24,11 +25,11 @@ public class UserDAO {
      * @param newUser
      * @return BankUser
      */
-    public BankUser save(BankUser newUser) {
+    public void save(Connection conn, BankUser newUser) {
 
         System.out.println("in bank userdao save");
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try {
 
             String sqlInsertUser = "insert into user_table" +
                                     "(email , first_name , last_name) values (?,?,?)";
@@ -56,12 +57,10 @@ public class UserDAO {
 
             pstmt.executeUpdate();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataSourceException();
         }
-
-        return newUser;
-
     }
 
     /**

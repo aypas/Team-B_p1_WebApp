@@ -14,7 +14,7 @@ public class BankUserController {
     private BankUserService bankUserService = new BankUserService(new UserDAO());
 
     public void register(HttpServletRequest req, HttpServletResponse resp){
-        System.out.println("in controller register method");
+        System.out.println("in controller register method " + req.getParameter("first_name"));
         String fName = req.getParameter("First_Name");
         String lName = req.getParameter("Last_Name");
         String uName = req.getParameter("Username");
@@ -23,7 +23,7 @@ public class BankUserController {
 
         BankUser newUser = new BankUser(fName, lName, uName, email, password);
         bankUserService.register(newUser);
-        resp.setStatus(202);
+//        resp.setStatus(202);
 
     }
 }

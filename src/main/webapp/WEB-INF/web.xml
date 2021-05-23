@@ -20,10 +20,10 @@
         <servlet-class>com.revature.p1.servlet.BankUserServelet</servlet-class>
     </servlet>
 
-    <servlet-mapping>
-        <servlet-name>bankUserServlet</servlet-name>
-        <url-pattern>/user</url-pattern>
-    </servlet-mapping>
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>bankUserServlet</servlet-name>-->
+<!--        <url-pattern>/user</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>userServlet</servlet-name>-->

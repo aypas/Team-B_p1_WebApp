@@ -13,7 +13,7 @@ import java.util.Properties;
  * Date: 5/7/2021
  * Time: 8:25 AM
  * Description: Factory singleton that gives us a connection to the
- *              database via jdbc.
+ * database via jdbc.
  */
 public class ConnectionFactory {
 
@@ -37,9 +37,8 @@ public class ConnectionFactory {
     }
 
     /**
-     *
      * Description: If the ConnectionFactory hasn't been instantiated instantiate
-     *              it and return it, otherwise return it without creating.
+     * it and return it, otherwise return it without creating.
      *
      * @return ConnectionFactory
      */
@@ -53,9 +52,8 @@ public class ConnectionFactory {
     }
 
     /**
-     *
      * Description: Establishes connection to the database using credentials
-     *              from the application.properties file.
+     * from the application.properties file.
      *
      * @return Connection
      */
@@ -67,9 +65,15 @@ public class ConnectionFactory {
         try {
 
             conn = DriverManager.getConnection(
-                    props.getProperty("host-url"),
-                    props.getProperty("username"),
-                    props.getProperty("password"));
+//                    props.getProperty("host-url"),
+//                    props.getProperty("username"),
+//                    props.getProperty("password"));
+//                    System.getProperty("host_url"),
+//                    System.getProperty("username"),
+//                    System.getProperty("password"));
+                    System.getenv("host_url"),
+                    System.getenv("db_username"),
+                    System.getenv("db_password"));
 
         } catch (SQLException e) {
             e.printStackTrace();

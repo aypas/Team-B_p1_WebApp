@@ -11,6 +11,7 @@ import javax.servlet.ServletContextListener;
  *      in your deployment descriptor (web.xml) under the listener tag.
  */
 public class DependencyLoaderListener implements ServletContextListener {
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
