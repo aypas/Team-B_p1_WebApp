@@ -12,7 +12,6 @@ public class BankUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("in servlet");
         dispatcher.dataDispatch(req, resp);
     }
 

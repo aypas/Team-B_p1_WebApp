@@ -12,16 +12,17 @@ public class Dispatcher {
     private BankUserController controller = new BankUserController();
 
     public void dataDispatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("in dispatcher dataDispatch" + req.getParameter("first_name"));
 
         switch(req.getRequestURI()){
             case "/bankapp/user":
-                System.out.println("in dispatcher switch");
                 controller.register(req, resp);
                 break;
+            case"/bankapp/auth":
+                controller.authenticate(req, resp);
+
             default:
                 resp.setStatus(400);
-                resp.getWriter().println(req.getRequestURI());
+//                resp.getWriter().println(req.getRequestURI());
         }
     }
 }

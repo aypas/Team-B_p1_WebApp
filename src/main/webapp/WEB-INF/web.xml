@@ -17,18 +17,18 @@
             -->
     <servlet>
         <servlet-name>bankUserServlet</servlet-name>
-        <servlet-class>com.revature.p1.servlet.BankUserServelet</servlet-class>
+        <servlet-class>com.revature.p1.servlet.BankUserServlet</servlet-class>
     </servlet>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>bankUserServlet</servlet-name>-->
-<!--        <url-pattern>/user</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>bankUserServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>userServlet</servlet-name>-->
-<!--        <url-pattern>/flashcard</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>bankUserServlet</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
 
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>userServlet</servlet-name>-->
