@@ -124,7 +124,7 @@ public class UserDAO {
      * @return BankUser
      */
     public BankUser findUserByUsernameAndPassword(String username, String password) {
-
+        System.out.println("bank user dao " + username+password);
         BankUser user = null;
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -155,9 +155,9 @@ public class UserDAO {
                 user.setPassword(rs.getString("password"));
             }
 
-            if (user == null) {
-                return user;
-            }
+//            if (user == null) {
+//                return user;
+//            }
 
             sql = "select * from user_table where id = ?";
             pstmt = conn.prepareStatement(sql);
