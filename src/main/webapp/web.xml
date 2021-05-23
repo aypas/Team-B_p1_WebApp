@@ -36,6 +36,6 @@
 <!--    </servlet-mapping>-->
     <!--  /user.data  /flashcard.data  /studyset.data  /user/studyset.data  -->
     <listener>
-        <listener-class>com.revature.quizzard.servlet.DependencyLoaderListener</listener-class>
+        <listener-class>com.revature.p1.servlet.DependencyLoaderListener</listener-class>
     </listener>
 </web-app>

@@ -29,11 +29,11 @@ public class ConnectionFactory {
     }
 
     private ConnectionFactory() {
-        try {
-            props.load(new FileReader("src/resources/application.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            props.load(new FileReader("src/resources/application.properties"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**

@@ -14,9 +14,10 @@ public class Driver {
     private static AppState app = new AppState();
 
     public static void main(String[] args) {
-        while (app.isAppRunning()) {
-            app.getRouter().navigate("/welcome");
-        }
+//        app.startup();
+//        while (app.isAppRunning()) {
+//            app.getRouter().navigate("/welcome");
+//        }
     }
 
     /**
