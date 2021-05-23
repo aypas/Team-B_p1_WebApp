@@ -14,6 +14,7 @@ public class Dispatcher {
     public void dataDisapatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         switch(req.getRequestURI()){
             case "/user":
+                System.out.println("in dispatcher switch");
                 controller.register(req, resp);
                 break;
             default:
