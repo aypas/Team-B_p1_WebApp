@@ -12,8 +12,10 @@ public class Dispatcher {
     private BankUserController controller = new BankUserController();
 
     public void dataDisapatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("in dispatcher dataDispatch" + req.getRequestURI());
+
         switch(req.getRequestURI()){
-            case "/user":
+            case "/bankapp/user":
                 System.out.println("in dispatcher switch");
                 controller.register(req, resp);
                 break;

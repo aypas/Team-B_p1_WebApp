@@ -11,7 +11,7 @@ public class BankUserServelet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("in servlet");
+        System.out.println("in servlet" + req.getRequestURI());
         dispatcher.dataDisapatch(req, resp);
     }
 

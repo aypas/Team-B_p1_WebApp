@@ -33,7 +33,7 @@ public class BankUserService {
      *
      */
     public BankUser register(BankUser newUser) throws InvalidRequestException, ResourcePersistenceException {
-
+        System.out.println("in bankuserwervice register");
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid new user data provided!");
         }
@@ -45,7 +45,7 @@ public class BankUserService {
         if (!userDao.isEmailAvailable(newUser.getEmail())) {
             throw new ResourcePersistenceException("The provided email is already taken!");
         }
-
+        System.out.println("in bankuserwervice register before return");
         return userDao.save(newUser);
 
     }

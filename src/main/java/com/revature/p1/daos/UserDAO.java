@@ -26,6 +26,8 @@ public class UserDAO {
      */
     public BankUser save(BankUser newUser) {
 
+        System.out.println("in bank userdao save");
+
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sqlInsertUser = "insert into user_table" +
