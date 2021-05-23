@@ -17,7 +17,7 @@
             -->
     <servlet>
         <servlet-name>bankUserServlet</servlet-name>
-        <servlet-class>com.revature.p1.servlet</servlet-class>
+        <servlet-class>com.revature.p1.servlet.BankUserServelet</servlet-class>
     </servlet>
 
     <servlet-mapping>
