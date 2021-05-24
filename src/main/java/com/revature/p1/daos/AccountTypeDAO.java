@@ -61,8 +61,6 @@ public class AccountTypeDAO {
 
                 rsCounter++;
             }
-
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
