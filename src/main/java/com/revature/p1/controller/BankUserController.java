@@ -1,7 +1,7 @@
 package com.revature.p1.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.p1.daos.UserDAO;
+import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.services.BankUserService;
 
@@ -15,7 +15,7 @@ public class BankUserController {
 //    private UserDAO userDao;
 
     //Refactor with Dependency Injection? pass bankuser class the same way?
-    private BankUserService bankUserService = new BankUserService(new UserDAO());
+    private BankUserService bankUserService = new BankUserService(new BankUserDAO());
 
     public void register(HttpServletRequest req, HttpServletResponse resp){
         String fName = req.getParameter("First_Name");
