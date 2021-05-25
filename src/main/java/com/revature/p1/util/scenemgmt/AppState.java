@@ -3,7 +3,7 @@ package com.revature.p1.util.scenemgmt;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountDAO;
 import com.revature.p1.daos.AccountTransactionDAO;
-import com.revature.p1.daos.UserDAO;
+import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.screens.*;
 import com.revature.p1.services.*;
 
@@ -29,7 +29,7 @@ public class AppState{
         appRunning = true;
         consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
-        final UserDAO userDAO = new UserDAO();
+        final BankUserDAO userDAO = new BankUserDAO();
         final AccountDAO acctDAO = new AccountDAO();
         final AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
         final AccountTransactionDAO xActionDAO = new AccountTransactionDAO();
