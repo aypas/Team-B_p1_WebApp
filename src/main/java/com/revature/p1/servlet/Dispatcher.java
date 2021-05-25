@@ -19,9 +19,9 @@ public class Dispatcher {
             case "/bankapp/user":
                 bankUserController.register(req, resp);
                 break;
-            case"/bankapp/auth":
-                bankUserController.authenticate(req, resp);
-                break;
+//            case"/bankapp/auth":
+//                bankUserController.authenticate(req, resp);
+//                break;
             case "/bankapp/account/create":
                 System.out.println("account/create in dispatch switch");
                 accountController.createAccount(req, resp);
