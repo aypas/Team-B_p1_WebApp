@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * Time: 8:28 AM
  * Description: Access user information in the database
  */
-public class UserDAO {
+public class BankUserDAO {
 
     /**
      *

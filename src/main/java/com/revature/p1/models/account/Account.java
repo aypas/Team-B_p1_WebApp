@@ -37,6 +37,9 @@ public class Account {
         this.uID = uID;
     }
 
+    public Account(int uId, int tId, String aName) {
+    }
+
     public int getaID() {
         return aID;
     }

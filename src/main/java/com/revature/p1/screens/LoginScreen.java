@@ -1,6 +1,6 @@
 package com.revature.p1.screens;
 
-import com.revature.p1.daos.UserDAO;
+import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.singleton.LoggedInUser;
 
@@ -17,10 +17,10 @@ import static com.revature.p1.Driver.app;
  */
 public class LoginScreen extends Screen {
 
-    private UserDAO userDao;
+    private BankUserDAO userDao;
     private BufferedReader consoleReader;
 
-    public LoginScreen(BufferedReader consoleReader, UserDAO userDAO) {
+    public LoginScreen(BufferedReader consoleReader, BankUserDAO userDAO) {
         super("LoginScreen", "/login");
         this.consoleReader = consoleReader;
         this.userDao = userDAO;
