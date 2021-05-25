@@ -1,17 +1,14 @@
 package com.revature.p1.services;
 
-import com.revature.p1.daos.UserDAO;
+import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.exceptions.*;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
-import com.revature.p1.util.singleton.LoggedInUser;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.revature.p1.Driver.app;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,9 +19,9 @@ import static com.revature.p1.Driver.app;
  */
 public class BankUserService {
 
-    private UserDAO userDao;
+    private BankUserDAO userDao;
 
-    public BankUserService(UserDAO userDao) {
+    public BankUserService(BankUserDAO userDao) {
         this.userDao = userDao;
     }
 
@@ -66,6 +63,9 @@ public class BankUserService {
 
         try {
             BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(username, password);
+
+            //May not need this line - just an extra check.
+            if(authenticatedUser == null) throw new AuthenticationException();
 
             return authenticatedUser;
 
