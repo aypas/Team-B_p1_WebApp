@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+  post_build:
+    commands:
+      - mvn package
+      - mv target/Group-B_P1.war Group-B_P1.war
+artifacts:
+  files:
+    - Group-B_P1.war
