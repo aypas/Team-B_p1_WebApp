@@ -9,7 +9,7 @@
 
     <version>1.0</version>
     <build>
-        <finalName>Group-B_P1</finalName>
+        <finalName>ROOT</finalName>
     </build>
     <packaging>war</packaging>
 
