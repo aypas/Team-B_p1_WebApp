@@ -33,7 +33,10 @@ public class AuthServlet extends HttpServlet {
             System.out.printf("Attempting to authenticate user, %s, with provided credentials", creds.getUsername());
 
             BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
+            //prints username and password of authuser - remove??
             writer.write(mapper.writeValueAsString(authUser));
+
+            req.getSession().setAttribute("this-user", authUser);
 
         } catch(MismatchedInputException e){
             e.printStackTrace();
