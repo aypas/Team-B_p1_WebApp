@@ -11,3 +11,4 @@ phases:
 artifacts:
   files:
     - Group-B_P1.war
+    - .ebextensions/**/*
