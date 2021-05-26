@@ -15,25 +15,25 @@
     <!--This tells tomcat where to find the servlet and what name to register it as. We can use
             the name of the servlet later to reference this instance.
             -->
-    <servlet>
-        <servlet-name>Servlet</servlet-name>
-        <servlet-class>com.revature.p1.servlet.Servlet</servlet-class>
-    </servlet>
+<!--    <servlet>-->
+<!--        <servlet-name>Servlet</servlet-name>-->
+<!--        <servlet-class>com.revature.p1.servlet.BankUserServlet</servlet-class>-->
+<!--    </servlet>-->
 
-    <servlet-mapping>
-        <servlet-name>Servlet</servlet-name>
-        <url-pattern>/user</url-pattern>
-    </servlet-mapping>
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>Servlet</servlet-name>-->
+<!--        <url-pattern>/user</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>bankUserServlet</servlet-name>-->
 <!--        <url-pattern>/auth</url-pattern>-->
 <!--    </servlet-mapping>-->
 
-    <servlet-mapping>
-        <servlet-name>Servlet</servlet-name>
-        <url-pattern>/account/create</url-pattern>
-    </servlet-mapping>
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>Servlet</servlet-name>-->
+<!--        <url-pattern>/account/create</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>userServlet</servlet-name>-->

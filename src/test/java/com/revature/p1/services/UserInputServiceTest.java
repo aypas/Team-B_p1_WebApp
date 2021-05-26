@@ -17,11 +17,11 @@ import static org.mockito.Mockito.mock;
  */
 public class UserInputServiceTest {
 
-    private UserInputService sut;
+    private _UserInputService sut;
 
     @Before
     public void setUp() {
-        sut = new UserInputService();
+        sut = new _UserInputService();
     }
 
     @After

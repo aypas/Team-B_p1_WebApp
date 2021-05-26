@@ -7,6 +7,6 @@ package com.revature.p1.daos;
  * Time: 4:16 PM
  * Description: {Insert Description}
  */
-public class TransferDAO {
+public class _TransferDAO {
 
 }

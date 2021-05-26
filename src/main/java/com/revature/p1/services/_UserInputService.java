@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
  * Time: 1:36 PM
  * Description: Ensures user input is valid within menu selections.
  */
-public class UserInputService {
+public class _UserInputService {
 
-    public UserInputService() {
+    public _UserInputService() {
     }
 
     /**
