@@ -34,7 +34,7 @@ public class AppState{
         final AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
         final AccountTransactionDAO xActionDAO = new AccountTransactionDAO();
 
-        final UserInputService inputService = new UserInputService();
+        final _UserInputService inputService = new _UserInputService();
         final BankUserService userService = new BankUserService(userDAO);
         final AccountOpeningService acctOpenService = new AccountOpeningService(acctDAO);
         final DepositService depositService = new DepositService(balanceDAO, xActionDAO);

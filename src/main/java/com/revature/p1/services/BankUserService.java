@@ -33,8 +33,6 @@ public class BankUserService {
      * @throws InvalidRequestException
      */
     public void register(BankUser newUser) {
-        System.out.println("in bankuserwervice register " + newUser.toString());
-
 
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid new user data provided!");
@@ -60,7 +58,7 @@ public class BankUserService {
     }
 
     public BankUser authenticate(String username, String password) throws AuthenticationException {
-
+        System.out.println("in bank userwervice auth " + username + password);
         try {
             BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(username, password);
 

@@ -2,6 +2,7 @@ package com.revature.p1.util.factory;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -28,12 +29,23 @@ public class ConnectionFactory {
         }
     }
 
-    private ConnectionFactory() {
+//    private ConnectionFactory() {
 //        try {
-//            props.load(new FileReader("src/resources/application.properties"));
+//            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+//            InputStream input = loader.getResourceAsStream("application.properties");
+//            System.out.println("connection factory " + input);
+//            props.load(input);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+//    }
+
+    private ConnectionFactory() {
+        try {
+            props.load(new FileReader("WEB-INF/application.properties"));
+        } catch (IOException e) {
+//            e.printStackTrace();
+        }
     }
 
     /**
@@ -65,15 +77,13 @@ public class ConnectionFactory {
         try {
 
             conn = DriverManager.getConnection(
-//                    props.getProperty("host-url"),
-//                    props.getProperty("username"),
-//                    props.getProperty("password"));
-//                    System.getProperty("host_url"),
-//                    System.getProperty("username"),
-//                    System.getProperty("password"));
                     System.getenv("host_url"),
                     System.getenv("db_username"),
                     System.getenv("db_password"));
+//                    props.getProperty("host-url"),
+//                    props.getProperty("username"),
+//                    props.getProperty("password"));
+
 
         } catch (SQLException e) {
             e.printStackTrace();
