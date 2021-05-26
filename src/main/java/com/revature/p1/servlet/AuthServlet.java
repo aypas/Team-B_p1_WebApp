@@ -16,10 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/auth")
+//@WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
 
-    private final BankUserService bankUserService = new BankUserService(new BankUserDAO());
+//    private final BankUserService bankUserService = new BankUserService(new BankUserDAO());
+    private BankUserService bankUserService;
+    public AuthServlet(BankUserService bankUserService) {
+        this.bankUserService = bankUserService;
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

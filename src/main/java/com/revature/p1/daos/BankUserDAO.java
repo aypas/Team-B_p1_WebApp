@@ -129,6 +129,8 @@ public class BankUserDAO {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
+            System.out.println("conn " + conn);
+
             String encryptedPass = null;
 
             String sql = "select password from user_login where username = ?";

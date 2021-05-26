@@ -29,13 +29,22 @@ public class ConnectionFactory {
         }
     }
 
+//    private ConnectionFactory() {
+//        try {
+//            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+//            InputStream input = loader.getResourceAsStream("application.properties");
+//            System.out.println("connection factory " + input);
+//            props.load(input);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     private ConnectionFactory() {
         try {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            InputStream input = loader.getResourceAsStream("application.properties");
-            props.load(input);
+            props.load(new FileReader("WEB-INF/application.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -68,9 +77,12 @@ public class ConnectionFactory {
         try {
 
             conn = DriverManager.getConnection(
-                    props.getProperty("host-url"),
-                    props.getProperty("username"),
-                    props.getProperty("password"));
+                    System.getenv("host_url"),
+                    System.getenv("db_username"),
+                    System.getenv("db_password"));
+//                    props.getProperty("host-url"),
+//                    props.getProperty("username"),
+//                    props.getProperty("password"));
 
 
         } catch (SQLException e) {

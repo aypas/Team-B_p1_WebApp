@@ -60,7 +60,7 @@ public class BankUserService {
     }
 
     public BankUser authenticate(String username, String password) throws AuthenticationException {
-
+        System.out.println("in bank userwervice auth " + username + password);
         try {
             BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(username, password);
 
