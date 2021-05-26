@@ -18,21 +18,46 @@ public class AccountsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         //AccountsTypeDao => no service tied to this one
             //getAllAcctTypes
-        // /transactions/types
+        // /accounts/types
 
 //        AccountTransactionDAO
-        // /transactions/all?id=(some id)
+            //getAllAcctTransactions
+        // /accounts/transaction/all?id=(some id)
+
+        //AccountDAO
+            // getAcct
+        // /accounts/all
+
+        //AccountBalanceDao
+            // getBalance
+        // /accounts/balance (need param?)
+
 
         //switch statment using req.getRequestURI()
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp){
         //AccountTransactionDAO
-        // /transactions/
+        // /accounts/transaction
 
         // AccountDao
             //saveNewAcct
-        // /transactions/account/register
+        // /accounts/newaccount
+
+        //AccountBalanceDao
+            //saveNewBalance
+        // /accounts/newbalance
+
+        //switch statment using req.getRequestURI()
+
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp){
+        //AccountBalanceDao
+            //saveBalance
+        // /accounts/balance
     }
 }

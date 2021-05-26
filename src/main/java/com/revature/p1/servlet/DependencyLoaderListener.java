@@ -47,7 +47,7 @@ public class DependencyLoaderListener implements ServletContextListener {
         ServletContext context = sce.getServletContext();
         context.addServlet("AuthServlet", authServlet).addMapping("/auth");
         context.addServlet("BankUserServlet", bankUserServlet).addMapping("/users/*");
-        context.addServlet("AccountsServlet", accountsServlet).addMapping("/transactions/*");
+        context.addServlet("AccountsServlet", accountsServlet).addMapping("/accounts/*");
 //        try {
 //            Class.forName("org.postgresql.Driver");
 //        } catch (ClassNotFoundException e) {
