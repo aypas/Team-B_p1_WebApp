@@ -5,7 +5,7 @@ import com.revature.p1.daos.AccountDAO;
 import com.revature.p1.exceptions.InvalidRequestException;
 import com.revature.p1.models.account.Account;
 import com.revature.p1.models.account.BankUser;
-import com.revature.p1.services.UserInputService;
+import com.revature.p1.services._UserInputService;
 import com.revature.p1.util.singleton.CurrentAccount;
 import com.revature.p1.util.singleton.LoggedInUser;
 
@@ -22,12 +22,12 @@ import static com.revature.p1.Driver.app;
  */
 public class AccountScreen extends Screen {
 
-    private UserInputService inputService;
+    private _UserInputService inputService;
     private AccountDAO acctDao = new AccountDAO();
     private BufferedReader consoleReader;
     private BankUser user;
 
-    public AccountScreen(BufferedReader consoleReader, UserInputService inputService) {
+    public AccountScreen(BufferedReader consoleReader, _UserInputService inputService) {
         super("AccountScreen", "/accounts");
         this.consoleReader = consoleReader;
         this.inputService = inputService;

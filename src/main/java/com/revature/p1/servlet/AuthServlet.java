@@ -33,4 +33,10 @@ public class AuthServlet extends HttpServlet {
 
 
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp){
+        //can use cookie to delete user and all accounts
+        //need cascade call to get all accounts, and transactinos associated with current user
+    }
 }

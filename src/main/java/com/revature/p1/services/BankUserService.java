@@ -33,8 +33,6 @@ public class BankUserService {
      * @throws InvalidRequestException
      */
     public void register(BankUser newUser) {
-        System.out.println("in bankuserwervice register " + newUser.toString());
-
 
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid new user data provided!");

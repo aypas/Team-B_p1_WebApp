@@ -16,20 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BankUserController {
-//    private UserDAO userDao;
 
-    //Refactor with Dependency Injection? pass bankuser class the same way?
     private BankUserService bankUserService;
 
     public BankUserController(BankUserService bankUserService) {
         this.bankUserService = bankUserService;
     }
     public void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        String fName = req.getParameter("First_Name");
-//        String lName = req.getParameter("Last_Name");
-//        String uName = req.getParameter("Username");
-//        String email = req.getParameter("Email");
-//        String password = req.getParameter("Password");
 
         ObjectMapper mapper = new ObjectMapper();
         PrintWriter writer = resp.getWriter();
@@ -43,8 +36,6 @@ public class BankUserController {
             e.printStackTrace();
             resp.setStatus(500);
         }
-
-//        resp.setStatus(202);
     }
 
     public void authenticate(HttpServletRequest req, HttpServletResponse resp) throws IOException {

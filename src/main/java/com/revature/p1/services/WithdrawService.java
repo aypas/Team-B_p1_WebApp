@@ -25,6 +25,10 @@ public class WithdrawService {
         this.xActionService = new AccountTransactionService(xActionDAO);
     }
 
+    public WithdrawService(AccountBalanceDAO balanceDAO) {
+        this.balanceDAO = balanceDAO;
+    }
+
     /**
      *
      * Description: If entry is valid this will send the data to the database.
