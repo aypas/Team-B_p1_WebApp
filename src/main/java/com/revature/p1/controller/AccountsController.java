@@ -7,14 +7,14 @@ import com.revature.p1.services.WithdrawService;
 
 import javax.servlet.http.HttpServlet;
 
-public class TransactionController {
+public class AccountsController {
 
     private DepositService depositService;
     private WithdrawService withdrawService;
     private AccountOpeningService accountOpeningService;
     private AccountTransactionService accountTransactionService;
 
-    public TransactionController(DepositService depositService, WithdrawService withdrawService, AccountOpeningService accountOpeningService, AccountTransactionService accountTransactionService) {
+    public AccountsController(DepositService depositService, WithdrawService withdrawService, AccountOpeningService accountOpeningService, AccountTransactionService accountTransactionService) {
         this.depositService = depositService;
         this.withdrawService = withdrawService;
         this.accountOpeningService = accountOpeningService;
