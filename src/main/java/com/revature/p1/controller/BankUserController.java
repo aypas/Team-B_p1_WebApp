@@ -24,16 +24,27 @@ public class BankUserController {
     public BankUserController(BankUserService bankUserService) {
         this.bankUserService = bankUserService;
     }
-    public void register(HttpServletRequest req, HttpServletResponse resp){
-        String fName = req.getParameter("First_Name");
-        String lName = req.getParameter("Last_Name");
-        String uName = req.getParameter("Username");
-        String email = req.getParameter("Email");
-        String password = req.getParameter("Password");
+    public void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//        String fName = req.getParameter("First_Name");
+//        String lName = req.getParameter("Last_Name");
+//        String uName = req.getParameter("Username");
+//        String email = req.getParameter("Email");
+//        String password = req.getParameter("Password");
 
-        BankUser newUser = new BankUser(fName, lName, uName, email, password);
-        bankUserService.register(newUser);
-        resp.setStatus(202);
+        ObjectMapper mapper = new ObjectMapper();
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+
+        try{
+            BankUser newUser = mapper.readValue(req.getInputStream(), BankUser.class);
+            bankUserService.register(newUser);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            resp.setStatus(500);
+        }
+
+//        resp.setStatus(202);
     }
 
     public void authenticate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -44,10 +55,7 @@ public class BankUserController {
 
         try{
             Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
-            System.out.printf("Attempting to authenticate user, %s, with provided credentials", creds.getUsername(), creds.getPassword());
-            System.out.println("user naem and password " + creds.getUsername() + creds.getPassword());
-
-            BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
+               BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
             //prints username and password of authuser - remove??
             writer.write(mapper.writeValueAsString(authUser));
 

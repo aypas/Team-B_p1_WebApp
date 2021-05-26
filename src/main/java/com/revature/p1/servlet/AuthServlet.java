@@ -20,8 +20,6 @@ import java.io.PrintWriter;
 //@WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
 
-//    private final BankUserService bankUserService = new BankUserService(new BankUserDAO());
-    private BankUserService bankUserService;
     private BankUserController bankUserController;
 
     public AuthServlet(BankUserController bankUserController) {
@@ -30,6 +28,7 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        System.out.println("getpath info " + req.getRequestURI());
         bankUserController.authenticate(req, resp);
 
 
