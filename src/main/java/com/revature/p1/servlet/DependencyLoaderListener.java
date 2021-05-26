@@ -1,7 +1,7 @@
 package com.revature.p1.servlet;
 
 import com.revature.p1.controller.BankUserController;
-import com.revature.p1.controller.TransactionController;
+import com.revature.p1.controller.AccountsController;
 import com.revature.p1.daos.*;
 import com.revature.p1.services.*;
 
@@ -37,17 +37,17 @@ public class DependencyLoaderListener implements ServletContextListener {
         AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
 
 
-        TransactionController transactionController = new TransactionController(depositService, withdrawService,accountOpeningService, accountTransactionService);
+        AccountsController accountsController = new AccountsController(depositService, withdrawService,accountOpeningService, accountTransactionService);
 
         AuthServlet authServlet = new AuthServlet(bankUserController);
         BankUserServlet bankUserServlet= new BankUserServlet(bankUserController);
-        TransactionServlet transactionServlet = new TransactionServlet(transactionController);
+        AccountsServlet accountsServlet = new AccountsServlet(accountsController);
 
 
         ServletContext context = sce.getServletContext();
         context.addServlet("AuthServlet", authServlet).addMapping("/auth");
         context.addServlet("BankUserServlet", bankUserServlet).addMapping("/users/*");
-        context.addServlet("TransactionServlet", transactionServlet).addMapping("/transactions/*");
+        context.addServlet("AccountsServlet", accountsServlet).addMapping("/accounts/*");
 //        try {
 //            Class.forName("org.postgresql.Driver");
 //        } catch (ClassNotFoundException e) {
