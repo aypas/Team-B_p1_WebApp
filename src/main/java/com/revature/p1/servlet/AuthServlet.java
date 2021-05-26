@@ -2,6 +2,7 @@ package com.revature.p1.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.revature.p1.controller.BankUserController;
 import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.dtos.Credentials;
 import com.revature.p1.exceptions.AuthenticationException;
@@ -21,37 +22,16 @@ public class AuthServlet extends HttpServlet {
 
 //    private final BankUserService bankUserService = new BankUserService(new BankUserDAO());
     private BankUserService bankUserService;
-    public AuthServlet(BankUserService bankUserService) {
-        this.bankUserService = bankUserService;
+    private BankUserController bankUserController;
+
+    public AuthServlet(BankUserController bankUserController) {
+       this.bankUserController = bankUserController;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        bankUserController.authenticate(req, resp);
 
-        ObjectMapper mapper = new ObjectMapper();
-        PrintWriter writer = resp.getWriter();
-        resp.setContentType("application/json");
-
-        try{
-            Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
-            System.out.printf("Attempting to authenticate user, %s, with provided credentials", creds.getUsername());
-
-            BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
-            //prints username and password of authuser - remove??
-            writer.write(mapper.writeValueAsString(authUser));
-
-            req.getSession().setAttribute("this-user", authUser);
-
-        } catch(MismatchedInputException e){
-            e.printStackTrace();
-            resp.setStatus(400);
-        }catch (AuthenticationException e){
-            e.printStackTrace();
-            resp.setStatus(401);
-        } catch(Exception e){
-            e.printStackTrace();
-            resp.setStatus(500);
-        }
 
     }
 }

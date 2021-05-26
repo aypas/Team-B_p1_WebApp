@@ -1,5 +1,6 @@
 package com.revature.p1.servlet;
 
+import com.revature.p1.controller.BankUserController;
 import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.services.BankUserService;
 
@@ -22,8 +23,10 @@ public class DependencyLoaderListener implements ServletContextListener {
         BankUserDAO bankUserDAO = new BankUserDAO();
         BankUserService bankUserService = new BankUserService(bankUserDAO);
 
-        AuthServlet authServlet = new AuthServlet(bankUserService);
-        BankUserServlet bankUserServlet= new BankUserServlet(bankUserService);
+        BankUserController bankUserController = new BankUserController(bankUserService);
+
+        AuthServlet authServlet = new AuthServlet(bankUserController);
+        BankUserServlet bankUserServlet= new BankUserServlet(bankUserController);
 
         ServletContext context = sce.getServletContext();
         context.addServlet("AuthServlet", authServlet).addMapping("/auth");

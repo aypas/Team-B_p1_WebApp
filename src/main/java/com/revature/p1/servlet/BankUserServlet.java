@@ -1,6 +1,7 @@
 package com.revature.p1.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.p1.controller.BankUserController;
 import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.services.BankUserService;
@@ -20,9 +21,10 @@ public class BankUserServlet extends HttpServlet {
 
 //    private Dispatcher dispatcher = new Dispatcher();
     private BankUserService bankUserService;
+    private BankUserController bankUserController;
 
-    public BankUserServlet(BankUserService bankUserService) {
-        this.bankUserService = bankUserService;
+    public BankUserServlet(BankUserController bankUserController) {
+        this.bankUserController = bankUserController;
     }
 
         /*
@@ -58,7 +60,7 @@ public class BankUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("in post servlet");
-//        dispatcher.dataDispatch(req, resp);
+        bankUserController.register(req, resp);
     }
 
 //    @Override
