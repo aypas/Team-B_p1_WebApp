@@ -18,13 +18,17 @@ import java.util.Map;
 public class BankUserController {
 
     private BankUserService bankUserService;
+    private ObjectMapper mapper;
 
-    public BankUserController(BankUserService bankUserService) {
+
+    public BankUserController(BankUserService bankUserService, ObjectMapper mapper) {
+
         this.bankUserService = bankUserService;
+        this.mapper = mapper;
+
     }
     public void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        ObjectMapper mapper = new ObjectMapper();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
@@ -40,7 +44,6 @@ public class BankUserController {
 
     public void authenticate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        ObjectMapper mapper = new ObjectMapper();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 

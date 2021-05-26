@@ -5,17 +5,22 @@ import com.revature.p1.controller.AccountsController;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class AccountsServlet extends HttpServlet {
 
-    private AccountsController transactionController;
 
-    public AccountsServlet(AccountsController transactionController) {
-            this.transactionController = transactionController;
+    private AccountsController accountsController;
+
+    public AccountsServlet(AccountsController accountsController) {
+            this.accountsController = accountsController;
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        System.out.println("in acc servlet get " + req.getRequestURI());
         //AccountsTypeDao => no service tied to this one
             //getAllAcctTypes
         // /accounts/types
@@ -34,6 +39,17 @@ public class AccountsServlet extends HttpServlet {
 
 
         //switch statment using req.getRequestURI()
+
+        switch(req.getRequestURI()){
+            case "/bankapp/accounts/types":
+                System.out.println("hit account types switch");
+                accountsController.getAllAcctTypes(req, resp);
+                break;
+
+            default:
+                resp.setStatus(400);
+
+        }
 
     }
 
