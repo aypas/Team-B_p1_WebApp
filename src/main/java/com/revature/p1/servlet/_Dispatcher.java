@@ -1,14 +1,6 @@
 package com.revature.p1.servlet;
 
-import com.revature.p1.controller.AccountController;
-import com.revature.p1.controller.BankUserController;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-public class Dispatcher {
+public class _Dispatcher {
 
 //    private BankUserController bankUserController = new BankUserController();
 //    private AccountController accountController = new AccountController();

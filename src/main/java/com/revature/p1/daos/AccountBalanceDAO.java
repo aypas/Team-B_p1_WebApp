@@ -80,6 +80,8 @@ public class AccountBalanceDAO {
      */
     public double getBalance(Account acct) {
 
+        System.out.println("in getbalance in dao " + acct.getaID());
+
         double balance = 0;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -99,6 +101,8 @@ public class AccountBalanceDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        balance = 54545.545;
+        System.out.println("balance " + balance);
 
         return balance;
 
