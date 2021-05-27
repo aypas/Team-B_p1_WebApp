@@ -1,0 +1,2 @@
+1. get balance returning 400 even though dao is getting th balance
+2. do withdraw and deposit next

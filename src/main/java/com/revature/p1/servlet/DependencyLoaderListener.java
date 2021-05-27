@@ -38,7 +38,7 @@ public class DependencyLoaderListener implements ServletContextListener {
         AccountTransactionDAO transactionDAO = new AccountTransactionDAO();
         AccountTransactionService accountTransactionService = new AccountTransactionService(transactionDAO);
         AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
-        AccountsController accountsController = new AccountsController(depositService, withdrawService,accountOpeningService, accountTransactionService, accountTypeDAO, mapper);
+        AccountsController accountsController = new AccountsController(depositService, withdrawService,accountOpeningService, accountTransactionService, accountTypeDAO, balanceDAO, mapper);
 
         //has one method - getAllaccount types -> isn't tied to a service
 

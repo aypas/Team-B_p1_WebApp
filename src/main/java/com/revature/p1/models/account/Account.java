@@ -43,6 +43,11 @@ public class Account {
         this.aName = aName;
     }
 
+    public Account(int aID, int uID){
+        this.aID = aID;
+        this.uID = uID;
+    }
+
     public int getaID() {
         return aID;
     }

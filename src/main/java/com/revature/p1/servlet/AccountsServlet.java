@@ -47,7 +47,8 @@ public class AccountsServlet extends HttpServlet {
                 System.out.println("hit account types switch");
                 accountsController.getAllAcctTypes(req, resp);
                 break;
-//            case ""
+            case "/bankapp/accounts/balance":
+                accountsController.getBalance(req, resp);
 
             default:
                 resp.setStatus(400);
@@ -60,9 +61,11 @@ public class AccountsServlet extends HttpServlet {
         //AccountTransactionDAO
         // /accounts/transaction
 
+        //DONE
         // AccountDao
             //saveNewAcct
         // /accounts/newaccount
+
 
         //AccountBalanceDao
             //saveNewBalance
@@ -72,10 +75,10 @@ public class AccountsServlet extends HttpServlet {
 
         switch(req.getRequestURI()){
             case "/bankapp/accounts/newaccount":
-                System.out.println("hit account new switch");
                 accountsController.saveNewAcct(req, resp);
                 break;
-//            case ""
+            case "/bankapp/accounts/newbalance":
+//                accountsController.saveNewBalance(req, resp);
 
             default:
                 resp.setStatus(400);
