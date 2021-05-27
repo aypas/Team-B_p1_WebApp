@@ -86,15 +86,19 @@ public class AccountsController {
         }
 
         try{
-
              Account acct = mapper.readValue(req.getInputStream(), Account.class);
              balanceDAO.getBalance(acct);
-
-
         }catch (Exception e){
             e.printStackTrace();
             resp.setStatus(404);
         }
+    }
 
+    public void createDeposit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-    }}
+        BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
+         String usrInput = req.getParameter("usrInput");
+
+        depositService.createBalance(bankUser,usrInput);
+    }
+}

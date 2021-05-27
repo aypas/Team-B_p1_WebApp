@@ -57,7 +57,7 @@ public class AccountsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //AccountTransactionDAO
         // /accounts/transaction
 
@@ -79,7 +79,10 @@ public class AccountsServlet extends HttpServlet {
                 break;
             case "/bankapp/accounts/newbalance":
 //                accountsController.saveNewBalance(req, resp);
-
+                break;
+            case "/bankapp/accounts/deposit":
+                accountsController.createDeposit(req,resp);
+//
             default:
                 resp.setStatus(400);
 
