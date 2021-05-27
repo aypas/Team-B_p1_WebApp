@@ -21,9 +21,11 @@ public class AccountsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         System.out.println("in acc servlet get " + req.getRequestURI());
+        //DONE
         //AccountsTypeDao => no service tied to this one
             //getAllAcctTypes
         // /accounts/types
+
 
 //        AccountTransactionDAO
             //getAllAcctTransactions
@@ -45,10 +47,10 @@ public class AccountsServlet extends HttpServlet {
                 System.out.println("hit account types switch");
                 accountsController.getAllAcctTypes(req, resp);
                 break;
+//            case ""
 
             default:
                 resp.setStatus(400);
-
         }
 
     }
@@ -67,6 +69,18 @@ public class AccountsServlet extends HttpServlet {
         // /accounts/newbalance
 
         //switch statment using req.getRequestURI()
+
+        switch(req.getRequestURI()){
+            case "/bankapp/accounts/newaccount":
+                System.out.println("hit account new switch");
+                accountsController.saveNewAcct(req, resp);
+                break;
+//            case ""
+
+            default:
+                resp.setStatus(400);
+
+        }
 
     }
 
