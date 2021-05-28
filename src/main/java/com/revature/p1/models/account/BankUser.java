@@ -1,5 +1,7 @@
 package com.revature.p1.models.account;
 
+import com.revature.util.annotation.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Jbialon
@@ -7,12 +9,30 @@ package com.revature.p1.models.account;
  * Time: 9:06 AM
  * Description: {Insert Description}
  */
+
+@Entity
+@Table(table_name = "user_table")
 public class BankUser {
+
+    @Primary(name = "id")
     private int uID;
+
+    @Column(name = "first_name")
     private String fName;
+
+    @Column(name = "last_name")
     private String lName;
+
+    @Column(name = "username")
+    @Username
     private String uName;
+
+    @Column(name = "email")
+    @Email
     private String email;
+
+    @Column(name = "password")
+    @Password
     private String password;
 
     public BankUser(){
