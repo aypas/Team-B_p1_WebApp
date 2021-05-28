@@ -38,8 +38,6 @@ public class AccountsController {
         this.mapper = mapper;
     }
 
-    //Abstract away Object Mapper?
-
     public void getAllAcctTypes(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         PrintWriter writer = resp.getWriter();
@@ -47,7 +45,9 @@ public class AccountsController {
 
         try {
             AccountType[] acctTypes = accountTypeDAO.getAllAcctTypes();
-            Arrays.stream(acctTypes).forEach(accountType -> System.out.println("account type " + accountType.getType()));
+//            Arrays.stream(acctTypes).forEach(accountType -> System.out.println("account type " + accountType.getType()));
+            writer.write(mapper.writeValueAsString(acctTypes));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
