@@ -1,2 +1,13 @@
 1. get balance returning 400 even though dao is getting th balance
 2. do withdraw and deposit next
+3. have session object use dto - more secure
+
+Orm integration stpes
+in orm project
+1. clone
+2. be on main
+3. mvn clean install
+
+in webapp
+1.file > project structure >moduels > plus sign > jars or directories > nav to m2 find orm .jar
+ > select it and import
