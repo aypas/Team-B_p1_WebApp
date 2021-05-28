@@ -38,6 +38,8 @@ public class AccountsController {
         this.mapper = mapper;
     }
 
+    //Abstract away Object Mapper?
+
     public void getAllAcctTypes(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         PrintWriter writer = resp.getWriter();
@@ -45,17 +47,14 @@ public class AccountsController {
 
         try {
             AccountType[] acctTypes = accountTypeDAO.getAllAcctTypes();
-//            Arrays.stream(acctTypes).forEach(accountType -> System.out.println("account type " + accountType.getType()));
-            writer.write(mapper.writeValueAsString(acctTypes));
-
+            Arrays.stream(acctTypes).forEach(accountType -> System.out.println("account type " + accountType.getType()));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void saveNewAcct(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void saveNewAcct(HttpServletRequest req, HttpServletResponse resp) {
 
-        PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
@@ -67,18 +66,7 @@ public class AccountsController {
         try {
 
             Account newAcct = mapper.readValue(req.getInputStream(), Account.class);
-            Account acct = accountOpeningService.createAccount(newAcct);
-
-            BankUser currentUser = (BankUser) req.getSession().getAttribute("this-user");
-            System.out.println(currentUser);
-            System.out.println(acct.getuID() + currentUser.getuID());
-            if(acct.getuID() != currentUser.getuID()){
-                resp.setStatus(401);
-                return;
-            }
-
-            writer.write(mapper.writeValueAsString(newAcct));
-
+            accountOpeningService.createAccount(newAcct);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,19 +86,15 @@ public class AccountsController {
         }
 
         try{
+
              Account acct = mapper.readValue(req.getInputStream(), Account.class);
              balanceDAO.getBalance(acct);
+
+
         }catch (Exception e){
             e.printStackTrace();
             resp.setStatus(404);
         }
-    }
 
-    public void createDeposit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
-         String usrInput = req.getParameter("usrInput");
-
-        depositService.createBalance(bankUser,usrInput);
-    }
-}
+    }}
