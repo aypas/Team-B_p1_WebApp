@@ -48,7 +48,7 @@ public class BankUserService {
             }
             System.out.println("in bankuserwervice register before return");
 
-            userDao.save(conn, newUser);
+            userDao.save(newUser);
         } catch (SQLException e) {
             e.printStackTrace();
 //            throw new ResourcePersistenceException();
