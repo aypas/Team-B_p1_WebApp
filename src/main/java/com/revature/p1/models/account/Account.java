@@ -37,7 +37,15 @@ public class Account {
         this.uID = uID;
     }
 
-    public Account(int uId, int tId, String aName) {
+    public Account(int uID, int tID, String aName) {
+        this.uID = uID;
+        this. tID = tID;
+        this.aName = aName;
+    }
+
+    public Account(int aID, int uID){
+        this.aID = aID;
+        this.uID = uID;
     }
 
     public int getaID() {

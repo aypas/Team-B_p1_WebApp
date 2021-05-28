@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AccountController {
+public class _AccountController {
 
     private AccountOpeningService accountOpeningService = new AccountOpeningService(new AccountDAO());
 

@@ -1,5 +1,6 @@
 package com.revature.p1.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.p1.controller.BankUserController;
 import com.revature.p1.controller.AccountsController;
 import com.revature.p1.daos.*;
@@ -21,10 +22,14 @@ public class DependencyLoaderListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
+        ObjectMapper mapper = new ObjectMapper();
+
+        //BankUserController Injections
         BankUserDAO bankUserDAO = new BankUserDAO();
         BankUserService bankUserService = new BankUserService(bankUserDAO);
-        BankUserController bankUserController = new BankUserController(bankUserService);
+        BankUserController bankUserController = new BankUserController(bankUserService, mapper);
 
+        //Accounts Controller Injections
         AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
         DepositService depositService = new DepositService(balanceDAO);
         WithdrawService withdrawService = new WithdrawService(balanceDAO);
@@ -32,12 +37,10 @@ public class DependencyLoaderListener implements ServletContextListener {
         AccountOpeningService accountOpeningService = new AccountOpeningService(accountDAO);
         AccountTransactionDAO transactionDAO = new AccountTransactionDAO();
         AccountTransactionService accountTransactionService = new AccountTransactionService(transactionDAO);
+        AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
+        AccountsController accountsController = new AccountsController(depositService, withdrawService,accountOpeningService, accountTransactionService, accountTypeDAO, balanceDAO, mapper);
 
         //has one method - getAllaccount types -> isn't tied to a service
-        AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
-
-
-        AccountsController accountsController = new AccountsController(depositService, withdrawService,accountOpeningService, accountTransactionService);
 
         AuthServlet authServlet = new AuthServlet(bankUserController);
         BankUserServlet bankUserServlet= new BankUserServlet(bankUserController);

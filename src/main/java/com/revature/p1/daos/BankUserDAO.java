@@ -25,11 +25,11 @@ public class BankUserDAO {
      * @param newUser
      * @return BankUser
      */
-    public void save(Connection conn, BankUser newUser) {
+    public void save(BankUser newUser) {
 
         System.out.println("in bank userdao save");
 
-        try {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()){
 
             String sqlInsertUser = "insert into user_table" +
                                     "(email , first_name , last_name) values (?,?,?)";
