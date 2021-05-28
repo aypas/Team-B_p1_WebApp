@@ -3,7 +3,6 @@ package com.revature.p1.services;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTransactionDAO;
 import com.revature.p1.exceptions.InvalidRequestException;
-import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.singleton.CurrentAccount;
 
 import java.util.regex.Matcher;
@@ -39,15 +38,7 @@ public class DepositService {
      * @return boolean
      * @throws InvalidRequestException
      */
-    public boolean createBalance(BankUser bankUser, String usrInput) throws InvalidRequestException {
-        System.out.println("in create balance "+ bankUser.getuName());
-        //perhaps we should un-nest the getbalance method
-            //its a little challenging to scale, perhaps?
-            //**coding decision**
-        /**
-         * Since each route is validated
-         *  just pass current user as arg here - I think that may make tying in ORM simpler?
-         */
+    public boolean createBalance(String usrInput) throws InvalidRequestException {
 
         if (!isDepositValid(usrInput)) {
             throw new InvalidRequestException("Invalid Deposit Amount Entered");
@@ -57,7 +48,7 @@ public class DepositService {
 
         // Sends extra information to transaction table in the database.
         xActionService.sendBalanceAsTransaction(usrInput, "Deposit");
-       //neewd to send account_id
+
         return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
 
     }

@@ -43,10 +43,10 @@ public class DepositScreen extends Screen{
             String userSelection = consoleReader.readLine();
 
             try {
-//                if (depositService.createBalance(userSelection)) {
-//                    System.out.println("Deposit Success");
-//                    app().getRouter().navigate("/accounts");
-//                }
+                if (depositService.createBalance(userSelection)) {
+                    System.out.println("Deposit Success");
+                    app().getRouter().navigate("/accounts");
+                }
             } catch (InvalidRequestException ire) {
                 System.out.println("Invalid amount, try again.");
                 app().getRouter().navigate("/deposit");

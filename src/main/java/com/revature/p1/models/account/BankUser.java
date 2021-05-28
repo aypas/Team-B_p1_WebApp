@@ -19,15 +19,6 @@ public class BankUser {
         super();
     }
 
-    public BankUser(int uID, String fName, String lName, String uName, String email, String password) {
-        this.uID = uID;
-        this.fName = fName;
-        this.lName = lName;
-        this.uName = uName;
-        this.email = email;
-        this.password = password;
-    }
-
     public BankUser(String fName, String lName, String uName, String email, String password) {
         this.fName = fName;
         this.lName = lName;
@@ -36,7 +27,14 @@ public class BankUser {
         this.password = password;
     }
 
-
+    public BankUser(int uID, String fName, String lName, String uName, String email, String password) {
+        this.uID = uID;
+        this.fName = fName;
+        this.lName = lName;
+        this.uName = uName;
+        this.email = email;
+        this.password = password;
+    }
 
     public int getuID() {
         return uID;
@@ -89,8 +87,7 @@ public class BankUser {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BankUser{");
-        sb.append("uID=").append(uID);
-        sb.append(", fName='").append(fName).append('\'');
+        sb.append("fName='").append(fName).append('\'');
         sb.append(", lName='").append(lName).append('\'');
         sb.append(", uName='").append(uName).append('\'');
         sb.append(", email='").append(email).append('\'');

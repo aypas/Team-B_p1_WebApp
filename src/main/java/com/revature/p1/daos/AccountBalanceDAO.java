@@ -101,7 +101,7 @@ public class AccountBalanceDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-//        balance = 54545.545;
+        balance = 54545.545;
         System.out.println("balance " + balance);
 
         return balance;
