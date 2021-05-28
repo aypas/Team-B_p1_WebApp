@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Team-B_p1_WebApp" />
+        <module name="bankapp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Bank-App" target="8" />
+      <module name="bankapp" target="8" />
       <module name="Team-B_p1_WebApp" target="8" />
     </bytecodeTargetLevel>
   </component>
