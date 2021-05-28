@@ -82,7 +82,7 @@ public class AccountsServlet extends HttpServlet {
                 break;
             case "/bankapp/accounts/deposit":
                 accountsController.createDeposit(req,resp);
-//
+                break;
             default:
                 resp.setStatus(400);
 

@@ -76,7 +76,7 @@ public class BankUserDAO {
     public boolean isUsernameAvailable(String username) {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            String sql = "select * from user_login where username = ?";
+            String sql = "select * from user_table where username = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
 

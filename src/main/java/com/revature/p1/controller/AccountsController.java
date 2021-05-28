@@ -53,8 +53,9 @@ public class AccountsController {
         }
     }
 
-    public void saveNewAcct(HttpServletRequest req, HttpServletResponse resp) {
+    public void saveNewAcct(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
+        PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
@@ -66,7 +67,9 @@ public class AccountsController {
         try {
 
             Account newAcct = mapper.readValue(req.getInputStream(), Account.class);
-            accountOpeningService.createAccount(newAcct);
+            Account acct = accountOpeningService.createAccount(newAcct);
+            writer.write(mapper.writeValueAsString(newAcct));
+
 
         } catch (Exception e) {
             e.printStackTrace();
