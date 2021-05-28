@@ -132,7 +132,7 @@ public class BankUserDAO {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            String encryptedPass = null;
+//            String encryptedPass = null;
 
             String sql = "select id, first_name, last_name, email, username, password from user_table where username = ? and password = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);

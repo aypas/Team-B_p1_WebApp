@@ -68,6 +68,15 @@ public class AccountsController {
 
             Account newAcct = mapper.readValue(req.getInputStream(), Account.class);
             Account acct = accountOpeningService.createAccount(newAcct);
+
+            BankUser currentUser = (BankUser) req.getSession().getAttribute("this-user");
+            System.out.println(currentUser);
+            System.out.println(acct.getuID() + currentUser.getuID());
+            if(acct.getuID() != currentUser.getuID()){
+                resp.setStatus(401);
+                return;
+            }
+
             writer.write(mapper.writeValueAsString(newAcct));
 
 
