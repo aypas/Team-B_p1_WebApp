@@ -34,11 +34,11 @@ public class BankUserService {
      */
     public void register(BankUser newUser) {
 
+        try {
+
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid new user data provided!");
         }
-
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             if (!userDao.isUsernameAvailable(newUser.getuName())) {
                 throw new UsernameUnavailableException();
             }
@@ -49,16 +49,13 @@ public class BankUserService {
             System.out.println("in bankuserwervice register before return");
 
             userDao.save(newUser);
-        } catch (SQLException e) {
-            e.printStackTrace();
-//            throw new ResourcePersistenceException();
         } catch (UsernameUnavailableException | EmailUnavailableException e) {
             e.printStackTrace();
         }
     }
 
     public BankUser authenticate(String username, String password) throws AuthenticationException {
-        System.out.println("in bank userwervice auth " + username + password);
+        System.out.println("in bank userservice auth " + username + password);
         try {
             BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(username, password);
 
@@ -95,7 +92,7 @@ public class BankUserService {
             return false;
         if (user.getEmail() == null || user.getEmail().trim().isEmpty() || user.getEmail().length() > 50) return false;
         if (user.getfName() == null || user.getfName().trim().isEmpty() || user.getfName().length() > 50) return false;
-        if (user.getfName() == null || user.getfName().trim().isEmpty() || user.getfName().length() > 50) return false;
+        if (user.getlName() == null || user.getlName().trim().isEmpty() || user.getlName().length() > 50) return false;
 
         /*
             Regular expression evaluation email input...
