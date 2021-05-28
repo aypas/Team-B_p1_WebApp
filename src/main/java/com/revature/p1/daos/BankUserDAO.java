@@ -4,6 +4,9 @@ import com.revature.p1.exceptions.DataSourceException;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
 
+import com.revature.querinator.PostgresQueryBuilder;
+import com.revature.querinator.GenericObjectMaker;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +21,9 @@ import java.sql.SQLException;
  */
 public class BankUserDAO {
 
+    private final GenericObjectMaker objMaker = new GenericObjectMaker();
+    private PostgresQueryBuilder queryMaker;
+
     /**
      *
      * Description: Adds a new user to the database
@@ -31,8 +37,14 @@ public class BankUserDAO {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()){
 
+            queryMaker = new PostgresQueryBuilder(conn);
+
+            queryMaker.insert(newUser);
+
+/*
             String sqlInsertUser = "insert into user_table" +
                                     "(email , first_name , last_name) values (?,?,?)";
+
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertUser, new String[] { "id" });
 
             pstmt.setString(1,newUser.getEmail());
@@ -56,8 +68,8 @@ public class BankUserDAO {
             pstmt.setString(3,newUser.getPassword());
 
             pstmt.executeUpdate();
-
-        } catch (SQLException e) {
+*/
+        } catch (SQLException | IllegalAccessException e) {
             e.printStackTrace();
             throw new DataSourceException();
         }
@@ -67,22 +79,27 @@ public class BankUserDAO {
      *
      * Description: Checks database for an existing username
      *
-     * @param username
+     * @param user
      * @return boolean
      */
-    public boolean isUsernameAvailable(String username) {
+    public boolean isUsernameAvailable(BankUser user) {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
+            queryMaker = new PostgresQueryBuilder(conn);
+
+/*
             String sql = "select * from user_login where username = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
+ */
 
-            ResultSet rs = pstmt.executeQuery();
+            ResultSet rs = queryMaker.getUsername(user);
             if (rs.next()) {
                 return false;
             }
 
-        } catch (SQLException e) {
+
+        } catch (SQLException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
@@ -94,22 +111,26 @@ public class BankUserDAO {
      *
      * Description: Checks database for an existing email
      *
-     * @param email
+     * @param user
      * @return boolean
      */
-    public boolean isEmailAvailable(String email) {
+    public boolean isEmailAvailable(BankUser user) {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
+            queryMaker = new PostgresQueryBuilder(conn);
+
+/*
             String sql = "select * from user_table where email = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
+*/
 
-            ResultSet rs = pstmt.executeQuery();
+            ResultSet rs = queryMaker.getEmail(user);
             if (rs.next()) {
                 return false;
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
