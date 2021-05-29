@@ -36,6 +36,7 @@ public class AccountsServlet extends HttpServlet {
             // getAcct
         // /accounts/all
 
+        //DONE
         //AccountBalanceDao
             // getBalance
         // /accounts/balance (need param?)
@@ -59,8 +60,10 @@ public class AccountsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         //AccountTransactionDAO
-        // /accounts/transaction
+        //deposit
+        // /accounts/deposit
 
         //DONE
         // AccountDao

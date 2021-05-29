@@ -3,6 +3,7 @@ package com.revature.p1.services;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTransactionDAO;
 import com.revature.p1.exceptions.InvalidRequestException;
+import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.singleton.CurrentAccount;
 
@@ -39,8 +40,7 @@ public class DepositService {
      * @return boolean
      * @throws InvalidRequestException
      */
-    public boolean createBalance(BankUser bankUser, String aID, String depositAmt) throws InvalidRequestException {
-        System.out.println("in create balance "+ bankUser.getuName());
+    public double createBalance(BankUser bankUser, int aID, double depositAmt) throws InvalidRequestException {
         //perhaps we should un-nest the getbalance method
             //its a little challenging to scale, perhaps?
             //**coding decision**
@@ -49,22 +49,23 @@ public class DepositService {
          *  just pass current user as arg here - I think that may make tying in ORM simpler?
          */
 
-        if (!isDepositValid(depositAmt)) {
-            throw new InvalidRequestException("Invalid Deposit Amount Entered");
-        }
+        System.out.println("in create balance "+ aID);
+//        if (!isDepositValid(depositAmt)) {
+//            throw new InvalidRequestException("Invalid Deposit Amount Entered");
+//        }
 
 
-//        double newBalance = balanceDAO.getBalance(Integer.parseInt(aID), bankUser.getuID());
 
-//        Double.parseDouble(depositAmt)
+        //tie in current user id to make it more secure?
+        AccountBalance balance = balanceDAO.getBalance(aID);
+        double newBalance = balance.getBalance() + depositAmt;
 
         // Sends extra information to transaction table in the database.
-        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
+//        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
        //neewd to send account_id
 //        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
 
-        return true;
-
+        return newBalance;
     }
 
     /**

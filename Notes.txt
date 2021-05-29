@@ -1,6 +1,8 @@
-1. get balance returning 400 even though dao is getting th balance
+1. get balance returning 400 even though dao is getting th balance***
+    --Probablt due to mock server calls in test
 2. do withdraw and deposit next
 3. have session object use dto - more secure
+4.
 
 Orm integration stpes
 in orm project

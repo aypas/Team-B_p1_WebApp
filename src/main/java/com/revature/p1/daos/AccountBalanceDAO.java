@@ -78,6 +78,7 @@ public class AccountBalanceDAO {
      */
     public AccountBalance getBalance(int aID) {
 
+        System.out.println("in get balance");
         AccountBalance accountBalance = null;
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
