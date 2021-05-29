@@ -1,8 +1,9 @@
 1. get balance returning 400 even though dao is getting th balance***
     --Probablt due to mock server calls in test
-2. do withdraw and deposit next
 3. have session object use dto - more secure
-4.
+4.Get transactions working
+5.Account balance DTO security
+    - compare aID to id in accounts table and user_id in that table doesn't match => throw error unauthorized status
 
 Orm integration stpes
 in orm project

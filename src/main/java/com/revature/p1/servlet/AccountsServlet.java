@@ -91,9 +91,7 @@ public class AccountsServlet extends HttpServlet {
                 break;
             default:
                 resp.setStatus(400);
-
         }
-
     }
 
     @Override
