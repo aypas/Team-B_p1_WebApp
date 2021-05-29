@@ -49,12 +49,10 @@ public class BankUserController {
         resp.setContentType("application/json");
 
         try {
+
             Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
             BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
-            System.out.println("authenitcate " + authUser.getuID());
-
             writer.write(mapper.writeValueAsString(authUser));
-
             req.getSession().setAttribute("this-user", authUser);
 
         } catch (MismatchedInputException e) {

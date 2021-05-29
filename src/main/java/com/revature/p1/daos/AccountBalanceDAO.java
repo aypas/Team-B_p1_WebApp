@@ -82,17 +82,19 @@ public class AccountBalanceDAO {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            String sqlInsertAcctBal = "select balance and account_id" +
-                    "from account_balance where account_id = ?";
+            String sqlInsertAcctBal = "select account_id, balance from account_balance where account_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
 
             pstmt.setInt(1, aID);
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                accountBalance.setBalance(rs.getDouble("balance"));
+                accountBalance = new AccountBalance();
                 accountBalance.setAcctID(rs.getInt("account_id"));
+                accountBalance.setBalance(rs.getDouble("balance"));
             }
+
+            System.out.println(accountBalance.toString());
 
 
         } catch (SQLException throwables) {

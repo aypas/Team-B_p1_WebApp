@@ -93,25 +93,24 @@ public class AccountsController {
 
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
+        System.out.println(req.getSession().getAttribute("this-user").toString());
 
         if (req.getSession().getAttribute("this-user") == null) {
             //Should this throw exception instead?
             resp.setStatus(401);
             return;
         }
+        System.out.println("after truy block in get balance contoller");
 
         try{
-//             Account acct = mapper.readValue(req.getInputStream(), Account.class);
-             int aID = Integer.parseInt(req.getParameter("aID"));
-             BankUser bankuser = (BankUser) req.getSession().getAttribute("this-user");
-//             (bankuser.getuID());
-            AccountBalance accountBalance = balanceDAO.getBalance(aID);
+             AccountBalance acctID = mapper.readValue(req.getInputStream(), AccountBalance.class);;
+            AccountBalance respBalance = balanceDAO.getBalance(acctID.getAcctID());
 
-            writer.write(mapper.writeValueAsString(accountBalance));
+            writer.write(mapper.writeValueAsString(respBalance));
 
         }catch (Exception e){
             e.printStackTrace();
-            resp.setStatus(404);
+            resp.setStatus(500);
         }
     }
 
