@@ -48,7 +48,7 @@ public class _WithdrawService {
         usrInput = "-" + usrInput;
 
         // Sends extra information to transaction table in the database.
-        xActionService.sendBalanceAsTransaction(usrInput, "Withdraw");
+//        xActionService.sendBalanceAsTransaction(usrInput, "Withdraw");
 
 //        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
 

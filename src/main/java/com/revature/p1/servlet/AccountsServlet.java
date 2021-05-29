@@ -61,8 +61,11 @@ public class AccountsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
+        //
+
+        //DONE
         //AccountTransactionDAO
-        //deposit
+        //depositandwithdraw
         // /accounts/deposit
 
         //DONE
@@ -88,6 +91,9 @@ public class AccountsServlet extends HttpServlet {
             case "/bankapp/accounts/deposit":
             case "/bankapp/accounts/withdraw":
                 accountsController.createDepositWithdraw(req,resp);
+                break;
+            case "/bankapp/accounts/transaction":
+                System.out.println("hit trans switch");
                 break;
             default:
                 resp.setStatus(400);
