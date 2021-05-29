@@ -144,20 +144,21 @@ public class BankUserDAO {
      *
      * Description: Checks database and ensures proper login credentials were given
      *
-     * @param newUser
+     * @param
      * @return BankUser
      */
-    public BankUser findUserByUsernameAndPassword(Credentials newUser) {
+    public BankUser findUserByUsernameAndPassword(Credentials newUserCreds) {
         System.out.println("bank user dao ");
         BankUser user = new BankUser();
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            user.setuName(newUser.getUsername());
-            user.setPassword(newUser.getPassword());
+            user.setuName(newUserCreds.getUsername());
+            user.setPassword(newUserCreds.getPassword());
+
             queryMaker = new PostgresQueryBuilder(conn);
             objectMaker = new GenericObjectMaker();
-            user = (BankUser) objectMaker.buildObject(BankUser.class, queryMaker.loginByUsernamePgCrypt(user));
+            user = (BankUser) objectMaker.buildObject(BankUser.class, queryMaker.loginByUsername(user));
 
 
 //             String sql = "select id, first_name, last_name, email, username, password from user_table where username = ? and password = ?";
