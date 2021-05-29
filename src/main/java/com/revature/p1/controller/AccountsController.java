@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTypeDAO;
 import com.revature.p1.models.account.Account;
+import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.models.account.AccountType;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.services.AccountOpeningService;
@@ -86,9 +87,11 @@ public class AccountsController {
         }
     }
 
-    public void getBalance(HttpServletRequest req, HttpServletResponse resp) {
+    public void getBalance(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //Doesnt work with current config => needs constructor in Account model that taks aID,
         //but isn't allowed since there is already and int as only arg constructor => uID
+
+        PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
@@ -98,8 +101,14 @@ public class AccountsController {
         }
 
         try{
-             Account acct = mapper.readValue(req.getInputStream(), Account.class);
-             balanceDAO.getBalance(acct);
+//             Account acct = mapper.readValue(req.getInputStream(), Account.class);
+             int aID = Integer.parseInt(req.getParameter("aID"));
+             BankUser bankuser = (BankUser) req.getSession().getAttribute("this-user");
+//             (bankuser.getuID());
+            AccountBalance accountBalance = balanceDAO.getBalance(aID);
+
+            writer.write(mapper.writeValueAsString(accountBalance));
+
         }catch (Exception e){
             e.printStackTrace();
             resp.setStatus(404);
@@ -109,8 +118,9 @@ public class AccountsController {
     public void createDeposit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
-         String usrInput = req.getParameter("usrInput");
+         String depositAmt = req.getParameter("depositAmt");
+         String accountId = req.getParameter("accountId");
 
-        depositService.createBalance(bankUser,usrInput);
+        depositService.createBalance(bankUser, accountId, depositAmt);
     }
 }

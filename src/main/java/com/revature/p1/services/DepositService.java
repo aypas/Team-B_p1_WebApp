@@ -35,11 +35,11 @@ public class DepositService {
      *
      * Description: If entry is valid this will send the data to the database.
      *
-     * @param usrInput
+     * @param
      * @return boolean
      * @throws InvalidRequestException
      */
-    public boolean createBalance(BankUser bankUser, String usrInput) throws InvalidRequestException {
+    public boolean createBalance(BankUser bankUser, String aID, String depositAmt) throws InvalidRequestException {
         System.out.println("in create balance "+ bankUser.getuName());
         //perhaps we should un-nest the getbalance method
             //its a little challenging to scale, perhaps?
@@ -49,16 +49,21 @@ public class DepositService {
          *  just pass current user as arg here - I think that may make tying in ORM simpler?
          */
 
-        if (!isDepositValid(usrInput)) {
+        if (!isDepositValid(depositAmt)) {
             throw new InvalidRequestException("Invalid Deposit Amount Entered");
         }
 
-        double newBalance = balanceDAO.getBalance(CurrentAccount.getInstance().getCurrentAccount()) + Double.parseDouble(usrInput);
+
+//        double newBalance = balanceDAO.getBalance(Integer.parseInt(aID), bankUser.getuID());
+
+//        Double.parseDouble(depositAmt)
 
         // Sends extra information to transaction table in the database.
-        xActionService.sendBalanceAsTransaction(usrInput, "Deposit");
+        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
        //neewd to send account_id
-        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
+//        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
+
+        return true;
 
     }
 

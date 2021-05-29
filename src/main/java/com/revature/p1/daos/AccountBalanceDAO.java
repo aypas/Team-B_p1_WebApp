@@ -2,6 +2,7 @@ package com.revature.p1.daos;
 
 import com.revature.p1.models.account.Account;
 
+import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.util.factory.ConnectionFactory;
 
 import java.sql.Connection;
@@ -19,20 +20,19 @@ import java.sql.SQLException;
 public class AccountBalanceDAO {
 
     /**
-     *
      * Description: When creating a new bank account this will initialize the accounts balance record.
      *
      * @param acct
      */
     public void saveNewBalance(Account acct) {
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sqlInsertAcctBal = "insert into account_balance" +
                     "(account_id , balance) values (?,0)";
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
 
-            pstmt.setInt(1,acct.getaID());
+            pstmt.setInt(1, acct.getaID());
             pstmt.executeUpdate();
 
 
@@ -42,7 +42,6 @@ public class AccountBalanceDAO {
     }
 
     /**
-     *
      * Description: Updates the accounts balance record within the database.
      *
      * @param acct
@@ -51,7 +50,7 @@ public class AccountBalanceDAO {
      */
     public boolean saveBalance(Account acct, double currBalance) {
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             String sqlInsertAcctBal = "update account_balance " +
                     "set balance = ? where account_id = ?";
@@ -72,39 +71,35 @@ public class AccountBalanceDAO {
     }
 
     /**
-     *
      * Description: Gets the balance of the desired account from the database.
      *
-     * @param acct
+     * @param
      * @return double
      */
-    public double getBalance(Account acct) {
+    public AccountBalance getBalance(int aID) {
 
-        System.out.println("in getbalance in dao " + acct.getaID());
+        AccountBalance accountBalance = null;
 
-        double balance = 0;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
-            String sqlInsertAcctBal = "select balance " +
+            String sqlInsertAcctBal = "select balance and account_id" +
                     "from account_balance where account_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
 
-            pstmt.setInt(1, acct.getaID());
+            pstmt.setInt(1, aID);
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                balance = rs.getDouble("balance");
+                accountBalance.setBalance(rs.getDouble("balance"));
+                accountBalance.setAcctID(rs.getInt("account_id"));
             }
 
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-//        balance = 54545.545;
-        System.out.println("balance " + balance);
 
-        return balance;
+        return accountBalance;
 
     }
 }

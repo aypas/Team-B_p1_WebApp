@@ -43,14 +43,16 @@ public class WithdrawService {
             throw new InvalidRequestException("Invalid Withdraw Amount Entered");
         }
 
-        double newBalance = balanceDAO.getBalance(CurrentAccount.getInstance().getCurrentAccount()) - Double.parseDouble(usrInput);
+//        double newBalance = balanceDAO.getBalance(CurrentAccount.getInstance().getCurrentAccount()) - Double.parseDouble(usrInput);
 
         usrInput = "-" + usrInput;
 
         // Sends extra information to transaction table in the database.
         xActionService.sendBalanceAsTransaction(usrInput, "Withdraw");
 
-        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
+//        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
+
+        return true;
 
     }
 
@@ -69,12 +71,9 @@ public class WithdrawService {
 
         if (usrInput == null || usrInput.trim().isEmpty() || usrInput.contains("-") || usrInput.contains(" ") || !m.matches()) return false;
 
-        double newBalance = balanceDAO.getBalance(CurrentAccount.getInstance().getCurrentAccount()) - Double.parseDouble(usrInput);
-        if (newBalance < 0) return false;
+//        double newBalance = balanceDAO.getBalance(CurrentAccount.getInstance().getCurrentAccount()) - Double.parseDouble(usrInput);
+//        if (newBalance < 0) return false;
 
         return true;
     }
-
-
-
 }
