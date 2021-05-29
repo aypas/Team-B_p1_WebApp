@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class AccountsController {
 
@@ -40,7 +41,7 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         try {
-            AccountType[] acctTypes = accountTypeDAO.getAllAcctTypes();
+            List<AccountType> acctTypes = accountTypeDAO.getAllAcctTypes();
 //            Arrays.stream(acctTypes).forEach(accountType -> System.out.println("account type " + accountType.getType()));
             writer.write(mapper.writeValueAsString(acctTypes));
 
