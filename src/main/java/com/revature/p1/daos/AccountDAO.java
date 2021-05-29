@@ -1,6 +1,7 @@
 package com.revature.p1.daos;
 
 import com.revature.p1.models.account.Account;
+import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
 import com.revature.querinator.GenericObjectMaker;
@@ -31,12 +32,14 @@ public class AccountDAO {
      * @return Account
      */
     public Account saveNewAcct(Account acct) {
-        // This implementation assumes ID is supplied with new account
+
         AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
-//        BankUser user;
-//        Account newAcct;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            queryMaker = new PostgresQueryBuilder(conn);
+            int aId = queryMaker.insertAndGetId(acct);
+            balanceDAO.saveNewBalance(new AccountBalance(aId, 0));
 
 //            String sqlInsertAcct = "insert into account " +
 //                    "(user_id , type_id, acct_name) values (?,?,?)";
@@ -57,7 +60,7 @@ public class AccountDAO {
 //
 //            balanceDAO.saveNewBalance(newAcct);
 
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalAccessException throwables) {
             throwables.printStackTrace();
         }
 

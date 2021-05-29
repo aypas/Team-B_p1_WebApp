@@ -3,6 +3,7 @@ package com.revature.p1.services;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTransactionDAO;
 import com.revature.p1.exceptions.InvalidRequestException;
+import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.singleton.CurrentAccount;
 
@@ -53,12 +54,12 @@ public class DepositService {
             throw new InvalidRequestException("Invalid Deposit Amount Entered");
         }
 
-        double newBalance = balanceDAO.getBalance(CurrentAccount.getInstance().getCurrentAccount()) + Double.parseDouble(usrInput);
+        double newBalance = balanceDAO.getBalance(new AccountBalance(CurrentAccount.getInstance().getCurrentAccount().getaID(), 0)).getBalance() + Double.parseDouble(usrInput);
 
         // Sends extra information to transaction table in the database.
         xActionService.sendBalanceAsTransaction(usrInput, "Deposit");
        //neewd to send account_id
-        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
+        return balanceDAO.saveBalance(new AccountBalance(CurrentAccount.getInstance().getCurrentAccount().getaID(), newBalance));
 
     }
 

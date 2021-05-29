@@ -54,10 +54,10 @@ public class BankUserService {
         }
     }
 
-    public BankUser authenticate(String username, String password) throws AuthenticationException {
-        System.out.println("in bank userservice auth " + username + password);
+    public BankUser authenticate(BankUser newUser) throws AuthenticationException {
+        System.out.println("in bank userservice auth " + newUser.getuName() + newUser.getPassword());
         try {
-            BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(username, password);
+            BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(newUser);
 
             //May not need this line - just an extra check.
             if(authenticatedUser == null) throw new AuthenticationException();
