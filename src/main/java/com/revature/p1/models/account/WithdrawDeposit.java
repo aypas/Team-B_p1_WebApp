@@ -4,6 +4,8 @@ public class WithdrawDeposit {
     private int aID;
     private double amount;
 
+    public WithdrawDeposit(){}
+
     public WithdrawDeposit(int aID, double amount) {
         this.aID = aID;
         this.amount = amount;
