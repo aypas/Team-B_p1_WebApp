@@ -43,30 +43,32 @@ public class BankUserServiceTest {
     public void test_registerWithValidUserAndAvailableUsernameAndPassword() {
 
         // Arrange
-        when(mockUserDao.isUsernameAvailable(anyString())).thenReturn(true);
-        when(mockUserDao.isEmailAvailable(anyString())).thenReturn(true);
+        BankUser user = new BankUser(0, "fN", "lN", "uN", "taken@email.com", "pw");
+        when(mockUserDao.isUsernameAvailable(user)).thenReturn(true);
+        when(mockUserDao.isEmailAvailable(user)).thenReturn(true);
 
         // Act
-        sut.register(new BankUser(0, "fN", "lN", "uN", "taken@email.com", "pw"));
+        sut.register(user);
 
         // Assert
-        verify(mockUserDao, times(1)).isUsernameAvailable(anyString());
-        verify(mockUserDao, times(1)).isEmailAvailable(anyString());
+        verify(mockUserDao, times(1)).isUsernameAvailable(user);
+        verify(mockUserDao, times(1)).isEmailAvailable(user);
         verify(mockUserDao, times(1)).save(any());
     }
 
     @Test
     public void test_registerWithValidUserAndTakenUsername() {
         // Arrange
-        when(mockUserDao.isUsernameAvailable(anyString())).thenReturn(false);
+        BankUser user = new BankUser(0, "fN", "lN", "uN", "taken@email.com", "pw");
+        when(mockUserDao.isUsernameAvailable(user)).thenReturn(false);
 
         // Act
         try {
-            sut.register(new BankUser(0, "fN", "lN", "tN", "valid@email.com", "pw"));
+            sut.register(user);
         } catch (Exception e) {
             assertTrue(e instanceof ResourcePersistenceException);
         } finally {
-            verify(mockUserDao, times(0)).isEmailAvailable(anyString());
+            verify(mockUserDao, times(0)).isEmailAvailable(user);
             verify(mockUserDao, times(0)).save(any());
         }
 

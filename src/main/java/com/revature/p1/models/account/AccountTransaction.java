@@ -1,5 +1,7 @@
 package com.revature.p1.models.account;
 
+import com.revature.util.annotation.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Jbialon
@@ -7,10 +9,22 @@ package com.revature.p1.models.account;
  * Time: 11:09 AM
  * Description: {Insert Description}
  */
+
+@Entity
+@Table(table_name = "account_transaction")
 public class AccountTransaction {
+
+    @Foreign
+    @Column(name = "account_id")
     private int acctID;
+
+    @Primary(name = "id")
     private int transactionID;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "transaction_amt")
     private double transactionAmt;
 
     public AccountTransaction() {
