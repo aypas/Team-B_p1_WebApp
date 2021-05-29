@@ -153,9 +153,11 @@ public class BankUserDAO {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
+            user.setuName(newUser.getUsername());
+            user.setPassword(newUser.getPassword());
             queryMaker = new PostgresQueryBuilder(conn);
             objectMaker = new GenericObjectMaker();
-            user = (BankUser) objectMaker.buildObject(BankUser.class, queryMaker.loginByUsernamePgCrypt(newUser));
+            user = (BankUser) objectMaker.buildObject(BankUser.class, queryMaker.loginByUsernamePgCrypt(user));
 
 
 //             String sql = "select id, first_name, last_name, email, username, password from user_table where username = ? and password = ?";
