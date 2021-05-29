@@ -3,6 +3,8 @@ package com.revature.p1.daos;
 import com.revature.p1.models.account.Account;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
+import com.revature.querinator.GenericObjectMaker;
+import com.revature.querinator.PostgresQueryBuilder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,43 +20,48 @@ import java.sql.SQLException;
  */
 public class AccountDAO {
 
+    private PostgresQueryBuilder queryMaker;
+    private GenericObjectMaker objectMaker;
+
     /**
      *
      * Description: Saves a new bank account to the database.
      *
-     * @param newAcct
+     * @param acct
      * @return Account
      */
-    public Account saveNewAcct(Account newAcct) {
-
+    public Account saveNewAcct(Account acct) {
+        // This implementation assumes ID is supplied with new account
         AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
+//        BankUser user;
+//        Account newAcct;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            String sqlInsertAcct = "insert into account " +
-                    "(user_id , type_id, acct_name) values (?,?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcct, new String[] { "id" });
-
-            pstmt.setInt(1,newAcct.getuID());
-            pstmt.setInt(2, newAcct.gettID());
-            pstmt.setString(3, newAcct.getaName());
-
-            int rowsInserted = pstmt.executeUpdate();
-
-            if (rowsInserted != 0) {
-                ResultSet rs = pstmt.getGeneratedKeys();
-                while (rs.next()) {
-                    newAcct.setaID(rs.getInt("id"));
-                }
-            }
-
-            balanceDAO.saveNewBalance(newAcct);
+//            String sqlInsertAcct = "insert into account " +
+//                    "(user_id , type_id, acct_name) values (?,?,?)";
+//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcct, new String[] { "id" });
+//
+//            pstmt.setInt(1,newAcct.getuID());
+//            pstmt.setInt(2, newAcct.gettID());
+//            pstmt.setString(3, newAcct.getaName());
+//
+//            int rowsInserted = pstmt.executeUpdate();
+//
+//            if (rowsInserted != 0) {
+//                ResultSet rs = pstmt.getGeneratedKeys();
+//                while (rs.next()) {
+//                    newAcct.setaID(rs.getInt("id"));
+//                }
+//            }
+//
+//            balanceDAO.saveNewBalance(newAcct);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return newAcct;
+        return acct;
 
     }
 

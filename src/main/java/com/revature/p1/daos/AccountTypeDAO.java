@@ -2,6 +2,7 @@ package com.revature.p1.daos;
 
 import com.revature.p1.models.account.AccountType;
 import com.revature.p1.util.factory.ConnectionFactory;
+import com.revature.querinator.PostgresQueryBuilder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,8 @@ import java.sql.SQLException;
  * Description: Interacts with the account_type table in the database
  */
 public class AccountTypeDAO {
+
+    private PostgresQueryBuilder queryMaker;
 
     /**
      *

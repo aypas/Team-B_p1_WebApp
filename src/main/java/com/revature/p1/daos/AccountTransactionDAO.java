@@ -3,6 +3,7 @@ package com.revature.p1.daos;
 import com.revature.p1.models.account.Account;
 import com.revature.p1.models.account.AccountTransaction;
 import com.revature.p1.util.factory.ConnectionFactory;
+import com.revature.querinator.PostgresQueryBuilder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,8 @@ import java.sql.SQLException;
  * Description: Interacts with the account_transaction table within the database.
  */
 public class AccountTransactionDAO {
+
+    private PostgresQueryBuilder queryMaker;
 
     /**
      *
@@ -87,17 +90,20 @@ public class AccountTransactionDAO {
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            String sqlInsertTransaction = "insert into account_transaction" +
-                    "(account_id , transaction_amt, description) values (?,?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertTransaction);
+            queryMaker = new PostgresQueryBuilder(conn);
+            queryMaker.insert(transaction);
 
-            pstmt.setInt(1, transaction.getAcctID());
-            pstmt.setDouble(2, transaction.getTransactionAmt());
-            pstmt.setString(3, transaction.getDescription());
-            pstmt.executeUpdate();
+//            String sqlInsertTransaction = "insert into account_transaction" +
+//                    "(account_id , transaction_amt, description) values (?,?,?)";
+//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertTransaction);
+//
+//            pstmt.setInt(1, transaction.getAcctID());
+//            pstmt.setDouble(2, transaction.getTransactionAmt());
+//            pstmt.setString(3, transaction.getDescription());
+//            pstmt.executeUpdate();
 
 
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalAccessException throwables) {
             throwables.printStackTrace();
         }
     }
