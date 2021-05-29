@@ -6,29 +6,26 @@ import com.revature.p1.daos.AccountTypeDAO;
 import com.revature.p1.models.account.*;
 import com.revature.p1.services.AccountOpeningService;
 import com.revature.p1.services.AccountTransactionService;
-import com.revature.p1.services.DepositService;
-import com.revature.p1.services.WithdrawService;
-import com.revature.p1.util.singleton.CurrentAccount;
+import com.revature.p1.services.DepositWithdrawService;
+import com.revature.p1.services._WithdrawService;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 public class AccountsController {
 
-    private DepositService depositService;
-    private WithdrawService withdrawService;
+    private DepositWithdrawService depositWithdrawService;
+    private _WithdrawService withdrawService;
     private AccountOpeningService accountOpeningService;
     private AccountTransactionService accountTransactionService;
     private AccountTypeDAO accountTypeDAO;
     private AccountBalanceDAO balanceDAO;
     private ObjectMapper mapper;
 
-    public AccountsController(DepositService depositService, WithdrawService withdrawService, AccountOpeningService accountOpeningService, AccountTransactionService accountTransactionService, AccountTypeDAO accountTypeDAO, AccountBalanceDAO balanceDAO, ObjectMapper mapper) {
-        this.depositService = depositService;
+    public AccountsController(DepositWithdrawService depositWithdrawService, _WithdrawService withdrawService, AccountOpeningService accountOpeningService, AccountTransactionService accountTransactionService, AccountTypeDAO accountTypeDAO, AccountBalanceDAO balanceDAO, ObjectMapper mapper) {
+        this.depositWithdrawService = depositWithdrawService;
         this.withdrawService = withdrawService;
         this.accountOpeningService = accountOpeningService;
         this.accountTransactionService = accountTransactionService;
@@ -110,7 +107,7 @@ public class AccountsController {
         }
     }
 
-    public void createDeposit(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void createDepositWithdraw(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
@@ -121,12 +118,14 @@ public class AccountsController {
         }
 
         BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
-        System.out.println("conytoller createdeposit " + req.getParameter("aID"));
         WithdrawDeposit withdrawDeposit =  mapper.readValue(req.getInputStream(), WithdrawDeposit.class);
-        System.out.println("withdrawdeposit " + withdrawDeposit.getaID());
-        double newbalance = depositService.createBalance(bankUser, withdrawDeposit.getaID(), withdrawDeposit.getAmount());
 
-        System.out.println("newbalance " + newbalance);
-        writer.write(mapper.writeValueAsString(withdrawDeposit));
+        double amount = withdrawDeposit.getAmount();
+        if(req.getRequestURI().compareTo("/bankapp/accounts/withdraw") == 0){
+            System.out.println("in urei if");
+            amount = -amount;
+        }
+        AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount);
+        writer.write(mapper.writeValueAsString(accountBalance));
     }
 }

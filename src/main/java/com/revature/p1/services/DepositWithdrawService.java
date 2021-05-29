@@ -17,17 +17,17 @@ import java.util.regex.Pattern;
  * Time: 1:39 PM
  * Description: Assures the users deposit input is valid before persisting to the database.
  */
-public class DepositService {
+public class DepositWithdrawService {
 
     AccountBalanceDAO balanceDAO;
     AccountTransactionService xActionService;
 
-    public DepositService(AccountBalanceDAO balanceDAO, AccountTransactionDAO xActionDAO) {
+    public DepositWithdrawService(AccountBalanceDAO balanceDAO, AccountTransactionDAO xActionDAO) {
         this.balanceDAO = balanceDAO;
         this.xActionService = new AccountTransactionService(xActionDAO);
     }
 
-    public DepositService(AccountBalanceDAO balanceDAO) {
+    public DepositWithdrawService(AccountBalanceDAO balanceDAO) {
         this.balanceDAO = balanceDAO;
     }
 
@@ -40,7 +40,7 @@ public class DepositService {
      * @return boolean
      * @throws InvalidRequestException
      */
-    public double createBalance(BankUser bankUser, int aID, double depositAmt) throws InvalidRequestException {
+    public AccountBalance createBalance(BankUser bankUser, int aID, double depositAmt) throws InvalidRequestException {
         //perhaps we should un-nest the getbalance method
             //its a little challenging to scale, perhaps?
             //**coding decision**
@@ -49,10 +49,12 @@ public class DepositService {
          *  just pass current user as arg here - I think that may make tying in ORM simpler?
          */
 
+        AccountBalance accountBalance = new AccountBalance();
+
         System.out.println("in create balance "+ aID);
-//        if (!isDepositValid(depositAmt)) {
-//            throw new InvalidRequestException("Invalid Deposit Amount Entered");
-//        }
+        if (!isDepositValid(depositAmt)) {
+            throw new InvalidRequestException("Invalid Deposit Amount Entered");
+        }
 
 
 
@@ -63,25 +65,31 @@ public class DepositService {
         // Sends extra information to transaction table in the database.
 //        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
        //neewd to send account_id
-//        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
+        balanceDAO.saveBalance(aID, newBalance);
 
-        return newBalance;
+        accountBalance.setAcctID(aID);
+        accountBalance.setBalance(newBalance);
+
+        return accountBalance;
     }
 
     /**
      *
      * Description: Ensures user input is valid
      *
-     * @param usrInput
+     * @param amount
      * @return boolean
      */
-    public boolean isDepositValid(String usrInput) {
+    public boolean isDepositValid(double amount) {
+//        String regex = "[0-9]*(\\.[0-9]{0,2})?";
+//        Pattern p = Pattern.compile(regex);
+//        Matcher m = p.matcher(usrInput);
 
-        String regex = "[0-9]*(\\.[0-9]{0,2})?";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(usrInput);
+//        if (amount == null || amount.trim().isEmpty() || amount.contains("-") || usrInamountput.contains(" ") || !m.matches()) return false;
 
-        if (usrInput == null || usrInput.trim().isEmpty() || usrInput.contains("-") || usrInput.contains(" ") || !m.matches()) return false;
+        if(Math.abs(amount) < 1){
+            return false;
+        }
 
         return true;
     }

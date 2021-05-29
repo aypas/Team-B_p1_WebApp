@@ -20,9 +20,9 @@ import static org.mockito.Mockito.mock;
  * Time: 10:31 AM
  * Description: {Insert Description}
  */
-public class DepositServiceTest {
+public class DepositWithdrawServiceTest {
 
-    private DepositService sut;
+    private DepositWithdrawService sut;
     private AccountBalanceDAO mockBalanceDao;
     private AccountTransactionDAO mockXActionDAO;
 
@@ -30,7 +30,7 @@ public class DepositServiceTest {
     public void setUp() {
         mockBalanceDao = mock(AccountBalanceDAO.class);
         mockXActionDAO = mock(AccountTransactionDAO.class);
-        sut = new DepositService(mockBalanceDao, mockXActionDAO);
+        sut = new DepositWithdrawService(mockBalanceDao, mockXActionDAO);
         CurrentAccount.getInstance().setCurrentAccount(new Account("test",1,1,1));
     }
 

@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.when;
  */
 public class WithdrawServiceTest {
 
-    private WithdrawService sut;
+    private _WithdrawService sut;
     private AccountBalanceDAO mockBalanceDao;
     private AccountTransactionDAO mockXActionDAO;
 
@@ -31,7 +30,7 @@ public class WithdrawServiceTest {
     public void setUp() {
         mockBalanceDao = mock(AccountBalanceDAO.class);
         mockXActionDAO = mock(AccountTransactionDAO.class);
-        sut = new WithdrawService(mockBalanceDao, mockXActionDAO);
+        sut = new _WithdrawService(mockBalanceDao, mockXActionDAO);
         CurrentAccount.getInstance().setCurrentAccount(new Account("test",1,1,1));
     }
 

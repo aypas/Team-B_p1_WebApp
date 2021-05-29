@@ -44,11 +44,11 @@ public class AccountBalanceDAO {
     /**
      * Description: Updates the accounts balance record within the database.
      *
-     * @param acct
+     * @param
      * @param currBalance
      * @return
      */
-    public boolean saveBalance(Account acct, double currBalance) {
+    public void saveBalance(int aID, double currBalance) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -56,18 +56,15 @@ public class AccountBalanceDAO {
                     "set balance = ? where account_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
 
+            //was getting account from singleton before, so logic is very similar
             pstmt.setDouble(1, currBalance);
-            pstmt.setInt(2, acct.getaID());
+            pstmt.setInt(2, aID);
             pstmt.executeUpdate();
 
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
-        return true;
-
     }
 
     /**

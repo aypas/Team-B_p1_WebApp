@@ -15,17 +15,17 @@ import java.util.regex.Pattern;
  * Time: 3:02 PM
  * Description: Assures the users withdraw input is valid before persisting to the database.
  */
-public class WithdrawService {
+public class _WithdrawService {
 
     AccountBalanceDAO balanceDAO;
     AccountTransactionService xActionService;
 
-    public WithdrawService(AccountBalanceDAO balanceDAO, AccountTransactionDAO xActionDAO) {
+    public _WithdrawService(AccountBalanceDAO balanceDAO, AccountTransactionDAO xActionDAO) {
         this.balanceDAO = balanceDAO;
         this.xActionService = new AccountTransactionService(xActionDAO);
     }
 
-    public WithdrawService(AccountBalanceDAO balanceDAO) {
+    public _WithdrawService(AccountBalanceDAO balanceDAO) {
         this.balanceDAO = balanceDAO;
     }
 
