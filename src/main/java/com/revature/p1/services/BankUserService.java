@@ -39,11 +39,11 @@ public class BankUserService {
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid new user data provided!");
         }
-            if (!userDao.isUsernameAvailable(newUser.getuName())) {
+            if (!userDao.isUsernameAvailable(newUser)) {
                 throw new UsernameUnavailableException();
             }
 
-            if (!userDao.isEmailAvailable(newUser.getEmail())) {
+            if (!userDao.isEmailAvailable(newUser)) {
                 throw new EmailUnavailableException();
             }
             System.out.println("in bankuserwervice register before return");
