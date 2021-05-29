@@ -1,5 +1,6 @@
 package com.revature.p1.daos;
 
+import com.revature.p1.dtos.Credentials;
 import com.revature.p1.exceptions.DataSourceException;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
@@ -146,7 +147,7 @@ public class BankUserDAO {
      * @param newUser
      * @return BankUser
      */
-    public BankUser findUserByUsernameAndPassword(BankUser newUser) {
+    public BankUser findUserByUsernameAndPassword(Credentials newUser) {
         System.out.println("bank user dao ");
         BankUser user = new BankUser();
 

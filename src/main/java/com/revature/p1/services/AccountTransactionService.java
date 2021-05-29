@@ -25,7 +25,9 @@ public class AccountTransactionService {
      * @param newTransaction
      * @return boolean
      */
+/*
     public AccountTransaction sendBalanceAsTransaction(AccountTransaction newTransaction) {
+
 
 //        AccountTransaction newTransaction = new AccountTransaction();
 
@@ -37,4 +39,5 @@ public class AccountTransactionService {
 
         return accountTransactionRes;
     }
+     */
 }

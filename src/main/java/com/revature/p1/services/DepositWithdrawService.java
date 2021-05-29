@@ -59,7 +59,7 @@ public class DepositWithdrawService {
 
 
         //tie in current user id to make it more secure?
-        AccountBalance balance = balanceDAO.getBalance(aID);
+        AccountBalance balance = balanceDAO.getBalance(accountBalance);
         double newBalance = balance.getBalance() + depositAmt;
 
 

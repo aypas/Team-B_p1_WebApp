@@ -97,7 +97,7 @@ public class AccountsController {
 
         try{
              AccountBalance acctID = mapper.readValue(req.getInputStream(), AccountBalance.class);;
-            AccountBalance respBalance = balanceDAO.getBalance(acctID.getAcctID());
+            AccountBalance respBalance = balanceDAO.getBalance(acctID);
 
             writer.write(mapper.writeValueAsString(respBalance));
 
@@ -129,6 +129,7 @@ public class AccountsController {
         writer.write(mapper.writeValueAsString(accountBalance));
     }
 
+    /*
     public void createTransaction(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
@@ -144,4 +145,5 @@ public class AccountsController {
         AccountTransaction accountTransResp = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
         writer.write(mapper.writeValueAsString(accountTransResp));
     }
+     */
 }

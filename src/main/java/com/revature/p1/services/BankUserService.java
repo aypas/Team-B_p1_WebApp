@@ -1,6 +1,7 @@
 package com.revature.p1.services;
 
 import com.revature.p1.daos.BankUserDAO;
+import com.revature.p1.dtos.Credentials;
 import com.revature.p1.exceptions.*;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
@@ -54,10 +55,10 @@ public class BankUserService {
         }
     }
 
-    public BankUser authenticate(String username, String password) throws AuthenticationException {
-        System.out.println("in bank userservice auth " + username + password);
+    public BankUser authenticate(Credentials creds) throws AuthenticationException {
+        System.out.println("in bank userservice auth " + creds.getUsername() + creds.getPassword());
         try {
-            BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(username, password);
+            BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(creds);
 
             //May not need this line - just an extra check.
             if(authenticatedUser == null) throw new AuthenticationException();

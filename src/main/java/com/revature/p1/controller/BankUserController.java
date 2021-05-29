@@ -51,7 +51,7 @@ public class BankUserController {
         try {
 
             Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
-            BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
+            BankUser authUser = bankUserService.authenticate(creds);
             System.out.println("authUser " + authUser.toString());
             writer.write(mapper.writeValueAsString(authUser));
             req.getSession().setAttribute("this-user", authUser);
