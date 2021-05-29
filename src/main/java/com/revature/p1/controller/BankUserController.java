@@ -27,16 +27,17 @@ public class BankUserController {
         this.mapper = mapper;
 
     }
+
     public void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        try{
+        try {
             BankUser newUser = mapper.readValue(req.getInputStream(), BankUser.class);
             bankUserService.register(newUser);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(500);
         }
@@ -47,21 +48,22 @@ public class BankUserController {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        try{
+        try {
             Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
-               BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
-            //prints username and password of authuser - remove??
+            BankUser authUser = bankUserService.authenticate(creds.getUsername(), creds.getPassword());
+            System.out.println("authenitcate " + authUser.getuID());
+
             writer.write(mapper.writeValueAsString(authUser));
 
             req.getSession().setAttribute("this-user", authUser);
 
-        } catch(MismatchedInputException e){
+        } catch (MismatchedInputException e) {
             e.printStackTrace();
             resp.setStatus(400);
-        }catch (AuthenticationException e){
+        } catch (AuthenticationException e) {
             e.printStackTrace();
             resp.setStatus(401);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(500);
         }
