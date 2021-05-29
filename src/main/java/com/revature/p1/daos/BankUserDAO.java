@@ -9,8 +9,6 @@ import com.revature.querinator.GenericObjectMaker;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
