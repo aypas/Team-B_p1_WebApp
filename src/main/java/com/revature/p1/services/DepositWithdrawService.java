@@ -62,13 +62,15 @@ public class DepositWithdrawService {
         AccountBalance balance = balanceDAO.getBalance(aID);
         double newBalance = balance.getBalance() + depositAmt;
 
+
         // Sends extra information to transaction table in the database.
 //        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
        //neewd to send account_id
-        balanceDAO.saveBalance(aID, newBalance);
-
         accountBalance.setAcctID(aID);
         accountBalance.setBalance(newBalance);
+        balanceDAO.saveBalance(accountBalance);
+
+
 
         return accountBalance;
     }

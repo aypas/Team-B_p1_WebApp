@@ -45,26 +45,26 @@ public class AccountBalanceDAO {
      * Description: Updates the accounts balance record within the database.
      *
      * @param
-     * @param currBalance
+     * @param accountBalance
      * @return
      */
-    public void saveBalance(int aID, double currBalance) {
+    public void saveBalance(AccountBalance accountBalance) {
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
-            String sqlInsertAcctBal = "update account_balance " +
-                    "set balance = ? where account_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
-
-            //was getting account from singleton before, so logic is very similar
-            pstmt.setDouble(1, currBalance);
-            pstmt.setInt(2, aID);
-            pstmt.executeUpdate();
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+//        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+//
+//            String sqlInsertAcctBal = "update account_balance " +
+//                    "set balance = ? where account_id = ?";
+//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
+//
+//            //was getting account from singleton before, so logic is very similar
+//            pstmt.setDouble(1, currBalance);
+//            pstmt.setInt(2, aID);
+//            pstmt.executeUpdate();
+//
+//
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
     }
 
     /**
