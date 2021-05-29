@@ -36,6 +36,7 @@ public class AccountsServlet extends HttpServlet {
             // getAcct
         // /accounts/all
 
+        //DONE
         //AccountBalanceDao
             // getBalance
         // /accounts/balance (need param?)
@@ -59,8 +60,13 @@ public class AccountsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        //
+
+        //DONE
         //AccountTransactionDAO
-        // /accounts/transaction
+        //depositandwithdraw
+        // /accounts/deposit
 
         //DONE
         // AccountDao
@@ -79,16 +85,19 @@ public class AccountsServlet extends HttpServlet {
                 accountsController.saveNewAcct(req, resp);
                 break;
             case "/bankapp/accounts/newbalance":
+                ///taken care of in new account? Make its own independent ruoute?
 //                accountsController.saveNewBalance(req, resp);
                 break;
             case "/bankapp/accounts/deposit":
-                accountsController.createDeposit(req,resp);
+            case "/bankapp/accounts/withdraw":
+                accountsController.createDepositWithdraw(req,resp);
+                break;
+            case "/bankapp/accounts/transaction":
+                System.out.println("hit trans switch");
                 break;
             default:
                 resp.setStatus(400);
-
         }
-
     }
 
     @Override

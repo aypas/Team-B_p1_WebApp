@@ -26,24 +26,21 @@ public class AccountBalanceDAO {
     private GenericObjectMaker objectMaker;
 
     /**
-     *
      * Description: When creating a new bank account this will initialize the accounts balance record.
      *
      * @param bal
      */
     public void saveNewBalance(AccountBalance bal) {
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             queryMaker = new PostgresQueryBuilder(conn);
             queryMaker.insert(bal);
 
-//            String sqlInsertAcctBal = "insert into account_balance" +
-//                    "(account_id , balance) values (?,0)";
-//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
-//
-//            pstmt.setInt(1,acct.getaID());
-//            pstmt.executeUpdate();
+            transRoutes
+            pstmt.setInt(1, acct.getaID());
+            pstmt.executeUpdate();
+
 
 
         } catch (SQLException | IllegalAccessException throwables) {
@@ -52,9 +49,9 @@ public class AccountBalanceDAO {
     }
 
     /**
-     *
      * Description: Updates the accounts balance record within the database.
      *
+
      * @param bal
      * @return
      */
@@ -67,10 +64,12 @@ public class AccountBalanceDAO {
             queryMaker = new PostgresQueryBuilder(conn);
             success = queryMaker.update(bal);
 
+
 //            String sqlInsertAcctBal = "update account_balance " +
 //                    "set balance = ? where account_id = ?";
 //            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
 //
+
 //            pstmt.setDouble(1, currBalance);
 //            pstmt.setInt(2, acct.getaID());
 //            pstmt.executeUpdate();
@@ -82,12 +81,13 @@ public class AccountBalanceDAO {
 
         return success;
 
+
     }
 
     /**
-     *
      * Description: Gets the balance of the desired account from the database.
      *
+
      * @param bal
      * @return AccountBalance
      */
@@ -97,7 +97,8 @@ public class AccountBalanceDAO {
 
         AccountBalance currentBalance = null;
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
 
             queryMaker = new PostgresQueryBuilder(conn);
             objectMaker = new GenericObjectMaker();

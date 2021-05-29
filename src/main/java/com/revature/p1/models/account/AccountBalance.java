@@ -21,9 +21,15 @@ public class AccountBalance {
     @Column(name = "balance")
     private double balance;
 
+    public AccountBalance(){ }
+
     public AccountBalance(int acctID, double balance) {
         this.acctID = acctID;
         this.balance = balance;
+    }
+
+    public AccountBalance(int acctID){
+        this.acctID = acctID;
     }
 
     public int getAcctID() {
@@ -40,5 +46,14 @@ public class AccountBalance {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AccountBalance{");
+        sb.append("acctID=").append(acctID);
+        sb.append(", balance=").append(balance);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -86,7 +86,7 @@ public class AccountTransactionDAO {
      *
      * @param transaction
      */
-    public void saveTransaction(AccountTransaction transaction) {
+    public AccountTransaction saveTransaction(AccountTransaction transaction) {
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -106,5 +106,7 @@ public class AccountTransactionDAO {
         } catch (SQLException | IllegalAccessException throwables) {
             throwables.printStackTrace();
         }
+
+        return transaction;
     }
 }

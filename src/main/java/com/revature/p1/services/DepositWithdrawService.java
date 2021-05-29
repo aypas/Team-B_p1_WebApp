@@ -3,6 +3,7 @@ package com.revature.p1.services;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTransactionDAO;
 import com.revature.p1.exceptions.InvalidRequestException;
+import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.singleton.CurrentAccount;
 
@@ -16,17 +17,17 @@ import java.util.regex.Pattern;
  * Time: 1:39 PM
  * Description: Assures the users deposit input is valid before persisting to the database.
  */
-public class DepositService {
+public class DepositWithdrawService {
 
     AccountBalanceDAO balanceDAO;
     AccountTransactionService xActionService;
 
-    public DepositService(AccountBalanceDAO balanceDAO, AccountTransactionDAO xActionDAO) {
+    public DepositWithdrawService(AccountBalanceDAO balanceDAO, AccountTransactionDAO xActionDAO) {
         this.balanceDAO = balanceDAO;
         this.xActionService = new AccountTransactionService(xActionDAO);
     }
 
-    public DepositService(AccountBalanceDAO balanceDAO) {
+    public DepositWithdrawService(AccountBalanceDAO balanceDAO) {
         this.balanceDAO = balanceDAO;
     }
 
@@ -35,12 +36,11 @@ public class DepositService {
      *
      * Description: If entry is valid this will send the data to the database.
      *
-     * @param usrInput
+     * @param
      * @return boolean
      * @throws InvalidRequestException
      */
-    public boolean createBalance(BankUser bankUser, String usrInput) throws InvalidRequestException {
-        System.out.println("in create balance "+ bankUser.getuName());
+    public AccountBalance createBalance(BankUser bankUser, int aID, double depositAmt) throws InvalidRequestException {
         //perhaps we should un-nest the getbalance method
             //its a little challenging to scale, perhaps?
             //**coding decision**
@@ -49,33 +49,49 @@ public class DepositService {
          *  just pass current user as arg here - I think that may make tying in ORM simpler?
          */
 
-        if (!isDepositValid(usrInput)) {
+        AccountBalance accountBalance = new AccountBalance();
+
+        System.out.println("in create balance "+ aID);
+        if (!isDepositValid(depositAmt)) {
             throw new InvalidRequestException("Invalid Deposit Amount Entered");
         }
 
-        double newBalance = balanceDAO.getBalance(CurrentAccount.getInstance().getCurrentAccount()) + Double.parseDouble(usrInput);
+
+
+        //tie in current user id to make it more secure?
+        AccountBalance balance = balanceDAO.getBalance(aID);
+        double newBalance = balance.getBalance() + depositAmt;
+
 
         // Sends extra information to transaction table in the database.
-        xActionService.sendBalanceAsTransaction(usrInput, "Deposit");
+//        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
        //neewd to send account_id
-        return balanceDAO.saveBalance(CurrentAccount.getInstance().getCurrentAccount(), newBalance);
+        accountBalance.setAcctID(aID);
+        accountBalance.setBalance(newBalance);
+        balanceDAO.saveBalance(accountBalance);
 
+
+
+        return accountBalance;
     }
 
     /**
      *
      * Description: Ensures user input is valid
      *
-     * @param usrInput
+     * @param amount
      * @return boolean
      */
-    public boolean isDepositValid(String usrInput) {
+    public boolean isDepositValid(double amount) {
+//        String regex = "[0-9]*(\\.[0-9]{0,2})?";
+//        Pattern p = Pattern.compile(regex);
+//        Matcher m = p.matcher(usrInput);
 
-        String regex = "[0-9]*(\\.[0-9]{0,2})?";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(usrInput);
+//        if (amount == null || amount.trim().isEmpty() || amount.contains("-") || usrInamountput.contains(" ") || !m.matches()) return false;
 
-        if (usrInput == null || usrInput.trim().isEmpty() || usrInput.contains("-") || usrInput.contains(" ") || !m.matches()) return false;
+        if(Math.abs(amount) < 1){
+            return false;
+        }
 
         return true;
     }
