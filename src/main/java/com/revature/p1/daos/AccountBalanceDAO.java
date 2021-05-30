@@ -90,7 +90,7 @@ public class AccountBalanceDAO {
      */
     public AccountBalance getBalance(AccountBalance bal) {
 
-        System.out.println("in getbalance in dao " + bal.getAcctID());
+//        System.out.println("in getbalance in dao " + bal.getAcctID());
 
         AccountBalance currentBalance = null;
 
@@ -99,6 +99,7 @@ public class AccountBalanceDAO {
             queryMaker = new PostgresQueryBuilder(conn);
             objectMaker = new GenericObjectMaker();
             currentBalance = (AccountBalance) objectMaker.buildObject(AccountBalance.class, queryMaker.selectByPrimaryKey(bal));
+            System.out.println("current balance in balancedao " + currentBalance);
 
 //            String sqlInsertAcctBal = "select balance " +
 //                    "from account_balance where account_id = ?";

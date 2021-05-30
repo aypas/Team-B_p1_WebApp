@@ -14,30 +14,30 @@ import org.junit.Test;
  */
 public class LinkedListTest {
 
-    private LinkedList<String> sut;
-
-    @Before
-    public void setUpTest() {
-        sut = new LinkedList<>();
-    }
-
-    @After
-    public void tearDownTest() {
-        sut = null;
-    }
-
-    @Test
-    public void test_addWithNonNullValue() {
-        // Arrange (prepare the test)
-        int expectedSize = 1;
-
-        // Act (do the test)
-        sut.add("data");
-
-        // Assert (ensure the results)
-        int actualSize = sut.size();
-        Assert.assertEquals(expectedSize, actualSize);
-    }
+//    private LinkedList<String> sut;
+//
+//    @Before
+//    public void setUpTest() {
+//        sut = new LinkedList<>();
+//    }
+//
+//    @After
+//    public void tearDownTest() {
+//        sut = null;
+//    }
+//
+//    @Test
+//    public void test_addWithNonNullValue() {
+//        // Arrange (prepare the test)
+//        int expectedSize = 1;
+//
+//        // Act (do the test)
+//        sut.add("data");
+//
+//        // Assert (ensure the results)
+//        int actualSize = sut.size();
+//        Assert.assertEquals(expectedSize, actualSize);
+//    }
 
     @Test(expected = Exception.class)
     public void test_addWithNullValue() {
@@ -45,7 +45,7 @@ public class LinkedListTest {
         // sometimes blank if there's nothing in particular to do
 
         // Act
-        sut.add(null);
+//        sut.add(null);
 
         // Assert
         // sometimes blank, especially if you expect an exception to be thrown

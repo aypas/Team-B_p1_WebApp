@@ -49,17 +49,18 @@ public class DepositWithdrawService {
          *  just pass current user as arg here - I think that may make tying in ORM simpler?
          */
 
-        AccountBalance accountBalance = new AccountBalance();
-
-        System.out.println("in create balance "+ aID);
+//        System.out.println("in create balance "+ aID);
         if (!isDepositValid(depositAmt)) {
             throw new InvalidRequestException("Invalid Deposit Amount Entered");
         }
 
-
+        AccountBalance accountBalance = new AccountBalance();
+        accountBalance.setAcctID(aID);
+        accountBalance.setBalance(depositAmt);
 
         //tie in current user id to make it more secure?
         AccountBalance balance = balanceDAO.getBalance(accountBalance);
+        System.out.println("balance ret in dw swervice " + balance.getBalance());
         double newBalance = balance.getBalance() + depositAmt;
 
 

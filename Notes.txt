@@ -4,6 +4,7 @@
 4.Get transactions working
 5.Account balance DTO security
     - compare aID to id in accounts table and user_id in that table doesn't match => throw error unauthorized status
+6. deposit withdraw routes not working
 
 Orm integration stpes
 in orm project
