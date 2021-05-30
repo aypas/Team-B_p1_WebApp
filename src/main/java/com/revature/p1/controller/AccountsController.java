@@ -1,5 +1,6 @@
 package com.revature.p1.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTypeDAO;
@@ -43,9 +44,14 @@ public class AccountsController {
 
         try {
             List<AccountType> acctTypes = accountTypeDAO.getAllAcctTypes();
-//            Arrays.stream(acctTypes).forEach(accountType -> System.out.println("account type " + accountType.getType()));
-            writer.write(mapper.writeValueAsString(acctTypes));
+            acctTypes.stream().forEach((acct) -> {
+                try {
+                    writer.write(mapper.writeValueAsString(acct));
 
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,21 +151,60 @@ public class AccountsController {
         writer.write(mapper.writeValueAsString(accountBalance));
     }
 
-    /*
+
     public void createTransaction(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        boolean result;
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        if(req.getSession().getAttribute("this-user") == null){
+        if (req.getSession().getAttribute("this-user") == null) {
             resp.setStatus(401);
             return;
         }
 
-        //send balanceastransaction = AccountTrans model takes and returns that
+        try {
+            AccountTransaction newAccountTrans = mapper.readValue(req.getInputStream(), AccountTransaction.class);
 
-        AccountTransaction newAccountTrans = mapper.readValue(req.getInputStream(), AccountTransaction.class);
-        AccountTransaction accountTransResp = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
-        writer.write(mapper.writeValueAsString(accountTransResp));
+            result = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
+            if (result) {
+                writer.write("Transaction save: succes!");
+                resp.setStatus(200);
+            } else {
+                writer.write("Transaction save: failed.");
+                resp.setStatus(400);
+            }
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-     */
+
+    public void getTransactions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+
+        if (req.getSession().getAttribute("this-user") == null) {
+            resp.setStatus(401);
+            return;
+        }
+
+        try {
+            Account account = mapper.readValue(req.getInputStream(), Account.class);
+
+            List<AccountTransaction> allTransactions = accountTransactionService.getTransactions(account);
+            System.out.println(allTransactions.size());
+
+            allTransactions.stream().forEach((transaction) -> {
+                try {
+                    writer.write(mapper.writeValueAsString(transaction));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

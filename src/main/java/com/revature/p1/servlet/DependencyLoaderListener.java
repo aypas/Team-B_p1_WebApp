@@ -31,12 +31,12 @@ public class DependencyLoaderListener implements ServletContextListener {
 
         //Accounts Controller Injections
         AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
-        DepositWithdrawService depositWithdrawService = new DepositWithdrawService(balanceDAO);
         _WithdrawService withdrawService = new _WithdrawService(balanceDAO);
         AccountDAO accountDAO = new AccountDAO();
         AccountOpeningService accountOpeningService = new AccountOpeningService(accountDAO);
         AccountTransactionDAO transactionDAO = new AccountTransactionDAO();
         AccountTransactionService accountTransactionService = new AccountTransactionService(transactionDAO);
+        DepositWithdrawService depositWithdrawService = new DepositWithdrawService(balanceDAO, accountTransactionService);
         AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
         AccountsController accountsController = new AccountsController(depositWithdrawService, withdrawService,accountOpeningService, accountTransactionService, accountTypeDAO, balanceDAO, mapper);
 

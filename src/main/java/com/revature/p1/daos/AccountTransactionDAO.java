@@ -37,6 +37,8 @@ public class AccountTransactionDAO {
 //        AccountTransaction acctTransaction = null;
 //        int numOfTransactions = 0;
 //        int rsCounter = 0;
+
+        System.out.println("getalltrans "+ acct.getaID());
          List<AccountTransaction> allTransactions = null;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -99,7 +101,9 @@ public class AccountTransactionDAO {
      *
      * @param transaction
      */
-    public void saveTransaction(AccountTransaction transaction) {
+    public boolean saveTransaction(AccountTransaction transaction) {
+
+        System.out.println("in save trans dao " + transaction.toString());
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -117,7 +121,9 @@ public class AccountTransactionDAO {
 
 
         } catch (SQLException | IllegalAccessException throwables) {
-            throwables.printStackTrace();
+//            throwables.printStackTrace();
+            return false;
         }
+        return true;
     }
 }

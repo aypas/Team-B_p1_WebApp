@@ -74,4 +74,14 @@ public class AccountTransaction {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AccountTransaction{");
+        sb.append("acctID=").append(acctID);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", transactionAmt=").append(transactionAmt);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -1,7 +1,10 @@
 package com.revature.p1.services;
 
 import com.revature.p1.daos.AccountTransactionDAO;
+import com.revature.p1.models.account.Account;
 import com.revature.p1.models.account.AccountTransaction;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,25 +22,32 @@ public class AccountTransactionService {
     }
 
     /**
-     *
      * Description: If entry is valid this will send the data to the database
-
+     *
      * @param newTransaction
      * @return boolean
      */
-/*
-    public AccountTransaction sendBalanceAsTransaction(AccountTransaction newTransaction) {
 
+    public boolean sendBalanceAsTransaction(AccountTransaction newTransaction) {
+        System.out.println("in send balance atService " + newTransaction.toString());
 
 //        AccountTransaction newTransaction = new AccountTransaction();
 
 //        newTransaction.setAcctID(CurrentAccount.getInstance().getCurrentAccount().getaID());
 //        newTransaction.setTransactionAmt(Double.parseDouble(transactionAmt));
 //        newTransaction.setDescription(description);
+        boolean result;
 
-        AccountTransaction accountTransactionRes = transactionDAO.saveTransaction(newTransaction);
+        result = transactionDAO.saveTransaction(newTransaction);
+        System.out.println("result send bal as trans ats " + result);
 
-        return accountTransactionRes;
+        return result;
     }
-     */
+
+    public List<AccountTransaction> getTransactions(Account account){
+
+        List<AccountTransaction> allTransactions =   transactionDAO.getAllAcctTransactions(account);
+
+        return allTransactions;
+    }
 }

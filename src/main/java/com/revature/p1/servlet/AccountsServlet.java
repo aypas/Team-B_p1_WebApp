@@ -46,11 +46,13 @@ public class AccountsServlet extends HttpServlet {
 
         switch(req.getRequestURI()){
             case "/bankapp/accounts/types":
-                System.out.println("hit account types switch");
                 accountsController.getAllAcctTypes(req, resp);
                 break;
             case "/bankapp/accounts/balance":
                 accountsController.getBalance(req, resp);
+            case"/bankapp/accounts/transactions":
+                accountsController.getTransactions(req, resp);
+                break;
 
             default:
                 resp.setStatus(400);
@@ -61,9 +63,7 @@ public class AccountsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        //
-
-        //DONE
+         //DONE
         //AccountTransactionDAO
         //depositandwithdraw
         // /accounts/deposit
@@ -78,7 +78,6 @@ public class AccountsServlet extends HttpServlet {
             //saveNewBalance
         // /accounts/newbalance
 
-        //switch statment using req.getRequestURI()
 
         switch(req.getRequestURI()){
             case "/bankapp/accounts/newaccount":
@@ -92,10 +91,9 @@ public class AccountsServlet extends HttpServlet {
             case "/bankapp/accounts/withdraw":
                 accountsController.createDepositWithdraw(req,resp);
                 break;
-//            case "/bankapp/accounts/balance":
-//                System.out.println();
-//                accountsController.getBalance(req, resp);
-//                break;
+            case "/bankapp/accounts/transaction":
+                accountsController.createTransaction(req, resp);
+                break;
             default:
                 resp.setStatus(400);
         }
