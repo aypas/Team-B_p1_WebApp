@@ -46,6 +46,7 @@ public class DependencyLoaderListener implements ServletContextListener {
         BankUserServlet bankUserServlet= new BankUserServlet(bankUserController);
         AccountsServlet accountsServlet = new AccountsServlet(accountsController);
 
+        System.out.println("in load listener");
 
         ServletContext context = sce.getServletContext();
         context.addServlet("AuthServlet", authServlet).addMapping("/auth");

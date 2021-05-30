@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 public class AccountsController {
@@ -113,7 +114,6 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
-            //Should this throw exception instead?
             resp.setStatus(401);
             return;
         }
@@ -121,12 +121,15 @@ public class AccountsController {
         BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
         WithdrawDeposit withdrawDeposit =  mapper.readValue(req.getInputStream(), WithdrawDeposit.class);
 
+        String[] reqArr = req.getRequestURI().split("/");
+        String transType =  reqArr[reqArr.length -1];
+
         double amount = withdrawDeposit.getAmount();
-        if(req.getRequestURI().compareTo("/bankapp/accounts/withdraw") == 0){
-            System.out.println("in urei if");
-            amount = -amount;
+
+        AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
+        if(accountBalance.getAcctID() == 0){
+            resp.setStatus(400);
         }
-        AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount);
         writer.write(mapper.writeValueAsString(accountBalance));
     }
 

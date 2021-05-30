@@ -92,8 +92,8 @@ public class AccountsServlet extends HttpServlet {
             case "/bankapp/accounts/withdraw":
                 accountsController.createDepositWithdraw(req,resp);
                 break;
-            case "/bankapp/accounts/transaction":
-                System.out.println("hit trans switch");
+            case "/bankapp/accounts/balance":
+                accountsController.getBalance(req, resp);
                 break;
             default:
                 resp.setStatus(400);

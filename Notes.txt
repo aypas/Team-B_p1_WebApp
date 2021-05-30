@@ -4,6 +4,7 @@
 4.Get transactions working
 5.Account balance DTO security
     - compare aID to id in accounts table and user_id in that table doesn't match => throw error unauthorized status
+6. deposit withdraw routes not working
 
 Orm integration stpes
 in orm project
@@ -14,3 +15,5 @@ in orm project
 in webapp
 1.file > project structure >moduels > plus sign > jars or directories > nav to m2 find orm .jar
  > select it and import
+
+ Saved working directory and index state WIP on dev: f7c624b Merge pull request #26 from 210426-java-react-enterprise/transRoutes
