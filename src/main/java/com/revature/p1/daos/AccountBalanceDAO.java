@@ -115,7 +115,7 @@ public class AccountBalanceDAO {
 //        balance = 54545.545;
 
 
-            System.out.println("balance " + currentBalance.getBalance());
+//            System.out.println("balance " + currentBalance.getBalance());
 
         } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException throwables) {
             throwables.printStackTrace();

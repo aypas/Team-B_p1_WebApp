@@ -70,7 +70,7 @@ public class AccountsController {
             BankUser currentUser = (BankUser) req.getSession().getAttribute("this-user");
             System.out.println(currentUser);
             System.out.println(acct.getuID() + currentUser.getuID());
-            if(acct.getuID() != currentUser.getuID()){
+            if (acct.getuID() != currentUser.getuID()) {
                 resp.setStatus(401);
                 return;
             }
@@ -92,18 +92,27 @@ public class AccountsController {
 
         if (req.getSession().getAttribute("this-user") == null) {
             //Should this throw exception instead?
+            System.out.println("req sessioin if");
             resp.setStatus(401);
             return;
         }
         System.out.println("after truy block in get balance contoller");
 
-        try{
-             AccountBalance acctID = mapper.readValue(req.getInputStream(), AccountBalance.class);;
+        try {
+            AccountBalance acctID = mapper.readValue(req.getInputStream(), AccountBalance.class);
+            ;
             AccountBalance respBalance = balanceDAO.getBalance(acctID);
+            if (respBalance.getAcctID() == 0) {
+                writer.write("Invalid request data.");
+                resp.setStatus(400);
+                return;
+            } else {
+                writer.write(mapper.writeValueAsString(respBalance));
+                resp.setStatus(200);
+                return;
+            }
 
-            writer.write(mapper.writeValueAsString(respBalance));
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(500);
         }
@@ -114,21 +123,24 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
+            writer.write("You are no autorized");
             resp.setStatus(401);
             return;
         }
 
         BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
-        WithdrawDeposit withdrawDeposit =  mapper.readValue(req.getInputStream(), WithdrawDeposit.class);
+        WithdrawDeposit withdrawDeposit = mapper.readValue(req.getInputStream(), WithdrawDeposit.class);
 
         String[] reqArr = req.getRequestURI().split("/");
-        String transType =  reqArr[reqArr.length -1];
+        String transType = reqArr[reqArr.length - 1];
 
         double amount = withdrawDeposit.getAmount();
 
         AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
-        if(accountBalance.getAcctID() == 0){
+        if (accountBalance.getAcctID() == 0) {
             resp.setStatus(400);
+            writer.write("Invalid transaction amount entered.");
+            return;
         }
         writer.write(mapper.writeValueAsString(accountBalance));
     }

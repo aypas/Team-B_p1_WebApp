@@ -38,6 +38,7 @@ public class BankUserController {
             bankUserService.register(newUser);
 
         } catch (Exception e) {
+            writer.write("Invalid register data provided.");
             e.printStackTrace();
             resp.setStatus(500);
         }
@@ -52,9 +53,15 @@ public class BankUserController {
 
             Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
             BankUser authUser = bankUserService.authenticate(creds);
-            System.out.println("authUser " + authUser.toString());
-            writer.write(mapper.writeValueAsString(authUser));
             req.getSession().setAttribute("this-user", authUser);
+
+            if(authUser.getuID() == 0){
+                writer.write("Invalid credentials.");
+                resp.setStatus(401);
+                return;
+            } else {
+                writer.write(mapper.writeValueAsString(authUser));
+            }
 
         } catch (MismatchedInputException e) {
             e.printStackTrace();

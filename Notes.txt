@@ -1,9 +1,6 @@
 1. get balance returning 400 even though dao is getting th balance***
     --Probablt due to mock server calls in test
-3. have session object use dto - more secure
 4.Get transactions working
-5.Account balance DTO security
-    - compare aID to id in accounts table and user_id in that table doesn't match => throw error unauthorized status
 6. deposit withdraw routes not working
 
 Orm integration stpes
@@ -17,3 +14,8 @@ in webapp
  > select it and import
 
  Saved working directory and index state WIP on dev: f7c624b Merge pull request #26 from 210426-java-react-enterprise/transRoutes
+
+ future dev
+ 1. Account balance DTO security
+        - compare aID to id in accounts table and user_id in that table doesn't match => throw error unauthorized status
+3. have session object use dto - more secure
