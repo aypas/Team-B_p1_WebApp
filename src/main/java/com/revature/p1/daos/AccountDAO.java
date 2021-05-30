@@ -2,15 +2,18 @@ package com.revature.p1.daos;
 
 import com.revature.p1.models.account.Account;
 import com.revature.p1.models.account.AccountBalance;
+import com.revature.p1.models.account.AccountTransaction;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
 import com.revature.querinator.GenericObjectMaker;
 import com.revature.querinator.PostgresQueryBuilder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -75,52 +78,60 @@ public class AccountDAO {
      * @param bankUser
      * @return Array of accounts
      */
-    public Account[] getAcct(BankUser bankUser) {
+    public List<Account> getAcct(BankUser bankUser) {
 
-        Account[] accts = null;
-        Account acct = null;
-        int count = 0;
-        int rsCounter = 0;
+//        Account[] accts = null;
+//        Account acct = null;
+//        int count = 0;
+//        int rsCounter = 0;
+
+        List<Account> allAccounts = null;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            String sqlGetNumOfAccts = "select count(*) " +
-                    "from account where user_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sqlGetNumOfAccts);
-            pstmt.setInt(1,bankUser.getuID());
+            queryMaker = new PostgresQueryBuilder(conn);
+            objectMaker = new GenericObjectMaker();
+            Account example = new Account();
+            Object[] fkInfo = {"user_id", bankUser.getuID()};
+            allAccounts = objectMaker.buildObjects(AccountTransaction.class, queryMaker.getObjectByForeignKey(example, fkInfo));
 
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                count = rs.getInt("count");
-            }
+//            String sqlGetNumOfAccts = "select count(*) " +
+//                    "from account where user_id = ?";
+//            PreparedStatement pstmt = conn.prepareStatement(sqlGetNumOfAccts);
+//            pstmt.setInt(1,bankUser.getuID());
+//
+//            ResultSet rs = pstmt.executeQuery();
+//            while (rs.next()) {
+//                count = rs.getInt("count");
+//            }
+//
+//            accts = new Account[count];
+//
+//            String sqlGetAcct = "select * " +
+//                    "from account where user_id = ?";
+//            pstmt = conn.prepareStatement(sqlGetAcct);
+//
+//            pstmt.setInt(1,bankUser.getuID());
+//
+//            rs = pstmt.executeQuery();
+//            while (rs.next()) {
+//                acct = new Account();
+//
+//                acct.setaID(rs.getInt("id"));
+//                acct.setaName(rs.getString("acct_name"));
+//                acct.setuID(rs.getInt("user_id"));
+//                acct.setjUID(rs.getInt("joint_user_id"));
+//                acct.settID(rs.getInt("type_id"));
+//
+//                accts[rsCounter] = acct;
+//                rsCounter++;
+//            }
 
-            accts = new Account[count];
-
-            String sqlGetAcct = "select * " +
-                    "from account where user_id = ?";
-            pstmt = conn.prepareStatement(sqlGetAcct);
-
-            pstmt.setInt(1,bankUser.getuID());
-
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                acct = new Account();
-
-                acct.setaID(rs.getInt("id"));
-                acct.setaName(rs.getString("acct_name"));
-                acct.setuID(rs.getInt("user_id"));
-                acct.setjUID(rs.getInt("joint_user_id"));
-                acct.settID(rs.getInt("type_id"));
-
-                accts[rsCounter] = acct;
-                rsCounter++;
-            }
-
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException throwables) {
             throwables.printStackTrace();
         }
 
-        return accts;
+        return allAccounts;
 
     }
 }
