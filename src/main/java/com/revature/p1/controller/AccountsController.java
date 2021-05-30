@@ -114,7 +114,6 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
-            //Should this throw exception instead?
             resp.setStatus(401);
             return;
         }
@@ -126,9 +125,7 @@ public class AccountsController {
         String transType =  reqArr[reqArr.length -1];
 
         double amount = withdrawDeposit.getAmount();
-        if(req.getRequestURI().compareTo("/bankapp/accounts/withdraw") == 0){
-            amount = -amount;
-        }
+
         AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
         if(accountBalance.getAcctID() == 0){
             resp.setStatus(400);

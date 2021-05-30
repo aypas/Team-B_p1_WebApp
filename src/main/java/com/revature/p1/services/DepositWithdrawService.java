@@ -50,6 +50,10 @@ public class DepositWithdrawService {
                 throw new InvalidRequestException("Invalid Deposit Amount Entered");
             }
 
+            if(transType.compareTo("withdraw") == 0){
+                depositAmt = -depositAmt;
+            }
+
             accountBalance.setAcctID(aID);
             accountBalance.setBalance(depositAmt);
 
@@ -83,14 +87,8 @@ public class DepositWithdrawService {
      * @return boolean
      */
     public boolean isDepositValid(double amount, String transType) {
-        System.out.println("in trans type " + transType);
-//        String regex = "[0-9]*(\\.[0-9]{0,2})?";
-//        Pattern p = Pattern.compile(regex);
-//        Matcher m = p.matcher(usrInput);
 
-//        if (amount == null || amount.trim().isEmpty() || amount.contains("-") || usrInamountput.contains(" ") || !m.matches()) return false;
-
-        if (amount < 1 && transType.compareTo("deposit") == 0) {
+        if (amount < 1) {
             return false;
         }
 
