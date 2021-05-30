@@ -4,6 +4,7 @@ import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTransactionDAO;
 import com.revature.p1.exceptions.InvalidRequestException;
 import com.revature.p1.models.account.AccountBalance;
+import com.revature.p1.models.account.AccountTransaction;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.singleton.CurrentAccount;
 
@@ -20,16 +21,16 @@ import java.util.regex.Pattern;
 public class DepositWithdrawService {
 
     AccountBalanceDAO balanceDAO;
-    AccountTransactionService xActionService;
+    AccountTransactionService accountTransactionService;
 
-    public DepositWithdrawService(AccountBalanceDAO balanceDAO, AccountTransactionDAO xActionDAO) {
+    public DepositWithdrawService(AccountBalanceDAO balanceDAO, AccountTransactionService accountTransactionService) {
         this.balanceDAO = balanceDAO;
-        this.xActionService = new AccountTransactionService(xActionDAO);
+        this.accountTransactionService = accountTransactionService;
     }
 
-    public DepositWithdrawService(AccountBalanceDAO balanceDAO) {
-        this.balanceDAO = balanceDAO;
-    }
+//    public DepositWithdrawService(AccountBalanceDAO balanceDAO) {
+//        this.balanceDAO = balanceDAO;
+//    }
 
 
     /**
@@ -39,33 +40,40 @@ public class DepositWithdrawService {
      * @return boolean
      * @throws InvalidRequestException
      */
-    public AccountBalance createBalance(BankUser bankUser, int aID, double depositAmt, String transType) throws InvalidRequestException {
+    public AccountBalance createBalance(BankUser bankUser, int aID, double ammount, String transType) throws InvalidRequestException {
         /**
          * Since each route is validated
          *  just pass current user as arg here - I think that may make tying in ORM simpler?
          */
         AccountBalance accountBalance = new AccountBalance();
+        AccountTransaction accountTransaction = new AccountTransaction();
         try {
-            if (!isDepositValid(depositAmt, transType)) {
+            if (!isDepositValid(ammount, transType)) {
                 throw new InvalidRequestException("Invalid Deposit Amount Entered");
             }
 
-            if(transType.compareTo("withdraw") == 0){
-                depositAmt = -depositAmt;
+            if (transType.compareTo("withdraw") == 0) {
+                ammount = -ammount;
             }
 
             accountBalance.setAcctID(aID);
-            accountBalance.setBalance(depositAmt);
+            accountBalance.setBalance(ammount);
 
             //tie in current user id to make it more secure?
             AccountBalance balance = balanceDAO.getBalance(accountBalance);
             System.out.println("balance ret in dw swervice " + balance.getBalance());
 
-            double newBalance = balance.getBalance() + depositAmt;
+            double newBalance = balance.getBalance() + ammount;
 
+            accountTransaction.setTransactionAmt(ammount);
+            accountTransaction.setDescription(transType);
+            accountTransaction.setAcctID(aID);
+
+            System.out.println("acctrans stuff " + accountTransaction.toString());
 
             // Sends extra information to transaction table in the database.
-//        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
+            accountTransactionService.sendBalanceAsTransaction(accountTransaction);
+
             //neewd to send account_id
             accountBalance.setAcctID(aID);
             accountBalance.setBalance(newBalance);

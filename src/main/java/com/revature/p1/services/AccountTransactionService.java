@@ -26,7 +26,7 @@ public class AccountTransactionService {
      */
 
     public boolean sendBalanceAsTransaction(AccountTransaction newTransaction) {
-
+        System.out.println("in send balance atService " + newTransaction.toString());
 
 //        AccountTransaction newTransaction = new AccountTransaction();
 

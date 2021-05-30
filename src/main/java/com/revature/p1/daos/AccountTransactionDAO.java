@@ -101,6 +101,8 @@ public class AccountTransactionDAO {
      */
     public boolean saveTransaction(AccountTransaction transaction) {
 
+        System.out.println("in save trans dao " + transaction.toString());
+
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             queryMaker = new PostgresQueryBuilder(conn);
