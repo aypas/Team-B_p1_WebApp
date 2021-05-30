@@ -1,7 +1,10 @@
 package com.revature.p1.services;
 
 import com.revature.p1.daos.AccountTransactionDAO;
+import com.revature.p1.models.account.Account;
 import com.revature.p1.models.account.AccountTransaction;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,4 +44,10 @@ public class AccountTransactionService {
         return result;
     }
 
+    public List<AccountTransaction> getTransactions(Account account){
+
+        List<AccountTransaction> allTransactions =   transactionDAO.getAllAcctTransactions(account);
+
+        return allTransactions;
+    }
 }

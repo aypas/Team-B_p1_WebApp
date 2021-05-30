@@ -51,6 +51,9 @@ public class AccountsServlet extends HttpServlet {
                 break;
             case "/bankapp/accounts/balance":
                 accountsController.getBalance(req, resp);
+            case"/bankapp/accounts/transactions":
+                accountsController.getTransactions(req, resp);
+                break;
 
             default:
                 resp.setStatus(400);
@@ -61,9 +64,7 @@ public class AccountsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        //
-
-        //DONE
+         //DONE
         //AccountTransactionDAO
         //depositandwithdraw
         // /accounts/deposit

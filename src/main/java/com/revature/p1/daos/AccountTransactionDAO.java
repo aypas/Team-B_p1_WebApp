@@ -37,6 +37,8 @@ public class AccountTransactionDAO {
 //        AccountTransaction acctTransaction = null;
 //        int numOfTransactions = 0;
 //        int rsCounter = 0;
+
+        System.out.println("getalltrans "+ acct.getaID());
          List<AccountTransaction> allTransactions = null;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {

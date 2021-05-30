@@ -1,5 +1,6 @@
 package com.revature.p1.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTypeDAO;
@@ -157,18 +158,49 @@ public class AccountsController {
             return;
         }
 
-        AccountTransaction newAccountTrans = mapper.readValue(req.getInputStream(), AccountTransaction.class);
+        try{
+            AccountTransaction newAccountTrans = mapper.readValue(req.getInputStream(), AccountTransaction.class);
 
-        result = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
-        if (result) {
-            writer.write("Transaction save: succes!");
-            resp.setStatus(200);
-        } else {
-            writer.write("Transaction save: failed.");
-            resp.setStatus(400);
+            result = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
+            if (result) {
+                writer.write("Transaction save: succes!");
+                resp.setStatus(200);
+            } else {
+                writer.write("Transaction save: failed.");
+                resp.setStatus(400);
+            }
+            return;
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return;
+    }
 
+    public void getTransactions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+
+        if (req.getSession().getAttribute("this-user") == null) {
+            resp.setStatus(401);
+            return;
+        }
+
+        try{
+            Account account = mapper.readValue(req.getInputStream(), Account.class);
+
+            List<AccountTransaction> allTransactions = accountTransactionService.getTransactions(account);
+            System.out.println(allTransactions.size());
+
+            allTransactions.stream().forEach((transaction) -> {
+                try {
+                    writer.write(mapper.writeValueAsString(transaction));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
