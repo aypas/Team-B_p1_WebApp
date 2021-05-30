@@ -119,7 +119,8 @@ public class AccountTransactionDAO {
 
 
         } catch (SQLException | IllegalAccessException throwables) {
-            throwables.printStackTrace();
+//            throwables.printStackTrace();
+            return false;
         }
         return true;
     }

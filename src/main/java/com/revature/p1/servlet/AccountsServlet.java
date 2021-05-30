@@ -78,7 +78,6 @@ public class AccountsServlet extends HttpServlet {
             //saveNewBalance
         // /accounts/newbalance
 
-        //switch statment using req.getRequestURI()
 
         switch(req.getRequestURI()){
             case "/bankapp/accounts/newaccount":
@@ -93,13 +92,8 @@ public class AccountsServlet extends HttpServlet {
                 accountsController.createDepositWithdraw(req,resp);
                 break;
             case "/bankapp/accounts/transaction":
-                System.out.println("hit trans switch");
                 accountsController.createTransaction(req, resp);
                 break;
-//            case "/bankapp/accounts/balance":
-//                System.out.println();
-//                accountsController.getBalance(req, resp);
-//                break;
             default:
                 resp.setStatus(400);
         }

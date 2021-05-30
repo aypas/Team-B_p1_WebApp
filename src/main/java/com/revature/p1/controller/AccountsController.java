@@ -157,19 +157,17 @@ public class AccountsController {
             return;
         }
 
-        //send balanceastransaction = AccountTrans model takes and returns that
-
         AccountTransaction newAccountTrans = mapper.readValue(req.getInputStream(), AccountTransaction.class);
+
         result = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
         if (result) {
             writer.write("Transaction save: succes!");
             resp.setStatus(200);
-            return;
         } else {
             writer.write("Transaction save: failed.");
             resp.setStatus(400);
-            return;
         }
+        return;
 
     }
 
