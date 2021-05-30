@@ -19,14 +19,13 @@ public class AccountTransactionService {
     }
 
     /**
-     *
      * Description: If entry is valid this will send the data to the database
-
+     *
      * @param newTransaction
      * @return boolean
      */
-/*
-    public AccountTransaction sendBalanceAsTransaction(AccountTransaction newTransaction) {
+
+    public boolean sendBalanceAsTransaction(AccountTransaction newTransaction) {
 
 
 //        AccountTransaction newTransaction = new AccountTransaction();
@@ -34,10 +33,11 @@ public class AccountTransactionService {
 //        newTransaction.setAcctID(CurrentAccount.getInstance().getCurrentAccount().getaID());
 //        newTransaction.setTransactionAmt(Double.parseDouble(transactionAmt));
 //        newTransaction.setDescription(description);
+        boolean result;
 
-        AccountTransaction accountTransactionRes = transactionDAO.saveTransaction(newTransaction);
+        result = transactionDAO.saveTransaction(newTransaction);
 
-        return accountTransactionRes;
+        return result;
     }
-     */
+
 }

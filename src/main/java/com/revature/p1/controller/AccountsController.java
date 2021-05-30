@@ -145,12 +145,14 @@ public class AccountsController {
         writer.write(mapper.writeValueAsString(accountBalance));
     }
 
-    /*
+
     public void createTransaction(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        boolean result;
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        if(req.getSession().getAttribute("this-user") == null){
+        if (req.getSession().getAttribute("this-user") == null) {
             resp.setStatus(401);
             return;
         }
@@ -158,8 +160,17 @@ public class AccountsController {
         //send balanceastransaction = AccountTrans model takes and returns that
 
         AccountTransaction newAccountTrans = mapper.readValue(req.getInputStream(), AccountTransaction.class);
-        AccountTransaction accountTransResp = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
-        writer.write(mapper.writeValueAsString(accountTransResp));
+        result = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
+        if (result) {
+            writer.write("Transaction save: succes!");
+            resp.setStatus(200);
+            return;
+        } else {
+            writer.write("Transaction save: failed.");
+            resp.setStatus(400);
+            return;
+        }
+
     }
-     */
+
 }
