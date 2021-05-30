@@ -115,5 +115,9 @@ public class BankUserService {
         return userDao.deleteUser(user);
     }
 
+    public boolean update(BankUser user) {
+        return userDao.updateUser(user);
+    }
+
 
 }

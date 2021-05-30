@@ -100,13 +100,13 @@ public class AccountsServlet extends HttpServlet {
                 resp.setStatus(400);
         }
     }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp){
-        //AccountBalanceDao
-            //saveBalance
-        // /accounts/balance
-    }
+//
+//    @Override
+//    protected void doPut(HttpServletRequest req, HttpServletResponse resp){
+//        //AccountBalanceDao
+//            //saveBalance
+//        // /accounts/balance
+//    }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
