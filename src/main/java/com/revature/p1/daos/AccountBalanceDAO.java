@@ -75,7 +75,8 @@ public class AccountBalanceDAO {
 
 
         } catch (SQLException | IllegalAccessException throwables) {
-            throwables.printStackTrace();
+//            throwables.printStackTrace();
+            return false;
         }
 
         return success;

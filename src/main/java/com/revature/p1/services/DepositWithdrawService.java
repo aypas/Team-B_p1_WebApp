@@ -33,64 +33,64 @@ public class DepositWithdrawService {
 
 
     /**
-     *
      * Description: If entry is valid this will send the data to the database.
      *
      * @param
      * @return boolean
      * @throws InvalidRequestException
      */
-    public AccountBalance createBalance(BankUser bankUser, int aID, double depositAmt) throws InvalidRequestException {
-        //perhaps we should un-nest the getbalance method
-            //its a little challenging to scale, perhaps?
-            //**coding decision**
+    public AccountBalance createBalance(BankUser bankUser, int aID, double depositAmt, String transType) throws InvalidRequestException {
         /**
          * Since each route is validated
          *  just pass current user as arg here - I think that may make tying in ORM simpler?
          */
-
-//        System.out.println("in create balance "+ aID);
-        if (!isDepositValid(depositAmt)) {
-            throw new InvalidRequestException("Invalid Deposit Amount Entered");
-        }
-
         AccountBalance accountBalance = new AccountBalance();
-        accountBalance.setAcctID(aID);
-        accountBalance.setBalance(depositAmt);
+        try {
+            if (!isDepositValid(depositAmt, transType)) {
+                throw new InvalidRequestException("Invalid Deposit Amount Entered");
+            }
 
-        //tie in current user id to make it more secure?
-        AccountBalance balance = balanceDAO.getBalance(accountBalance);
-        System.out.println("balance ret in dw swervice " + balance.getBalance());
-        double newBalance = balance.getBalance() + depositAmt;
+            accountBalance.setAcctID(aID);
+            accountBalance.setBalance(depositAmt);
+
+            //tie in current user id to make it more secure?
+            AccountBalance balance = balanceDAO.getBalance(accountBalance);
+            System.out.println("balance ret in dw swervice " + balance.getBalance());
+
+            double newBalance = balance.getBalance() + depositAmt;
 
 
-        // Sends extra information to transaction table in the database.
+            // Sends extra information to transaction table in the database.
 //        xActionService.sendBalanceAsTransaction(depositAmt, "Deposit");
-       //neewd to send account_id
-        accountBalance.setAcctID(aID);
-        accountBalance.setBalance(newBalance);
-        balanceDAO.saveBalance(accountBalance);
+            //neewd to send account_id
+            accountBalance.setAcctID(aID);
+            accountBalance.setBalance(newBalance);
+            if (!balanceDAO.saveBalance(accountBalance)) {
+                accountBalance.setBalance(balance.getBalance());
+                throw new InvalidRequestException("Invalid transaction amount.");
+            }
 
-
-
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+        }
         return accountBalance;
     }
 
     /**
-     *
      * Description: Ensures user input is valid
      *
      * @param amount
      * @return boolean
      */
-    public boolean isDepositValid(double amount) {
+    public boolean isDepositValid(double amount, String transType) {
+        System.out.println("in trans type " + transType);
 //        String regex = "[0-9]*(\\.[0-9]{0,2})?";
 //        Pattern p = Pattern.compile(regex);
 //        Matcher m = p.matcher(usrInput);
 
 //        if (amount == null || amount.trim().isEmpty() || amount.contains("-") || usrInamountput.contains(" ") || !m.matches()) return false;
 
-        if(Math.abs(amount) < 1){
+        if (amount < 1 && transType.compareTo("deposit") == 0) {
             return false;
         }
 
