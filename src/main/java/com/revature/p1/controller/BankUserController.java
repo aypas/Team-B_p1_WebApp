@@ -75,4 +75,12 @@ public class BankUserController {
         }
 
     }
+
+    public boolean delete(BankUser user) {
+        return bankUserService.delete(user);
+    }
+
+    public boolean updateUser(BankUser user) {
+        return bankUserService.update(user);
+    }
 }

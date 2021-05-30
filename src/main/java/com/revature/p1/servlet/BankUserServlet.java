@@ -1,6 +1,7 @@
 package com.revature.p1.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.p1.controller.AccountsController;
 import com.revature.p1.controller.BankUserController;
 import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.models.account.BankUser;
@@ -61,6 +62,66 @@ public class BankUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("in post servlet");
         bankUserController.register(req, resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("in delete of bankuser servlet");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+        HttpSession session = req.getSession(false);
+        BankUser requestingUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
+        boolean success = false;
+
+        if (requestingUser != null)  {
+            success = bankUserController.delete(requestingUser);
+            if (success) {
+                resp.setStatus(200);
+                writer.write("User successfully deleted.");
+            } else {
+                resp.setStatus(500);
+                writer.write("Faild to delete user.");
+            }
+        } else {
+            resp.setStatus(401);
+            writer.write("Error: cannot delete when not logged in.");
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("in put of bankuser servlet");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+        ObjectMapper mapper = new ObjectMapper();
+
+        BankUser updatedUser = mapper.readValue(req.getInputStream(), BankUser.class);
+
+        HttpSession session = req.getSession(false);
+        BankUser currentUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
+
+        boolean success = false;
+
+        if (currentUser != null && currentUser.getuID() == updatedUser.getuID()) {
+            success = bankUserController.updateUser(updatedUser);
+            if (success) {
+                resp.setStatus(200);
+                writer.write("User successfully updated.");
+            } else {
+                resp.setStatus(500);
+                writer.write("Failed to update user.");
+            }
+        } else if (currentUser == null) {
+            resp.setStatus(401);
+            writer.write("Not logged in to an existing account.");
+        } else {
+            resp.setStatus(403);
+            writer.write("Provided user ID does not match current user's.");
+        }
+
+        resp.setStatus(501);
+        writer.write("Put not supported at this time.");
+
     }
 
 //    @Override

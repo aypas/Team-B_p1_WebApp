@@ -188,4 +188,32 @@ public class BankUserDAO {
 
     }
 
+    public boolean deleteUser(BankUser user) {
+        boolean success = false;
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            success = queryMaker.delete(user);
+
+        } catch (SQLException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+    public boolean updateUser(BankUser user) {
+        boolean success = false;
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            success = queryMaker.update(user);
+
+        } catch (SQLException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
 }

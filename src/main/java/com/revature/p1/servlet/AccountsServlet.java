@@ -88,7 +88,7 @@ public class AccountsServlet extends HttpServlet {
 //                accountsController.saveNewBalance(req, resp);
                 break;
             case "/bankapp/accounts/deposit":
-            case "/bankapp/accounts/withdraw":
+            case "/bankapp/accounts/withdrawal":
                 accountsController.createDepositWithdraw(req,resp);
                 break;
             case "/bankapp/accounts/transaction":
@@ -98,11 +98,20 @@ public class AccountsServlet extends HttpServlet {
                 resp.setStatus(400);
         }
     }
+//
+//    @Override
+//    protected void doPut(HttpServletRequest req, HttpServletResponse resp){
+//        //AccountBalanceDao
+//            //saveBalance
+//        // /accounts/balance
+//    }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp){
-        //AccountBalanceDao
-            //saveBalance
-        // /accounts/balance
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println("in delete of bankuser servlet");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+        resp.setStatus(501);
+        writer.write("Deleting account not currently supported");
     }
 }

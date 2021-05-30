@@ -111,5 +111,13 @@ public class BankUserService {
         return true;
     }
 
+    public boolean delete(BankUser user) {
+        return userDao.deleteUser(user);
+    }
+
+    public boolean update(BankUser user) {
+        return userDao.updateUser(user);
+    }
+
 
 }
