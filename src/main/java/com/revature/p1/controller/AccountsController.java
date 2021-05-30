@@ -114,6 +114,7 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
+            writer.write("You are no autorized");
             resp.setStatus(401);
             return;
         }
@@ -129,6 +130,8 @@ public class AccountsController {
         AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
         if(accountBalance.getAcctID() == 0){
             resp.setStatus(400);
+            writer.write("Invalid transaction amount entered.");
+            return;
         }
         writer.write(mapper.writeValueAsString(accountBalance));
     }
