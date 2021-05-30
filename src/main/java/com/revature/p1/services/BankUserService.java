@@ -111,5 +111,9 @@ public class BankUserService {
         return true;
     }
 
+    public boolean delete(BankUser user) {
+        return userDao.deleteUser(user);
+    }
+
 
 }

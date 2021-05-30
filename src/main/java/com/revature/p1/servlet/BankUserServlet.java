@@ -63,6 +63,40 @@ public class BankUserServlet extends HttpServlet {
         bankUserController.register(req, resp);
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("in delete of bankuser servlet");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+        HttpSession session = req.getSession(false);
+        BankUser requestingUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
+        boolean success = false;
+
+        if (requestingUser != null)  {
+            success = bankUserController.delete(requestingUser);
+            if (success) {
+                resp.setStatus(200);
+                writer.write("User successfully deleted.");
+            } else {
+                resp.setStatus(500);
+                writer.write("Faild to delete user.");
+            }
+        } else {
+            resp.setStatus(401);
+            writer.write("Error: cannot delete when not logged in.");
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("in put of bankuser servlet");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+        resp.setStatus(501);
+        writer.write("Put not supported at this time.");
+
+    }
+
 //    @Override
 //    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        dispatcher.dataDisapatch(req, resp);

@@ -75,4 +75,8 @@ public class BankUserController {
         }
 
     }
+
+    public boolean delete(BankUser user) {
+        return bankUserService.delete(user);
+    }
 }
