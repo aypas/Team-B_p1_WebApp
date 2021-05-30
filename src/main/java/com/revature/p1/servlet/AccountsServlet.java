@@ -46,7 +46,6 @@ public class AccountsServlet extends HttpServlet {
 
         switch(req.getRequestURI()){
             case "/bankapp/accounts/types":
-                System.out.println("hit account types switch");
                 accountsController.getAllAcctTypes(req, resp);
                 break;
             case "/bankapp/accounts/balance":

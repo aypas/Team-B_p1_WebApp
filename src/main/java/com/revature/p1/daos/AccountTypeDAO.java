@@ -41,6 +41,8 @@ public class AccountTypeDAO {
             objectMaker = new GenericObjectMaker();
             accountTypes = objectMaker.buildObjects(AccountType.class, queryMaker.selectAllFromTable(new AccountType()));
 
+            System.out.println("account type list "+ accountTypes.size());
+
 //            String sqlCountAcctTypes = "select count(*)" +
 //                    "from account_type";
 //            PreparedStatement pstmt = conn.prepareStatement(sqlCountAcctTypes);

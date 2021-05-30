@@ -44,9 +44,14 @@ public class AccountsController {
 
         try {
             List<AccountType> acctTypes = accountTypeDAO.getAllAcctTypes();
-//            Arrays.stream(acctTypes).forEach(accountType -> System.out.println("account type " + accountType.getType()));
-            writer.write(mapper.writeValueAsString(acctTypes));
+            acctTypes.stream().forEach((acct) -> {
+                try {
+                    writer.write(mapper.writeValueAsString(acct));
 
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,7 +163,7 @@ public class AccountsController {
             return;
         }
 
-        try{
+        try {
             AccountTransaction newAccountTrans = mapper.readValue(req.getInputStream(), AccountTransaction.class);
 
             result = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
@@ -170,7 +175,7 @@ public class AccountsController {
                 resp.setStatus(400);
             }
             return;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -184,7 +189,7 @@ public class AccountsController {
             return;
         }
 
-        try{
+        try {
             Account account = mapper.readValue(req.getInputStream(), Account.class);
 
             List<AccountTransaction> allTransactions = accountTransactionService.getTransactions(account);
@@ -198,9 +203,8 @@ public class AccountsController {
                 }
             });
 
-            }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
