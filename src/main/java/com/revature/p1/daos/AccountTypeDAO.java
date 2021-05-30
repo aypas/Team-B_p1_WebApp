@@ -2,8 +2,10 @@ package com.revature.p1.daos;
 
 import com.revature.p1.models.account.AccountType;
 import com.revature.p1.util.factory.ConnectionFactory;
+import com.revature.querinator.GenericObjectMaker;
 import com.revature.querinator.PostgresQueryBuilder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +24,7 @@ import java.util.Map;
 public class AccountTypeDAO {
 
     private PostgresQueryBuilder queryMaker;
+    private GenericObjectMaker objectMaker;
 
     /**
      *
@@ -30,19 +33,13 @@ public class AccountTypeDAO {
      * @return array of account types
      */
     public List<AccountType> getAllAcctTypes() {
-        List<Map<String, Object>> rawRows;
-        List<AccountType> accountTypes = new ArrayList<>();
 
-
-
+        List<AccountType> accountTypes = null;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
             queryMaker = new PostgresQueryBuilder(conn);
-            rawRows = queryMaker.selectAllFromTable(new AccountType());
-
-            for (Map<String, Object> row : rawRows) {
-                accountTypes.add(new AccountType((int) row.get("id"), (String) row.get("acct_type"), (double) row.get("monthly_fee"), (double) row.get("interest")));
-            }
+            objectMaker = new GenericObjectMaker();
+            accountTypes = objectMaker.buildObjects(AccountType.class, queryMaker.selectAllFromTable(new AccountType()));
 
 //            String sqlCountAcctTypes = "select count(*)" +
 //                    "from account_type";
@@ -74,7 +71,7 @@ public class AccountTypeDAO {
 //
 //                rsCounter++;
 //            }
-        } catch (SQLException | IllegalAccessException throwables) {
+        } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException throwables) {
             throwables.printStackTrace();
         }
 

@@ -144,7 +144,7 @@ public class BankUserDAO {
      *
      * Description: Checks database and ensures proper login credentials were given
      *
-     * @param newUser
+     * @param newUserCreds
      * @return BankUser
      */
     public BankUser findUserByUsernameAndPassword(Credentials newUserCreds) {
