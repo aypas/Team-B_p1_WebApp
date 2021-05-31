@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.p1.controller.AccountsController;
 import com.revature.p1.controller.BankUserController;
 import com.revature.p1.daos.BankUserDAO;
+import com.revature.p1.dtos.Credentials;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.services.BankUserService;
 
@@ -69,22 +70,32 @@ public class BankUserServlet extends HttpServlet {
         System.out.println("in delete of bankuser servlet");
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
+        ObjectMapper mapper = new ObjectMapper();
+
+        // user passes in username and password when making delete request
+        Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
         HttpSession session = req.getSession(false);
         BankUser requestingUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
         boolean success = false;
 
-        if (requestingUser != null)  {
+        if (requestingUser == null) {
+            resp.setStatus(401);
+            writer.write("Error: cannot delete when not logged in.");
+            // this probably shouldn't be handled in the servlet like this but it works for now
+            // ensures that the user's credentials matched the currently logged in user just for an extra layer of caution when deleting
+        } else if (creds.getUsername() != requestingUser.getuName() || creds.getPassword() != requestingUser.getPassword()) {
+            resp.setStatus(403);
+            writer.write("Credentials do not match current user. Cannot delete user.");
+        } else {
             success = bankUserController.delete(requestingUser);
             if (success) {
+                session.invalidate();
                 resp.setStatus(200);
                 writer.write("User successfully deleted.");
             } else {
                 resp.setStatus(500);
-                writer.write("Faild to delete user.");
+                writer.write("Failed to delete user.");
             }
-        } else {
-            resp.setStatus(401);
-            writer.write("Error: cannot delete when not logged in.");
         }
     }
 
