@@ -69,7 +69,6 @@ public class AccountsController {
         }
 
         try {
-
             Account newAcct = mapper.readValue(req.getInputStream(), Account.class);
             Account acct = accountOpeningService.createAccount(newAcct);
 
@@ -102,11 +101,10 @@ public class AccountsController {
             resp.setStatus(401);
             return;
         }
-        System.out.println("after truy block in get balance contoller");
 
         try {
             AccountBalance acctID = mapper.readValue(req.getInputStream(), AccountBalance.class);
-            ;
+
             AccountBalance respBalance = balanceDAO.getBalance(acctID);
             if (respBalance.getAcctID() == 0) {
                 writer.write("Invalid request data.");
@@ -118,9 +116,10 @@ public class AccountsController {
                 return;
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            writer.write("Please supply a valid Account Id.");
             resp.setStatus(500);
+            e.printStackTrace();;
         }
     }
 
@@ -193,17 +192,25 @@ public class AccountsController {
             Account account = mapper.readValue(req.getInputStream(), Account.class);
 
             List<AccountTransaction> allTransactions = accountTransactionService.getTransactions(account);
-            System.out.println(allTransactions.size());
+          if(allTransactions.size() == 0){
+              writer.write("Please supply a valid Account Id.");
+              resp.setStatus(500);
+              return;
+          }
 
             allTransactions.stream().forEach((transaction) -> {
                 try {
                     writer.write(mapper.writeValueAsString(transaction));
                 } catch (JsonProcessingException e) {
+                    writer.write("Please supply a valid Account Id.");
+                    resp.setStatus(500);
                     e.printStackTrace();
                 }
             });
 
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
+            writer.write("Please supply a valid Account Id.");
+            resp.setStatus(500);
             e.printStackTrace();
         }
     }

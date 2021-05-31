@@ -19,3 +19,4 @@ in webapp
  1. Account balance DTO security
         - compare aID to id in accounts table and user_id in that table doesn't match => throw error unauthorized status
 3. have session object use dto - more secure
+4.new account - entering account id would be handled programmatically by JWT

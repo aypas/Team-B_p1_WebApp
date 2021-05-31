@@ -39,7 +39,6 @@ public class AccountTransactionService {
         boolean result;
 
         result = transactionDAO.saveTransaction(newTransaction);
-        System.out.println("result send bal as trans ats " + result);
 
         return result;
     }
