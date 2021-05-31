@@ -5,12 +5,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTypeDAO;
+import com.revature.p1.exceptions.InvalidRequestException;
 import com.revature.p1.models.account.*;
 import com.revature.p1.services.AccountOpeningService;
 import com.revature.p1.services.AccountTransactionService;
 import com.revature.p1.services.DepositWithdrawService;
 import com.revature.p1.services._WithdrawService;
 import com.revature.p1.util.Messages;
+import org.postgresql.util.PSQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -138,6 +140,9 @@ public class AccountsController {
             double amount = withdrawDeposit.getAmount();
 
             AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
+
+            System.out.println("account ballane in controller " + accountBalance.getBalance());
+
             if (accountBalance.getAcctID() == 0) {
                 resp.setStatus(400);
                 writer.write("Invalid transaction amount entered.");
@@ -149,6 +154,10 @@ public class AccountsController {
             writer.write("Invalid input data.");
             resp.setStatus(500);
             e.printStackTrace();
+        }catch(InvalidRequestException e){
+            e.printStackTrace();
+            writer.write("sdfdsfd");
+            resp.setStatus(500);
         }
 
     }
