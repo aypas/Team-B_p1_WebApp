@@ -31,31 +31,23 @@ public class DependencyLoaderListener implements ServletContextListener {
 
         //Accounts Controller Injections
         AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
-        DepositService depositService = new DepositService(balanceDAO);
-        WithdrawService withdrawService = new WithdrawService(balanceDAO);
+        _WithdrawService withdrawService = new _WithdrawService(balanceDAO);
         AccountDAO accountDAO = new AccountDAO();
         AccountOpeningService accountOpeningService = new AccountOpeningService(accountDAO);
         AccountTransactionDAO transactionDAO = new AccountTransactionDAO();
         AccountTransactionService accountTransactionService = new AccountTransactionService(transactionDAO);
+        DepositWithdrawService depositWithdrawService = new DepositWithdrawService(balanceDAO, accountTransactionService);
         AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
-        AccountsController accountsController = new AccountsController(depositService, withdrawService,accountOpeningService, accountTransactionService, accountTypeDAO, balanceDAO, mapper);
-
-        //has one method - getAllaccount types -> isn't tied to a service
+        AccountsController accountsController = new AccountsController(depositWithdrawService, withdrawService,accountOpeningService, accountTransactionService, accountTypeDAO, balanceDAO, mapper);
 
         AuthServlet authServlet = new AuthServlet(bankUserController);
         BankUserServlet bankUserServlet= new BankUserServlet(bankUserController);
         AccountsServlet accountsServlet = new AccountsServlet(accountsController);
 
-
         ServletContext context = sce.getServletContext();
         context.addServlet("AuthServlet", authServlet).addMapping("/auth");
         context.addServlet("BankUserServlet", bankUserServlet).addMapping("/users/*");
         context.addServlet("AccountsServlet", accountsServlet).addMapping("/accounts/*");
-//        try {
-//            Class.forName("org.postgresql.Driver");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override

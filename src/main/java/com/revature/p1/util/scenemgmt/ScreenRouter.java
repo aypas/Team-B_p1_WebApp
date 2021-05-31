@@ -1,6 +1,5 @@
 package com.revature.p1.util.scenemgmt;
 
-import com.revature.p1.screens.Screen;
 import com.revature.p1.util.datastructs.linkedlist.LinkedList;
 
 /**

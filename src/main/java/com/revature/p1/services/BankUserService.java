@@ -1,6 +1,7 @@
 package com.revature.p1.services;
 
 import com.revature.p1.daos.BankUserDAO;
+import com.revature.p1.dtos.Credentials;
 import com.revature.p1.exceptions.*;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.util.factory.ConnectionFactory;
@@ -34,35 +35,31 @@ public class BankUserService {
      */
     public void register(BankUser newUser) {
 
+        try {
+
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid new user data provided!");
         }
-
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            if (!userDao.isUsernameAvailable(newUser.getuName())) {
+            if (!userDao.isUsernameAvailable(newUser)) {
                 throw new UsernameUnavailableException();
             }
 
-            if (!userDao.isEmailAvailable(newUser.getEmail())) {
+            if (!userDao.isEmailAvailable(newUser)) {
                 throw new EmailUnavailableException();
             }
             System.out.println("in bankuserwervice register before return");
 
             userDao.save(newUser);
-        } catch (SQLException e) {
-            e.printStackTrace();
-//            throw new ResourcePersistenceException();
         } catch (UsernameUnavailableException | EmailUnavailableException e) {
             e.printStackTrace();
         }
     }
 
-    public BankUser authenticate(String username, String password) throws AuthenticationException {
-        System.out.println("in bank userwervice auth " + username + password);
+    public BankUser authenticate(Credentials creds) throws AuthenticationException {
+        System.out.println("in bank userservice auth " + creds.getUsername() + creds.getPassword());
         try {
-            BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(username, password);
+            BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(creds);
 
-            //May not need this line - just an extra check.
             if(authenticatedUser == null) throw new AuthenticationException();
 
             return authenticatedUser;
@@ -72,15 +69,6 @@ public class BankUserService {
             throw new AuthenticationException();
         }
     }
-
-//    public boolean isUsernamePasswordValid(String username, String password){
-//        if (username == null ||username.trim().isEmpty() || username.length() > 15) return false;
-//        if (password == null || password.trim().isEmpty() || password.length() > 72) return false;
-//
-//        return true;
-//
-//    }
-
 
     /**
      * Description: Ensures user input is valid
@@ -95,7 +83,7 @@ public class BankUserService {
             return false;
         if (user.getEmail() == null || user.getEmail().trim().isEmpty() || user.getEmail().length() > 50) return false;
         if (user.getfName() == null || user.getfName().trim().isEmpty() || user.getfName().length() > 50) return false;
-        if (user.getfName() == null || user.getfName().trim().isEmpty() || user.getfName().length() > 50) return false;
+        if (user.getlName() == null || user.getlName().trim().isEmpty() || user.getlName().length() > 50) return false;
 
         /*
             Regular expression evaluation email input...
@@ -111,6 +99,14 @@ public class BankUserService {
         }
 
         return true;
+    }
+
+    public boolean delete(BankUser user) {
+        return userDao.deleteUser(user);
+    }
+
+    public boolean update(BankUser user) {
+        return userDao.updateUser(user);
     }
 
 
