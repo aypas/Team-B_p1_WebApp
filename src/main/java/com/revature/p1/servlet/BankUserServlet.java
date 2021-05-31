@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 //@WebServlet("/user")
 public class BankUserServlet extends HttpServlet {
 
-//    private Dispatcher dispatcher = new Dispatcher();
     private BankUserService bankUserService;
     private BankUserController bankUserController;
 
@@ -28,26 +27,13 @@ public class BankUserServlet extends HttpServlet {
         this.bankUserController = bankUserController;
     }
 
-        /*
-    http verbs
-        - actions taken on a resource
-            get         READ
-            post        CREATE
-            put         UPDATE
-            delete      DELETE
-            patch       UPDATE
-     */
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("in get of bankuser servlet");
         ObjectMapper mapper = new ObjectMapper();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
         HttpSession session = req.getSession(false);
         BankUser requestingUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
-
-        System.out.println("get int bankuserSErvlet " + requestingUser.getuName());
 
         if(requestingUser == null){
             resp.setStatus(401);
@@ -123,10 +109,4 @@ public class BankUserServlet extends HttpServlet {
         writer.write("Put not supported at this time.");
 
     }
-
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        dispatcher.dataDisapatch(req, resp);
-//    }
-
 }

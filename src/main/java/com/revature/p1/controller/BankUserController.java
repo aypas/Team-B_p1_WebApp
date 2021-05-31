@@ -1,10 +1,8 @@
 package com.revature.p1.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import com.revature.p1.daos.BankUserDAO;
 import com.revature.p1.dtos.Credentials;
 import com.revature.p1.exceptions.AuthenticationException;
 import com.revature.p1.models.account.BankUser;
@@ -14,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 public class BankUserController {
 
@@ -42,7 +38,7 @@ public class BankUserController {
 
         } catch (JsonParseException e) {
             writer.write("Invalid register data provided.");
-//            e.printStackTrace();
+            e.printStackTrace();
             resp.setStatus(500);
         }
     }

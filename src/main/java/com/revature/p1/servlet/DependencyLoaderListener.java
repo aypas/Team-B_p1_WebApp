@@ -40,23 +40,14 @@ public class DependencyLoaderListener implements ServletContextListener {
         AccountTypeDAO accountTypeDAO = new AccountTypeDAO();
         AccountsController accountsController = new AccountsController(depositWithdrawService, withdrawService,accountOpeningService, accountTransactionService, accountTypeDAO, balanceDAO, mapper);
 
-        //has one method - getAllaccount types -> isn't tied to a service
-
         AuthServlet authServlet = new AuthServlet(bankUserController);
         BankUserServlet bankUserServlet= new BankUserServlet(bankUserController);
         AccountsServlet accountsServlet = new AccountsServlet(accountsController);
-
-        System.out.println("in load listener");
 
         ServletContext context = sce.getServletContext();
         context.addServlet("AuthServlet", authServlet).addMapping("/auth");
         context.addServlet("BankUserServlet", bankUserServlet).addMapping("/users/*");
         context.addServlet("AccountsServlet", accountsServlet).addMapping("/accounts/*");
-//        try {
-//            Class.forName("org.postgresql.Driver");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override

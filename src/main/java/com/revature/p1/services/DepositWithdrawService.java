@@ -1,15 +1,10 @@
 package com.revature.p1.services;
 
 import com.revature.p1.daos.AccountBalanceDAO;
-import com.revature.p1.daos.AccountTransactionDAO;
 import com.revature.p1.exceptions.InvalidRequestException;
 import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.models.account.AccountTransaction;
 import com.revature.p1.models.account.BankUser;
-import com.revature.p1.util.singleton.CurrentAccount;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,10 +22,6 @@ public class DepositWithdrawService {
         this.balanceDAO = balanceDAO;
         this.accountTransactionService = accountTransactionService;
     }
-
-//    public DepositWithdrawService(AccountBalanceDAO balanceDAO) {
-//        this.balanceDAO = balanceDAO;
-//    }
 
 
     /**
@@ -59,7 +50,6 @@ public class DepositWithdrawService {
             accountBalance.setAcctID(aID);
             accountBalance.setBalance(ammount);
 
-            //tie in current user id to make it more secure?
             AccountBalance balance = balanceDAO.getBalance(accountBalance);
             System.out.println("balance ret in dw swervice " + balance.getBalance());
 
@@ -69,12 +59,8 @@ public class DepositWithdrawService {
             accountTransaction.setDescription(transType);
             accountTransaction.setAcctID(aID);
 
-            System.out.println("acctrans stuff " + accountTransaction.toString());
-
-            // Sends extra information to transaction table in the database.
             accountTransactionService.sendBalanceAsTransaction(accountTransaction);
 
-            //neewd to send account_id
             accountBalance.setAcctID(aID);
             accountBalance.setBalance(newBalance);
             if (!balanceDAO.saveBalance(accountBalance)) {

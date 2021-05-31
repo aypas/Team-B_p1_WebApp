@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
 
 public class AccountsController {
@@ -63,7 +62,6 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
-            //Should this throw exception instead?
             resp.setStatus(401);
             return;
         }
@@ -73,15 +71,12 @@ public class AccountsController {
             Account acct = accountOpeningService.createAccount(newAcct);
 
             BankUser currentUser = (BankUser) req.getSession().getAttribute("this-user");
-            System.out.println(currentUser);
-            System.out.println(acct.getuID() + currentUser.getuID());
+
             if (acct.getuID() != currentUser.getuID()) {
                 resp.setStatus(401);
                 return;
             }
-
             writer.write(mapper.writeValueAsString(newAcct));
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,14 +85,10 @@ public class AccountsController {
     }
 
     public void getBalance(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //Doesnt work with current config => needs constructor in Account model that taks aID,
-        //but isn't allowed since there is already and int as only arg constructor => uID
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
-            //Should this throw exception instead?
-            System.out.println("req sessioin if");
             resp.setStatus(401);
             return;
         }
@@ -119,7 +110,7 @@ public class AccountsController {
         } catch (JsonProcessingException e) {
             writer.write("Please supply a valid Account Id.");
             resp.setStatus(500);
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 
@@ -192,11 +183,11 @@ public class AccountsController {
             Account account = mapper.readValue(req.getInputStream(), Account.class);
 
             List<AccountTransaction> allTransactions = accountTransactionService.getTransactions(account);
-          if(allTransactions.size() == 0){
-              writer.write("Please supply a valid Account Id.");
-              resp.setStatus(500);
-              return;
-          }
+            if (allTransactions.size() == 0) {
+                writer.write("Please supply a valid Account Id.");
+                resp.setStatus(500);
+                return;
+            }
 
             allTransactions.stream().forEach((transaction) -> {
                 try {
