@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This class handles client requests specific to user and route authentication.
+ */
+
 public class AuthServlet extends HttpServlet {
 
     private BankUserController bankUserController;

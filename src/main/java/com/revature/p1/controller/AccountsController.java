@@ -20,6 +20,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * This class writes client requests to appropriate POJO's before calling appropriate service functions
+ * then formats appropriate status codes based on server response.
+ */
+
 public class AccountsController {
 
     private DepositWithdrawService depositWithdrawService;

@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * This class routes client requests to the appropriate controller.
+ */
 public class AccountsServlet extends HttpServlet {
-
 
     private AccountsController accountsController;
 

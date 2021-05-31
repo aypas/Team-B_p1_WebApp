@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
+/**
+ * This class writes client requests to appropriate POJO's before calling appropriate service functions
+ * then formats appropriate status codes based on server response.
+ */
 public class BankUserController {
 
     private BankUserService bankUserService;

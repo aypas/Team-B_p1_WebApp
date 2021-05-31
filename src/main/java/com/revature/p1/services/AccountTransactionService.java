@@ -7,11 +7,7 @@ import com.revature.p1.models.account.AccountTransaction;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Jbialon
- * Date: 5/11/2021
- * Time: 3:35 PM
- * Description: Persists a transaction to the database.
+ *  This class passes data for getting and saving user transactions to appropriate DAO's
  */
 public class AccountTransactionService {
 
