@@ -141,8 +141,6 @@ public class AccountsController {
 
             AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
 
-            System.out.println("account ballane in controller " + accountBalance.getBalance());
-
             if (accountBalance.getAcctID() == 0) {
                 resp.setStatus(400);
                 writer.write("Invalid transaction amount entered.");
