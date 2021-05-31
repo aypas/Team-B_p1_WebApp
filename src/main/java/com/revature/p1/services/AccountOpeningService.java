@@ -28,14 +28,12 @@ public class AccountOpeningService {
      * @throws InvalidRequestException
      */
     public Account createAccount(Account acct) throws InvalidRequestException {
-//        System.out.println(acct.getaName());
 
         if (!isAccountValid(acct)) {
             throw new InvalidRequestException("Invalid Account Data Entered");
         }
 
         return acctDAO.saveNewAcct(acct);
-
     }
 
     /**

@@ -42,6 +42,8 @@ public class AccountDAO {
 
             queryMaker = new PostgresQueryBuilder(conn);
             int aId = queryMaker.insertAndGetId(acct);
+            System.out.println("savene acct aid " + aId);
+            acct.setaID(aId);
             balanceDAO.saveNewBalance(new AccountBalance(aId, 0));
 
 //            String sqlInsertAcct = "insert into account " +

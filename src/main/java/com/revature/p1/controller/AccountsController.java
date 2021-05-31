@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
 
 public class AccountsController {
@@ -63,26 +62,21 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
-            //Should this throw exception instead?
             resp.setStatus(401);
             return;
         }
 
         try {
-
             Account newAcct = mapper.readValue(req.getInputStream(), Account.class);
             Account acct = accountOpeningService.createAccount(newAcct);
 
             BankUser currentUser = (BankUser) req.getSession().getAttribute("this-user");
-            System.out.println(currentUser);
-            System.out.println(acct.getuID() + currentUser.getuID());
+
             if (acct.getuID() != currentUser.getuID()) {
                 resp.setStatus(401);
                 return;
             }
-
             writer.write(mapper.writeValueAsString(newAcct));
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,22 +85,17 @@ public class AccountsController {
     }
 
     public void getBalance(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //Doesnt work with current config => needs constructor in Account model that taks aID,
-        //but isn't allowed since there is already and int as only arg constructor => uID
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
-            //Should this throw exception instead?
-            System.out.println("req sessioin if");
             resp.setStatus(401);
             return;
         }
-        System.out.println("after truy block in get balance contoller");
 
         try {
             AccountBalance acctID = mapper.readValue(req.getInputStream(), AccountBalance.class);
-            ;
+
             AccountBalance respBalance = balanceDAO.getBalance(acctID);
             if (respBalance.getAcctID() == 0) {
                 writer.write("Invalid request data.");
@@ -118,9 +107,10 @@ public class AccountsController {
                 return;
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            writer.write("Please supply a valid Account Id.");
             resp.setStatus(500);
+            e.printStackTrace();
         }
     }
 
@@ -193,17 +183,25 @@ public class AccountsController {
             Account account = mapper.readValue(req.getInputStream(), Account.class);
 
             List<AccountTransaction> allTransactions = accountTransactionService.getTransactions(account);
-            System.out.println(allTransactions.size());
+            if (allTransactions.size() == 0) {
+                writer.write("Please supply a valid Account Id.");
+                resp.setStatus(500);
+                return;
+            }
 
             allTransactions.stream().forEach((transaction) -> {
                 try {
                     writer.write(mapper.writeValueAsString(transaction));
                 } catch (JsonProcessingException e) {
+                    writer.write("Please supply a valid Account Id.");
+                    resp.setStatus(500);
                     e.printStackTrace();
                 }
             });
 
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
+            writer.write("Please supply a valid Account Id.");
+            resp.setStatus(500);
             e.printStackTrace();
         }
     }

@@ -15,6 +15,7 @@ import com.revature.util.annotation.*;
 public class Account {
 
     @Primary(name = "id")
+//    @Column
     private int aID;
 
     @Column(name = "acct_name")

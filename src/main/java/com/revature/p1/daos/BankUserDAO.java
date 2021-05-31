@@ -89,7 +89,6 @@ public class BankUserDAO {
     public boolean isUsernameAvailable(BankUser user) {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-
             queryMaker = new PostgresQueryBuilder(conn);
             String username = queryMaker.getUsername(user);
             if (username == null) {

@@ -29,17 +29,10 @@ public class AccountTransactionService {
      */
 
     public boolean sendBalanceAsTransaction(AccountTransaction newTransaction) {
-        System.out.println("in send balance atService " + newTransaction.toString());
 
-//        AccountTransaction newTransaction = new AccountTransaction();
-
-//        newTransaction.setAcctID(CurrentAccount.getInstance().getCurrentAccount().getaID());
-//        newTransaction.setTransactionAmt(Double.parseDouble(transactionAmt));
-//        newTransaction.setDescription(description);
         boolean result;
 
         result = transactionDAO.saveTransaction(newTransaction);
-        System.out.println("result send bal as trans ats " + result);
 
         return result;
     }

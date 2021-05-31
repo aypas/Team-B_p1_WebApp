@@ -32,6 +32,8 @@ public class AccountBalanceDAO {
      */
     public void saveNewBalance(AccountBalance bal) {
 
+        System.out.println("save ne balance  "+ bal.getBalance());
+
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             queryMaker = new PostgresQueryBuilder(conn);
@@ -75,7 +77,7 @@ public class AccountBalanceDAO {
 
 
         } catch (SQLException | IllegalAccessException throwables) {
-//            throwables.printStackTrace();
+            throwables.printStackTrace();
             return false;
         }
 

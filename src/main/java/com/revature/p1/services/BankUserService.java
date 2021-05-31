@@ -60,7 +60,6 @@ public class BankUserService {
         try {
             BankUser authenticatedUser = userDao.findUserByUsernameAndPassword(creds);
 
-            //May not need this line - just an extra check.
             if(authenticatedUser == null) throw new AuthenticationException();
 
             return authenticatedUser;
@@ -70,15 +69,6 @@ public class BankUserService {
             throw new AuthenticationException();
         }
     }
-
-//    public boolean isUsernamePasswordValid(String username, String password){
-//        if (username == null ||username.trim().isEmpty() || username.length() > 15) return false;
-//        if (password == null || password.trim().isEmpty() || password.length() > 72) return false;
-//
-//        return true;
-//
-//    }
-
 
     /**
      * Description: Ensures user input is valid
