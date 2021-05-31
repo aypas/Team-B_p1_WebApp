@@ -37,7 +37,7 @@ public class AccountBalanceDAO {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             queryMaker = new PostgresQueryBuilder(conn);
-            queryMaker.insert(bal);
+            queryMaker.insertWithPK(bal);
 
 //            String sqlInsertAcctBal = "insert into account_balance" +
 //                    "(account_id , balance) values (?,0)";
