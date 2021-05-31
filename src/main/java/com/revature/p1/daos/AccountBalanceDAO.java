@@ -67,15 +67,6 @@ public class AccountBalanceDAO {
             queryMaker = new PostgresQueryBuilder(conn);
             success = queryMaker.update(bal);
 
-//            String sqlInsertAcctBal = "update account_balance " +
-//                    "set balance = ? where account_id = ?";
-//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
-//
-//            pstmt.setDouble(1, currBalance);
-//            pstmt.setInt(2, acct.getaID());
-//            pstmt.executeUpdate();
-
-
         } catch (SQLException | IllegalAccessException throwables) {
             throwables.printStackTrace();
             return false;
@@ -93,8 +84,6 @@ public class AccountBalanceDAO {
      */
     public AccountBalance getBalance(AccountBalance bal) {
 
-//        System.out.println("in getbalance in dao " + bal.getAcctID());
-
         AccountBalance currentBalance = null;
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -103,21 +92,6 @@ public class AccountBalanceDAO {
             objectMaker = new GenericObjectMaker();
             currentBalance = (AccountBalance) objectMaker.buildObject(AccountBalance.class, queryMaker.selectByPrimaryKey(bal));
             System.out.println("current balance in balancedao " + currentBalance);
-
-//            String sqlInsertAcctBal = "select balance " +
-//                    "from account_balance where account_id = ?";
-//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
-//
-//            pstmt.setInt(1, acct.getaID());
-//
-//            ResultSet rs = pstmt.executeQuery();
-//            while (rs.next()) {
-//                balance = rs.getDouble("balance");
-//            }
-//        balance = 54545.545;
-
-
-//            System.out.println("balance " + currentBalance.getBalance());
 
         } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException throwables) {
             throwables.printStackTrace();

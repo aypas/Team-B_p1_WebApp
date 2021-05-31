@@ -72,7 +72,8 @@ public class BankUserServlet extends HttpServlet {
             writer.write("Error: cannot delete when not logged in.");
             // this probably shouldn't be handled in the servlet like this but it works for now
             // ensures that the user's credentials matched the currently logged in user just for an extra layer of caution when deleting
-        } else if (creds.getUsername() != requestingUser.getuName() || creds.getPassword() != requestingUser.getPassword()) {
+        } else if (creds.getUsername().compareTo(requestingUser.getuName()) != 0 || creds.getPassword().compareTo(requestingUser.getPassword()) !=0){
+//            !creds.getUsername().equals(requestingUser.getuName()) || !creds.getPassword().equals(requestingUser.getPassword()){
             resp.setStatus(403);
             writer.write("Credentials do not match current user. Cannot delete user.");
         } else {
@@ -118,9 +119,5 @@ public class BankUserServlet extends HttpServlet {
             resp.setStatus(403);
             writer.write("Provided user ID does not match current user's.");
         }
-
-        resp.setStatus(501);
-        writer.write("Put not supported at this time.");
-
     }
 }

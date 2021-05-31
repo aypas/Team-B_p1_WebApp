@@ -33,12 +33,7 @@ public class AccountTransactionDAO {
      * @return array of transactions
      */
     public List<AccountTransaction> getAllAcctTransactions(Account acct) {
-//        AccountTransaction[] acctTransactions = null;
-//        AccountTransaction acctTransaction = null;
-//        int numOfTransactions = 0;
-//        int rsCounter = 0;
 
-        System.out.println("getalltrans "+ acct.getaID());
          List<AccountTransaction> allTransactions = null;
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -50,43 +45,6 @@ public class AccountTransactionDAO {
 
             // could probably use a getObjectsByFK method in ORM to better fit OOP principles but this should work fine
             allTransactions = objectMaker.buildObjects(AccountTransaction.class, queryMaker.getObjectByForeignKey(example, fkInfo));
-
-//            String sqlCountAcctTransactions = "select count(*) " +
-//                    "from account_Transaction where account_id = ?";
-//            PreparedStatement pstmt = conn.prepareStatement(sqlCountAcctTransactions);
-//
-//            pstmt.setInt(1, acct.getaID());
-//
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            while (rs.next()) {
-//                numOfTransactions = rs.getInt("count");
-//            }
-//
-//            acctTransactions = new AccountTransaction[numOfTransactions];
-//
-//            String sqlGetAcctTransactions = "select * " +
-//                    "from account_Transaction where account_id = ? " +
-//                    "order by id desc;";
-//            pstmt = conn.prepareStatement(sqlGetAcctTransactions);
-//
-//            pstmt.setInt(1, acct.getaID());
-//
-//            rs = pstmt.executeQuery();
-//
-//            while (rs.next()) {
-//                acctTransaction = new AccountTransaction();
-//
-//                acctTransaction.setTransactionID(rs.getInt("id"));
-//                acctTransaction.setAcctID(rs.getInt("account_id"));
-//                acctTransaction.setTransactionAmt(rs.getDouble("transaction_amt"));
-//                acctTransaction.setDescription(rs.getString("description"));
-//
-//                acctTransactions[rsCounter] = acctTransaction;
-//
-//                rsCounter++;
-//            }
-
 
         } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException throwables) {
             throwables.printStackTrace();
@@ -110,17 +68,9 @@ public class AccountTransactionDAO {
             queryMaker = new PostgresQueryBuilder(conn);
             queryMaker.insert(transaction);
 
-//            String sqlInsertTransaction = "insert into account_transaction" +
-//                    "(account_id , transaction_amt, description) values (?,?,?)";
-//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertTransaction);
-//
-//            pstmt.setInt(1, transaction.getAcctID());
-//            pstmt.setDouble(2, transaction.getTransactionAmt());
-//            pstmt.setString(3, transaction.getDescription());
-//            pstmt.executeUpdate();
-
 
         } catch (SQLException | IllegalAccessException throwables) {
+            //LEAVE THIS COMMENTED OUT
 //            throwables.printStackTrace();
             return false;
         }
