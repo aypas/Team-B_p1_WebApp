@@ -10,14 +10,15 @@ import com.revature.p1.models.account.BankUser;
 import com.revature.p1.services.BankUserService;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-//@WebServlet("/auth")
+/**
+ * This class handles client requests specific to user and route authentication.
+ */
+
 public class AuthServlet extends HttpServlet {
 
     private BankUserController bankUserController;
@@ -27,16 +28,11 @@ public class AuthServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        System.out.println("getpath info " + req.getRequestURI());
-        bankUserController.authenticate(req, resp);
-
-
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp){
-        //can use cookie to delete user and all accounts
-        //need cascade call to get all accounts, and transactinos associated with current user
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try{
+            bankUserController.authenticate(req, resp);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

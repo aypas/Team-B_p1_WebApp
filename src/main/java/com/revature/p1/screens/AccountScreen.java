@@ -137,7 +137,7 @@ public class AccountScreen extends Screen {
 
         AccountBalanceDAO balanceDAO = new AccountBalanceDAO();
 
-        System.out.printf("Account Name: %s\nBalance: $%.2f", acct.getaName(), balanceDAO.getBalance(acct));
+//        System.out.printf("Account Name: %s\nBalance: $%.2f", acct.getaName(), balanceDAO.getBalance(acct));
         System.out.println("");
 
         System.out.println("1 - Deposit");

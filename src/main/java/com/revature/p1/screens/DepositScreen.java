@@ -1,7 +1,7 @@
 package com.revature.p1.screens;
 
 import com.revature.p1.exceptions.InvalidRequestException;
-import com.revature.p1.services.DepositService;
+import com.revature.p1.services.DepositWithdrawService;
 
 
 import java.io.BufferedReader;
@@ -19,12 +19,12 @@ import static com.revature.p1.Driver.app;
 public class DepositScreen extends Screen{
 
     private BufferedReader consoleReader;
-    private DepositService depositService;
+    private DepositWithdrawService depositWithdrawService;
 
-    public DepositScreen(BufferedReader consoleReader, DepositService depositService) {
+    public DepositScreen(BufferedReader consoleReader, DepositWithdrawService depositWithdrawService) {
         super("DepositScreen", "/deposit");
         this.consoleReader = consoleReader;
-        this.depositService = depositService;
+        this.depositWithdrawService = depositWithdrawService;
     }
 
     /**
@@ -43,10 +43,10 @@ public class DepositScreen extends Screen{
             String userSelection = consoleReader.readLine();
 
             try {
-                if (depositService.createBalance(userSelection)) {
-                    System.out.println("Deposit Success");
-                    app().getRouter().navigate("/accounts");
-                }
+//                if (depositService.createBalance(userSelection)) {
+//                    System.out.println("Deposit Success");
+//                    app().getRouter().navigate("/accounts");
+//                }
             } catch (InvalidRequestException ire) {
                 System.out.println("Invalid amount, try again.");
                 app().getRouter().navigate("/deposit");

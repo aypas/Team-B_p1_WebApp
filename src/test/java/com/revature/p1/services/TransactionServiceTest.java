@@ -43,8 +43,8 @@ public class TransactionServiceTest {
 
 
         //Act
-
-        sut.sendBalanceAsTransaction("25", "test");
+    // args of sendTransacaiont takes and Account Transaction class
+//        sut.sendBalanceAsTransaction("25", "test");
 
         //Assert
 

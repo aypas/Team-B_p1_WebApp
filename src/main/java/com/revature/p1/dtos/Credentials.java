@@ -1,8 +1,18 @@
 package com.revature.p1.dtos;
 
+
+import com.revature.util.annotation.*;
+
+@Entity
+@Table(table_name = "user_table")
 public class Credentials {
 
+    @Column(name = "username")
+    @Username
     private String username;
+
+    @Column(name = "password")
+    @Password
     private String password;
 
     public Credentials(){
