@@ -18,7 +18,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-//@WebServlet("/user")
+/**
+ * Receives and unpacks client requests before sending them to the appropriate conroller method.
+ */
+
 public class BankUserServlet extends HttpServlet {
 
     private BankUserService bankUserService;

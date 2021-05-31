@@ -7,12 +7,9 @@ import com.revature.p1.models.account.AccountTransaction;
 import com.revature.p1.models.account.BankUser;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Jbialon
- * Date: 5/11/2021
- * Time: 1:39 PM
- * Description: Assures the users deposit input is valid before persisting to the database.
+ * This class validates data for Deposits and Withdrawals before sending it to appropriate DAO's
  */
+
 public class DepositWithdrawService {
 
     AccountBalanceDAO balanceDAO;
@@ -23,19 +20,7 @@ public class DepositWithdrawService {
         this.accountTransactionService = accountTransactionService;
     }
 
-
-    /**
-     * Description: If entry is valid this will send the data to the database.
-     *
-     * @param
-     * @return boolean
-     * @throws InvalidRequestException
-     */
     public AccountBalance createBalance(BankUser bankUser, int aID, double ammount, String transType) throws InvalidRequestException {
-        /**
-         * Since each route is validated
-         *  just pass current user as arg here - I think that may make tying in ORM simpler?
-         */
         AccountBalance accountBalance = new AccountBalance();
         AccountTransaction accountTransaction = new AccountTransaction();
         try {

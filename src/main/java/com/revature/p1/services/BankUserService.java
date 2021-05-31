@@ -12,11 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Jbialon
- * Date: 5/9/2021
- * Time: 4:04 PM
- * Description: Assures the users user account creation input is valid before persisting to the database.
+ *  This class validates data for user login, registration, update, delete, and authentication before sending it to appropriate DAO's
  */
 public class BankUserService {
 
@@ -26,14 +22,7 @@ public class BankUserService {
         this.userDao = userDao;
     }
 
-    /**
-     * Description: If entry is valid this will send the data to the database
-     *
-     * @param newUser
-     * @return BankUser
-     * @throws InvalidRequestException
-     */
-    public void register(BankUser newUser) {
+      public void register(BankUser newUser) {
 
         try {
 
