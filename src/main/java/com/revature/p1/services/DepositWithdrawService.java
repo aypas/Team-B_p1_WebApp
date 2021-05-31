@@ -51,15 +51,10 @@ public class DepositWithdrawService {
             accountBalance.setBalance(ammount);
 
             AccountBalance balance = balanceDAO.getBalance(accountBalance);
-            System.out.println("balance ret in dw swervice " + balance.getBalance());
 
             double newBalance = balance.getBalance() + ammount;
 
-            accountTransaction.setTransactionAmt(ammount);
-            accountTransaction.setDescription(transType);
-            accountTransaction.setAcctID(aID);
-
-            accountTransactionService.sendBalanceAsTransaction(accountTransaction);
+            System.out.println(balance.getBalance() + " " + newBalance);
 
             accountBalance.setAcctID(aID);
             accountBalance.setBalance(newBalance);
@@ -67,6 +62,11 @@ public class DepositWithdrawService {
                 accountBalance.setBalance(balance.getBalance());
                 throw new InvalidRequestException("Invalid transaction amount.");
             }
+            accountTransaction.setTransactionAmt(ammount);
+            accountTransaction.setDescription(transType);
+            accountTransaction.setAcctID(aID);
+
+            accountTransactionService.sendBalanceAsTransaction(accountTransaction);
 
         } catch (InvalidRequestException e) {
             e.printStackTrace();

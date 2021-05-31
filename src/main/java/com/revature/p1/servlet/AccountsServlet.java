@@ -48,7 +48,7 @@ public class AccountsServlet extends HttpServlet {
 //                accountsController.saveNewBalance(req, resp);
                 break;
             case "/bankapp/accounts/deposit":
-            case "/bankapp/accounts/withdrawal":
+            case "/bankapp/accounts/withdraw":
                 accountsController.createDepositWithdraw(req,resp);
                 break;
             case "/bankapp/accounts/transaction":

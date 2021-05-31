@@ -1,14 +1,18 @@
 package com.revature.p1.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountTypeDAO;
+import com.revature.p1.exceptions.InvalidRequestException;
 import com.revature.p1.models.account.*;
 import com.revature.p1.services.AccountOpeningService;
 import com.revature.p1.services.AccountTransactionService;
 import com.revature.p1.services.DepositWithdrawService;
 import com.revature.p1.services._WithdrawService;
+import com.revature.p1.util.Messages;
+import org.postgresql.util.PSQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,6 +66,7 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
+            writer.write(Messages.getUnauthorized());
             resp.setStatus(401);
             return;
         }
@@ -89,6 +94,7 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
+            writer.write(Messages.getUnauthorized());
             resp.setStatus(401);
             return;
         }
@@ -119,26 +125,39 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
-            writer.write("You are no autorized");
+            writer.write(Messages.getUnauthorized());
             resp.setStatus(401);
             return;
         }
+        try{
 
-        BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
-        WithdrawDeposit withdrawDeposit = mapper.readValue(req.getInputStream(), WithdrawDeposit.class);
+            BankUser bankUser = (BankUser) req.getSession().getAttribute("this-user");
+            WithdrawDeposit withdrawDeposit = mapper.readValue(req.getInputStream(), WithdrawDeposit.class);
 
-        String[] reqArr = req.getRequestURI().split("/");
-        String transType = reqArr[reqArr.length - 1];
+            String[] reqArr = req.getRequestURI().split("/");
+            String transType = reqArr[reqArr.length - 1];
 
-        double amount = withdrawDeposit.getAmount();
+            double amount = withdrawDeposit.getAmount();
 
-        AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
-        if (accountBalance.getAcctID() == 0) {
-            resp.setStatus(400);
-            writer.write("Invalid transaction amount entered.");
-            return;
+            AccountBalance accountBalance = depositWithdrawService.createBalance(bankUser, withdrawDeposit.getaID(), amount, transType);
+
+            if (accountBalance.getAcctID() == 0) {
+                resp.setStatus(400);
+                writer.write("Invalid transaction amount entered.");
+                return;
+            }
+            writer.write(mapper.writeValueAsString(accountBalance));
+
+        }catch(JsonParseException e){
+            writer.write("Invalid input data.");
+            resp.setStatus(500);
+            e.printStackTrace();
+        }catch(InvalidRequestException e){
+            e.printStackTrace();
+            writer.write("sdfdsfd");
+            resp.setStatus(500);
         }
-        writer.write(mapper.writeValueAsString(accountBalance));
+
     }
 
 
@@ -149,6 +168,7 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
+            writer.write(Messages.getUnauthorized());
             resp.setStatus(401);
             return;
         }
@@ -175,6 +195,7 @@ public class AccountsController {
         resp.setContentType("application/json");
 
         if (req.getSession().getAttribute("this-user") == null) {
+            writer.write(Messages.getUnauthorized());
             resp.setStatus(401);
             return;
         }
