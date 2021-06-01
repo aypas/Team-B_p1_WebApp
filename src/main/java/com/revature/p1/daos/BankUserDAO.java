@@ -191,7 +191,7 @@ public class BankUserDAO {
         boolean success = false;
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
+            queryMaker = new PostgresQueryBuilder(conn);
             success = queryMaker.delete(user);
 
         } catch (SQLException | IllegalAccessException e) {
@@ -205,7 +205,7 @@ public class BankUserDAO {
         boolean success = false;
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
+            queryMaker = new PostgresQueryBuilder(conn);
             success = queryMaker.update(user);
 
         } catch (SQLException | IllegalAccessException e) {

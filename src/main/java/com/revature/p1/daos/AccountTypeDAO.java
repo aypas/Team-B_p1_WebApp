@@ -43,36 +43,6 @@ public class AccountTypeDAO {
 
             System.out.println("account type list "+ accountTypes.size());
 
-//            String sqlCountAcctTypes = "select count(*)" +
-//                    "from account_type";
-//            PreparedStatement pstmt = conn.prepareStatement(sqlCountAcctTypes);
-//
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            while (rs.next()) {
-//                numOfTypes = rs.getInt("count");
-//            }
-//
-//            acctTypes = new AccountType[numOfTypes];
-//
-//            String sqlGetAcctTypes = "select *" +
-//                    "from account_type";
-//            pstmt = conn.prepareStatement(sqlGetAcctTypes);
-//
-//            rs = pstmt.executeQuery();
-//
-//            while (rs.next()) {
-//                acctType = new AccountType();
-//
-//                acctType.setId(rs.getInt("id"));
-//                acctType.setType(rs.getString("acct_type"));
-//                acctType.setInterest(rs.getDouble("interest"));
-//                acctType.setMonthlyFees(rs.getDouble("monthly_fee"));
-//
-//                acctTypes[rsCounter] = acctType;
-//
-//                rsCounter++;
-//            }
         } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException throwables) {
             throwables.printStackTrace();
         }
