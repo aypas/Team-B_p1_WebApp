@@ -10,7 +10,6 @@ import com.revature.p1.models.account.*;
 import com.revature.p1.services.AccountOpeningService;
 import com.revature.p1.services.AccountTransactionService;
 import com.revature.p1.services.DepositWithdrawService;
-import com.revature.p1.services._WithdrawService;
 import com.revature.p1.util.Messages;
 import org.postgresql.util.PSQLException;
 
@@ -28,16 +27,14 @@ import java.util.List;
 public class AccountsController {
 
     private DepositWithdrawService depositWithdrawService;
-    private _WithdrawService withdrawService;
     private AccountOpeningService accountOpeningService;
     private AccountTransactionService accountTransactionService;
     private AccountTypeDAO accountTypeDAO;
     private AccountBalanceDAO balanceDAO;
     private ObjectMapper mapper;
 
-    public AccountsController(DepositWithdrawService depositWithdrawService, _WithdrawService withdrawService, AccountOpeningService accountOpeningService, AccountTransactionService accountTransactionService, AccountTypeDAO accountTypeDAO, AccountBalanceDAO balanceDAO, ObjectMapper mapper) {
+    public AccountsController(DepositWithdrawService depositWithdrawService, AccountOpeningService accountOpeningService, AccountTransactionService accountTransactionService, AccountTypeDAO accountTypeDAO, AccountBalanceDAO balanceDAO, ObjectMapper mapper) {
         this.depositWithdrawService = depositWithdrawService;
-        this.withdrawService = withdrawService;
         this.accountOpeningService = accountOpeningService;
         this.accountTransactionService = accountTransactionService;
         this.accountTypeDAO = accountTypeDAO;
