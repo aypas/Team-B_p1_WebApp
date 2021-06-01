@@ -15,9 +15,9 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      #- mkdir artifact
-      - unzip target/bankapp-1.0.war -d ./
-      #- mv artifact/WEB-INF WEB-INF
+      - mkdir artifact
+      - unzip target/bankapp-1.0.war -d artifact/
+      - mv artifact/WEB-INF WEB-INF
 artifacts:
   #This creates an artifact with the following files. This artifact is passed to the next step in the build process.
   files:
