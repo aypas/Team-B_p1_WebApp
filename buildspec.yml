@@ -1,14 +1,32 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
       java: corretto8
+  pre_build:
+    commands:
+      - # S3 URI
+      - aws s3 cp s3://james-bialon-revature-bucket/ORM-testing/target/ORM-testing-1.0.jar /root/ec2-user/ORM-testing-1.0.jar
+      - mvn install:install-file -Dfile=/root/ec2-user/ORM-testing-1.0.jar -DgroupId=org.example -DartifactId=ORM-testing -Dversion=1.0 -Dpackaging=jar
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn package
   post_build:
     commands:
-      - mvn package
-      - mv target/ROOT.war ROOT.war
+      - echo Build completed on `date`
+      #- mkdir artifact
+      - echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      - ls -al
+      - echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      - ls -al target/
+      - echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      - unzip target/bankapp-1.0.war -d ./
+      - ls -al
+      - echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      #- mv artifact/WEB-INF WEB-INF
 artifacts:
+  #This creates an artifact with the following files. This artifact is passed to the next step in the build process.
   files:
-    - ROOT.war
-    - .ebextensions/**/*
+    - WEB-INF/**/*
+  name: artifact
