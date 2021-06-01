@@ -19,13 +19,13 @@ import static org.mockito.Mockito.mock;
  */
 public class AccountOpeningServiceTest {
 
-    private AccountOpeningService sut;
+    private com.revature.p1.services.AccountOpeningService sut;
     private AccountDAO mockAcctDAO;
 
     @Before
     public void setUp() {
         mockAcctDAO = mock(AccountDAO.class);
-        sut = new AccountOpeningService(mockAcctDAO);
+        sut = new com.revature.p1.services.AccountOpeningService(mockAcctDAO);
     }
 
     @After

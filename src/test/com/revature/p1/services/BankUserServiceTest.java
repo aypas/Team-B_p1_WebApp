@@ -1,10 +1,8 @@
 package com.revature.p1.services;
 
 import com.revature.p1.daos.BankUserDAO;
-import com.revature.p1.exceptions.AuthenticationException;
-import com.revature.p1.exceptions.DataSourceException;
-import com.revature.p1.exceptions.InvalidRequestException;
-import com.revature.p1.exceptions.ResourcePersistenceException;
+import com.revature.p1.dtos.Credentials;
+import com.revature.p1.exceptions.*;
 import com.revature.p1.models.account.BankUser;
 import org.junit.After;
 import org.junit.Before;
@@ -66,7 +64,7 @@ public class BankUserServiceTest {
         try {
             sut.register(user);
         } catch (Exception e) {
-            assertTrue(e instanceof ResourcePersistenceException);
+            assertTrue(e instanceof UsernameUnavailableException);
         } finally {
             verify(mockUserDao, times(0)).isEmailAvailable(user);
             verify(mockUserDao, times(0)).save(any());
@@ -75,21 +73,21 @@ public class BankUserServiceTest {
 
     }
 
-    /*
+
     @Test
     public void test_registerWithValidUserAndTakenEmail() {
         // Arrange
-        when(mockUserDao.isUsernameAvailable(anyString())).thenReturn(true);
-        when(mockUserDao.isEmailAvailable(anyString())).thenReturn(false);
+        when(mockUserDao.isUsernameAvailable(any())).thenReturn(true);
+        when(mockUserDao.isEmailAvailable(any())).thenReturn(false);
 
         // Act
         try {
             sut.register(new BankUser(0, "fN", "lN", "uN", "taken@email.com", "pw"));
         } catch (Exception e) {
-            assertTrue(e instanceof ResourcePersistenceException);
+            assertTrue(e instanceof EmailUnavailableException);
         } finally {
-            verify(mockUserDao, times(1)).isUsernameAvailable(anyString());
-            verify(mockUserDao, times(1)).isEmailAvailable(anyString());
+            verify(mockUserDao, times(1)).isUsernameAvailable(any());
+            verify(mockUserDao, times(1)).isEmailAvailable(any());
             verify(mockUserDao, times(0)).save(any());
         }
 
@@ -107,8 +105,8 @@ public class BankUserServiceTest {
         sut.register(invalidUser);
 
         // Assert
-        verify(mockUserDao.isUsernameAvailable(anyString()), times(1));
-        verify(mockUserDao.isEmailAvailable(anyString()), times(0));
+        verify(mockUserDao.isUsernameAvailable(invalidUser), times(0));
+        verify(mockUserDao.isEmailAvailable(invalidUser), times(0));
 
 
     }
@@ -117,7 +115,8 @@ public class BankUserServiceTest {
     @Test
     public void test_authenticateWithExistingUser() {
         // Arrange
-        when(mockUserDao.findUserByUsernameAndPassword("johnsmith", "revature")).thenReturn(new BankUser(1, "John", "Smith", "johnsmith", "john@gmail.com", "revature"));
+        Credentials creds = new Credentials();
+        when(mockUserDao.findUserByUsernameAndPassword(creds)).thenReturn(new BankUser(1, "John", "Smith", "johnsmith", "john@gmail.com", "revature"));
         int expectedId = 1;
         String expectedFirst = "John";
         String expectedLast = "Smith";
@@ -126,7 +125,7 @@ public class BankUserServiceTest {
         String expectedPass = "revature";
 
         // Act
-        BankUser authenticatedUser = sut.authenticate("johnsmith", "revature");
+        BankUser authenticatedUser = sut.authenticate(creds);
 
         // Assert
         assertEquals(expectedFirst, authenticatedUser.getfName());
@@ -135,7 +134,7 @@ public class BankUserServiceTest {
         assertEquals(expectedId, authenticatedUser.getuID());
         assertEquals(expectedEmail, authenticatedUser.getEmail());
         assertEquals(expectedPass, authenticatedUser.getPassword());
-        verify(mockUserDao, times(1)).findUserByUsernameAndPassword(anyString(), anyString());
+        verify(mockUserDao, times(1)).findUserByUsernameAndPassword(creds);
     }
 
 
@@ -143,25 +142,27 @@ public class BankUserServiceTest {
     @Test (expected = AuthenticationException.class)
     public void test_authenticateWithNonExistingUser() {
         // Arrange
-        when(mockUserDao.findUserByUsernameAndPassword("", "")).thenReturn(null);
+        Credentials creds = new Credentials();
+        when(mockUserDao.findUserByUsernameAndPassword(creds)).thenReturn(null);
 
         // Act
-        BankUser authenticatedUser = sut.authenticate("", "");
+        sut.authenticate(creds);
 
         // Assert
-        verify(mockUserDao.findUserByUsernameAndPassword(anyString(), anyString()), times(1));
+        verify(mockUserDao.findUserByUsernameAndPassword(creds), times(1));
     }
 
     @Test (expected = AuthenticationException.class)
     public void test_authenticateWithSQLException() {
         // Arrange
-        when(mockUserDao.findUserByUsernameAndPassword("", "")).thenThrow(new DataSourceException());
+        Credentials creds = new Credentials();
+        when(mockUserDao.findUserByUsernameAndPassword(creds)).thenThrow(new DataSourceException());
 
         // Act
-        BankUser authenticatedUser = sut.authenticate("", "");
+        sut.authenticate(creds);
 
         // Assert
-        verify(mockUserDao.findUserByUsernameAndPassword(anyString(), anyString()), times(1));
+        verify(mockUserDao.findUserByUsernameAndPassword(creds), times(1));
 
     }
 
@@ -277,6 +278,38 @@ public class BankUserServiceTest {
 
     }
 
-     */
+    @Test
+    public void test_delete() {
+
+        // Arrange
+        boolean expected = true;
+        BankUser user = new BankUser();
+        when(mockUserDao.deleteUser(user)).thenReturn(true);
+
+        // Act
+        boolean actual = sut.delete(user);
+
+        // Assert
+        assertEquals(expected, actual);
+        verify(mockUserDao, times(1)).deleteUser(user);
+
+    }
+
+    @Test
+    public void test_update() {
+
+        // Arrange
+        boolean expected = true;
+        BankUser user = new BankUser();
+        when(mockUserDao.updateUser(user)).thenReturn(true);
+
+        // Act
+        boolean actual = sut.update(user);
+
+        // Assert
+        assertEquals(expected, actual);
+        verify(mockUserDao, times(1)).updateUser(user);
+    }
+
 }
 
