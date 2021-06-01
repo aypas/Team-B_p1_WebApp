@@ -5,11 +5,7 @@ import com.revature.p1.exceptions.InvalidRequestException;
 import com.revature.p1.models.account.Account;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Jbialon
- * Date: 5/11/2021
- * Time: 8:42 AM
- * Description: Assures the users new account creation input is valid before persisting to the database.
+ * *  This class validates data for account creation before sending it to appropriate DAO's
  */
 public class AccountOpeningService {
 
@@ -28,14 +24,12 @@ public class AccountOpeningService {
      * @throws InvalidRequestException
      */
     public Account createAccount(Account acct) throws InvalidRequestException {
-//        System.out.println(acct.getaName());
 
         if (!isAccountValid(acct)) {
             throw new InvalidRequestException("Invalid Account Data Entered");
         }
 
         return acctDAO.saveNewAcct(acct);
-
     }
 
     /**

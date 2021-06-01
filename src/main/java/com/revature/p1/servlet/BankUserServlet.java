@@ -1,8 +1,10 @@
 package com.revature.p1.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.p1.controller.AccountsController;
 import com.revature.p1.controller.BankUserController;
 import com.revature.p1.daos.BankUserDAO;
+import com.revature.p1.dtos.Credentials;
 import com.revature.p1.models.account.BankUser;
 import com.revature.p1.services.BankUserService;
 
@@ -16,10 +18,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-//@WebServlet("/user")
+/**
+ * Receives and unpacks client requests before sending them to the appropriate conroller method.
+ */
+
 public class BankUserServlet extends HttpServlet {
 
-//    private Dispatcher dispatcher = new Dispatcher();
     private BankUserService bankUserService;
     private BankUserController bankUserController;
 
@@ -27,26 +31,13 @@ public class BankUserServlet extends HttpServlet {
         this.bankUserController = bankUserController;
     }
 
-        /*
-    http verbs
-        - actions taken on a resource
-            get         READ
-            post        CREATE
-            put         UPDATE
-            delete      DELETE
-            patch       UPDATE
-     */
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("in get of bankuser servlet");
         ObjectMapper mapper = new ObjectMapper();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
         HttpSession session = req.getSession(false);
         BankUser requestingUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
-
-        System.out.println("get int bankuserSErvlet " + requestingUser.getuName());
 
         if(requestingUser == null){
             resp.setStatus(401);
@@ -63,9 +54,70 @@ public class BankUserServlet extends HttpServlet {
         bankUserController.register(req, resp);
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        dispatcher.dataDisapatch(req, resp);
-//    }
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("in delete of bankuser servlet");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+        ObjectMapper mapper = new ObjectMapper();
 
+        // user passes in username and password when making delete request
+        Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
+        HttpSession session = req.getSession(false);
+        BankUser requestingUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
+        boolean success = false;
+
+        if (requestingUser == null) {
+            resp.setStatus(401);
+            writer.write("Error: cannot delete when not logged in.");
+            // this probably shouldn't be handled in the servlet like this but it works for now
+            // ensures that the user's credentials matched the currently logged in user just for an extra layer of caution when deleting
+        } else if (creds.getUsername().compareTo(requestingUser.getuName()) != 0 || creds.getPassword().compareTo(requestingUser.getPassword()) !=0){
+//            !creds.getUsername().equals(requestingUser.getuName()) || !creds.getPassword().equals(requestingUser.getPassword()){
+            resp.setStatus(403);
+            writer.write("Credentials do not match current user. Cannot delete user.");
+        } else {
+            success = bankUserController.delete(requestingUser);
+            if (success) {
+                session.invalidate();
+                resp.setStatus(200);
+                writer.write("User successfully deleted.");
+            } else {
+                resp.setStatus(500);
+                writer.write("Failed to delete user.");
+            }
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("in put of bankuser servlet");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+        ObjectMapper mapper = new ObjectMapper();
+
+        BankUser updatedUser = mapper.readValue(req.getInputStream(), BankUser.class);
+
+        HttpSession session = req.getSession(false);
+        BankUser currentUser = (session == null) ? null : (BankUser) session.getAttribute("this-user");
+
+        boolean success = false;
+
+        if (currentUser != null && currentUser.getuID() == updatedUser.getuID()) {
+            success = bankUserController.updateUser(updatedUser);
+            if (success) {
+                resp.setStatus(200);
+                writer.write("User successfully updated.");
+            } else {
+                resp.setStatus(500);
+                writer.write("Failed to update user.");
+            }
+        } else if (currentUser == null) {
+            resp.setStatus(401);
+            writer.write("Not logged in to an existing account.");
+        } else {
+            resp.setStatus(403);
+            writer.write("Provided user ID does not match current user's.");
+        }
+    }
 }

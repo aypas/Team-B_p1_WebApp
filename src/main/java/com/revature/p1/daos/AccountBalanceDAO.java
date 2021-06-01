@@ -2,8 +2,12 @@ package com.revature.p1.daos;
 
 import com.revature.p1.models.account.Account;
 
+import com.revature.p1.models.account.AccountBalance;
 import com.revature.p1.util.factory.ConnectionFactory;
+import com.revature.querinator.GenericObjectMaker;
+import com.revature.querinator.PostgresQueryBuilder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,93 +22,82 @@ import java.sql.SQLException;
  */
 public class AccountBalanceDAO {
 
+    private PostgresQueryBuilder queryMaker;
+    private GenericObjectMaker objectMaker;
+
     /**
-     *
      * Description: When creating a new bank account this will initialize the accounts balance record.
      *
-     * @param acct
+     * @param bal
      */
-    public void saveNewBalance(Account acct) {
+    public void saveNewBalance(AccountBalance bal) {
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        System.out.println("save ne balance  "+ bal.getBalance());
 
-            String sqlInsertAcctBal = "insert into account_balance" +
-                    "(account_id , balance) values (?,0)";
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            pstmt.setInt(1,acct.getaID());
-            pstmt.executeUpdate();
+            queryMaker = new PostgresQueryBuilder(conn);
+            queryMaker.insertWithPK(bal);
+
+//            String sqlInsertAcctBal = "insert into account_balance" +
+//                    "(account_id , balance) values (?,0)";
+//            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
+//
+//            pstmt.setInt(1,acct.getaID());
+//            pstmt.executeUpdate();
 
 
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalAccessException throwables) {
             throwables.printStackTrace();
         }
     }
 
     /**
-     *
      * Description: Updates the accounts balance record within the database.
      *
-     * @param acct
-     * @param currBalance
+     * @param bal
      * @return
      */
-    public boolean saveBalance(Account acct, double currBalance) {
+    public boolean saveBalance(AccountBalance bal) {
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        boolean success = false;
 
-            String sqlInsertAcctBal = "update account_balance " +
-                    "set balance = ? where account_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-            pstmt.setDouble(1, currBalance);
-            pstmt.setInt(2, acct.getaID());
-            pstmt.executeUpdate();
+            queryMaker = new PostgresQueryBuilder(conn);
+            success = queryMaker.update(bal);
 
-
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalAccessException throwables) {
             throwables.printStackTrace();
+            return false;
         }
 
-
-        return true;
+        return success;
 
     }
 
     /**
-     *
      * Description: Gets the balance of the desired account from the database.
      *
-     * @param acct
-     * @return double
+     * @param bal
+     * @return AccountBalance
      */
-    public double getBalance(Account acct) {
+    public AccountBalance getBalance(AccountBalance bal) {
 
-        System.out.println("in getbalance in dao " + acct.getaID());
+        AccountBalance currentBalance = null;
 
-        double balance = 0;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            queryMaker = new PostgresQueryBuilder(conn);
+            objectMaker = new GenericObjectMaker();
+            currentBalance = (AccountBalance) objectMaker.buildObject(AccountBalance.class, queryMaker.selectByPrimaryKey(bal));
+            System.out.println("current balance in balancedao " + currentBalance);
 
-            String sqlInsertAcctBal = "select balance " +
-                    "from account_balance where account_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertAcctBal);
-
-            pstmt.setInt(1, acct.getaID());
-
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                balance = rs.getDouble("balance");
-            }
-
-
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException throwables) {
             throwables.printStackTrace();
+
         }
-        balance = 54545.545;
-        System.out.println("balance " + balance);
-
-        return balance;
-
+        return currentBalance;
     }
 }
+

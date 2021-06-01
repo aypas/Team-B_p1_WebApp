@@ -4,7 +4,7 @@ import com.revature.p1.daos.AccountBalanceDAO;
 import com.revature.p1.daos.AccountDAO;
 import com.revature.p1.daos.AccountTransactionDAO;
 import com.revature.p1.daos.BankUserDAO;
-import com.revature.p1.screens.*;
+//import com.revature.p1.screens.*;
 import com.revature.p1.services.*;
 
 import java.io.BufferedReader;
@@ -37,8 +37,8 @@ public class AppState{
         final _UserInputService inputService = new _UserInputService();
         final BankUserService userService = new BankUserService(userDAO);
         final AccountOpeningService acctOpenService = new AccountOpeningService(acctDAO);
-        final DepositService depositService = new DepositService(balanceDAO, xActionDAO);
-        final WithdrawService withdrawService = new WithdrawService(balanceDAO, xActionDAO);
+        final DepositWithdrawService depositWithdrawService = new DepositWithdrawService(balanceDAO, xActionDAO);
+        final _WithdrawService withdrawService = new _WithdrawService(balanceDAO, xActionDAO);
 
         router = new ScreenRouter();
         router.addScreen(new WelcomeScreen(consoleReader))
@@ -46,7 +46,7 @@ public class AppState{
                 .addScreen(new RegisterScreen(consoleReader, userService))
                 .addScreen(new AccountScreen(consoleReader, inputService))
                 .addScreen(new OpenAccountScreen(consoleReader, acctOpenService))
-                .addScreen(new DepositScreen(consoleReader, depositService))
+                .addScreen(new DepositScreen(consoleReader, depositWithdrawService))
                 .addScreen(new WithdrawScreen(consoleReader, withdrawService))
                 .addScreen(new TransactionScreen(consoleReader, xActionDAO));
 

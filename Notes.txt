@@ -1,2 +1,22 @@
-1. get balance returning 400 even though dao is getting th balance
-2. do withdraw and deposit next
+1. get balance returning 400 even though dao is getting th balance***
+    --Probablt due to mock server calls in test
+4.Get transactions working
+6. deposit withdraw routes not working
+
+Orm integration stpes
+in orm project
+1. clone
+2. be on main
+3. mvn clean install
+
+in webapp
+1.file > project structure >moduels > plus sign > jars or directories > nav to m2 find orm .jar
+ > select it and import
+
+ Saved working directory and index state WIP on dev: f7c624b Merge pull request #26 from 210426-java-react-enterprise/transRoutes
+
+ future dev
+ 1. Account balance DTO security
+        - compare aID to id in accounts table and user_id in that table doesn't match => throw error unauthorized status
+3. have session object use dto - more secure
+4.new account - entering account id would be handled programmatically by JWT

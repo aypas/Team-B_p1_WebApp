@@ -1,7 +1,7 @@
 package com.revature.p1.screens;
 
 import com.revature.p1.exceptions.InvalidRequestException;
-import com.revature.p1.services.WithdrawService;
+import com.revature.p1.services._WithdrawService;
 
 import java.io.BufferedReader;
 
@@ -18,9 +18,9 @@ import static com.revature.p1.Driver.app;
 public class WithdrawScreen extends Screen{
 
     private BufferedReader consoleReader;
-    private WithdrawService withdrawService;
+    private _WithdrawService withdrawService;
 
-    public WithdrawScreen(BufferedReader consoleReader, WithdrawService withdrawService) {
+    public WithdrawScreen(BufferedReader consoleReader, _WithdrawService withdrawService) {
         super("DepositScreen", "/withdraw");
         this.consoleReader = consoleReader;
         this.withdrawService = withdrawService;

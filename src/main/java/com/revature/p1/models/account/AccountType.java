@@ -1,5 +1,10 @@
 package com.revature.p1.models.account;
 
+import com.revature.util.annotation.Column;
+import com.revature.util.annotation.Entity;
+import com.revature.util.annotation.Primary;
+import com.revature.util.annotation.Table;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Jbialon
@@ -7,10 +12,21 @@ package com.revature.p1.models.account;
  * Time: 9:59 AM
  * Description: {Insert Description}
  */
+
+@Entity
+@Table(table_name = "account_type")
 public class AccountType {
+
+    @Primary(name = "id")
     private int id;
+
+    @Column(name = "monthly_fee")
     private double monthlyFees;
+
+    @Column(name = "interest")
     private double interest;
+
+    @Column(name = "acct_type")
     private String type;
 
     public AccountType(){};
