@@ -6,8 +6,9 @@
 
     <groupId>com.revature</groupId>
     <artifactId>bankapp</artifactId>
-
+    <packaging>war</packaging>
     <version>1.0</version>
+
     <build>
         <finalName>ROOT</finalName>
 
@@ -53,7 +54,6 @@
             </plugin>
         </plugins>
     </build>
-    <packaging>war</packaging>
 
 
     <properties>
@@ -63,6 +63,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>ORM-testing</artifactId>
+            <version>1.0</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
         <dependency>
