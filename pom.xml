@@ -10,7 +10,7 @@
     <version>1.0</version>
 
     <build>
-        <finalName>ROOT</finalName>
+<!--        <finalName>ROOT</finalName>-->
 
         <plugins>
             <plugin>
