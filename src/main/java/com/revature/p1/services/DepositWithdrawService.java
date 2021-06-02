@@ -39,8 +39,6 @@ public class DepositWithdrawService {
 
             double newBalance = balance.getBalance() + ammount;
 
-            System.out.println(balance.getBalance() + " " + newBalance);
-
             accountBalance.setAcctID(aID);
             accountBalance.setBalance(newBalance);
             if (!balanceDAO.saveBalance(accountBalance)) {

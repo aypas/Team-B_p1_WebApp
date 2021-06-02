@@ -45,6 +45,9 @@ public class BankUserController {
             writer.write("Invalid register data provided.");
             e.printStackTrace();
             resp.setStatus(500);
+        }catch(Exception e){
+            writer.write("User already exists!");
+            resp.setStatus(500);
         }
     }
 

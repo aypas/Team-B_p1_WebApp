@@ -89,6 +89,7 @@ public class AccountsController {
             writer.write(mapper.writeValueAsString(newAcct));
 
         } catch (Exception e) {
+            writer.write("Invalid account data.");
             e.printStackTrace();
             resp.setStatus(404);
         }
@@ -165,7 +166,6 @@ public class AccountsController {
 
     }
 
-
     public void createTransaction(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         boolean result;
@@ -183,7 +183,7 @@ public class AccountsController {
 
             result = accountTransactionService.sendBalanceAsTransaction(newAccountTrans);
             if (result) {
-                writer.write("Transaction save: succes!");
+                writer.write("Transaction save: success!");
                 resp.setStatus(200);
             } else {
                 writer.write("Transaction save: failed.");

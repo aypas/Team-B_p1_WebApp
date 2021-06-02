@@ -108,6 +108,8 @@ public class BankUserServlet extends HttpServlet {
             if (success) {
                 resp.setStatus(200);
                 writer.write("User successfully updated.");
+                req.getSession().setAttribute("this-user", null);
+
             } else {
                 resp.setStatus(500);
                 writer.write("Failed to update user.");

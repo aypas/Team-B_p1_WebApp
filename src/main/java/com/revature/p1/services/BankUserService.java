@@ -36,7 +36,6 @@ public class BankUserService {
             if (!userDao.isEmailAvailable(newUser)) {
                 throw new EmailUnavailableException();
             }
-            System.out.println("in bankuserwervice register before return");
 
             userDao.save(newUser);
         } catch (UsernameUnavailableException | EmailUnavailableException e) {

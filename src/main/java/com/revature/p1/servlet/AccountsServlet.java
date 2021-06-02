@@ -31,11 +31,9 @@ public class AccountsServlet extends HttpServlet {
             case"/bankapp/accounts/transactions":
                 accountsController.getTransactions(req, resp);
                 break;
-
             default:
                 resp.setStatus(400);
         }
-
     }
 
     @Override
@@ -44,10 +42,6 @@ public class AccountsServlet extends HttpServlet {
         switch(req.getRequestURI()){
             case "/bankapp/accounts/newaccount":
                 accountsController.saveNewAcct(req, resp);
-                break;
-            case "/bankapp/accounts/newbalance":
-                ///taken care of in new account? Make its own independent ruoute?
-//                accountsController.saveNewBalance(req, resp);
                 break;
             case "/bankapp/accounts/deposit":
             case "/bankapp/accounts/withdraw":
