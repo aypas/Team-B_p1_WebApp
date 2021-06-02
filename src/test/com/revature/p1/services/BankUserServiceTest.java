@@ -195,21 +195,7 @@ public class BankUserServiceTest {
     }
 
     @Test
-    public void test_isUserValidWithNullUsername() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "Testington", null, "testemail@gmail.com", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithEmptyUsername() {
+    public void test_isUserValidWithInvalidUsername() {
         // Arrange
         boolean expected = false;
         BankUser test = new BankUser(1, "Test", "Testington", "", "testemail@gmail.com", "testpassword");
@@ -223,21 +209,7 @@ public class BankUserServiceTest {
     }
 
     @Test
-    public void test_isUserValidWithLongUsername() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "Testington", "fifteencharacters", "testemail@gmail.com", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithNullPassword() {
+    public void test_isUserValidWithInvalidPassword() {
         // Arrange
         boolean expected = false;
         BankUser test = new BankUser(1, "Test", "Testington", "testusername", "testemail@gmail.com", null);
@@ -251,10 +223,10 @@ public class BankUserServiceTest {
     }
 
     @Test
-    public void test_isUserValidWithEmptyPassword() {
+    public void test_isUserValidWithTooLongEmail() {
         // Arrange
         boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "Testington", "testusername", "testemail@gmail.com", "");
+        BankUser test = new BankUser(1, "Test", "Testington", "testusername", "1234567891234567891234567891234567891234567891", "testpassword");
 
         // Act
         boolean result = sut.isUserValid(test);
@@ -265,77 +237,7 @@ public class BankUserServiceTest {
     }
 
     @Test
-    public void test_isUserValidWithLongPassword() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "Testington", "testusername", "testemail@gmail.com", "11111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithNullEmail() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "Testington", "testusername", null, "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithEmptyEmail() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "Testington", "testusername", "", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithLongEmail() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "Testington", "testusername", "1234567891234567891234567891234567891234567891111111111111", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithNullFirstName() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, null, "Testington", "testusername", "testemail@gmail.com", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithEmptyFirstName() {
+    public void test_isUserValidWithInvalidFirstName() {
         // Arrange
         boolean expected = false;
         BankUser test = new BankUser(1, "", "Testington", "testusername", "testemail@gmail.com", "testpassword");
@@ -349,52 +251,10 @@ public class BankUserServiceTest {
     }
 
     @Test
-    public void test_isUserValidWithLongFirstName() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Testington", "testusername", "testemail@gmail.com", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithNullLastName() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", null, "testusername", "testemail@gmail.com", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithEmptyLastName() {
+    public void test_isUserValidWithInvalidLastName() {
         // Arrange
         boolean expected = false;
         BankUser test = new BankUser(1, "Test", "", "testusername", "testemail@gmail.com", "testpassword");
-
-        // Act
-        boolean result = sut.isUserValid(test);
-
-        // Assert
-        assertEquals(expected, result);
-
-    }
-
-    @Test
-    public void test_isUserValidWithLongLastName() {
-        // Arrange
-        boolean expected = false;
-        BankUser test = new BankUser(1, "Test", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "testusername", "testemail@gmail.com", "testpassword");
 
         // Act
         boolean result = sut.isUserValid(test);
@@ -452,3 +312,4 @@ public class BankUserServiceTest {
     }
 
 }
+

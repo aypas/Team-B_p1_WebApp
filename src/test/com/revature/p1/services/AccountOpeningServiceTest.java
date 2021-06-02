@@ -65,36 +65,6 @@ public class AccountOpeningServiceTest {
     }
 
     @Test(expected = InvalidRequestException.class)
-    public void test_createWithLongAcctName() {
-
-        // Arrange
-
-        Account acct = new Account("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 1, 0, 1);
-
-        // Act
-
-        sut.createAccount(acct);
-
-        //Assert
-
-    }
-
-    @Test(expected = InvalidRequestException.class)
-    public void test_createWithNullAcctName() {
-
-        // Arrange
-
-        Account acct = new Account(null, 1, 0, 1);
-
-        // Act
-
-        sut.createAccount(acct);
-
-        //Assert
-
-    }
-
-    @Test(expected = InvalidRequestException.class)
     public void test_createWithSpaceForAcctName() {
 
         // Arrange

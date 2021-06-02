@@ -20,24 +20,24 @@ public class DepositWithdrawService {
         this.accountTransactionService = accountTransactionService;
     }
 
-    public AccountBalance createBalance(BankUser bankUser, int aID, double ammount, String transType) throws InvalidRequestException {
+    public AccountBalance createBalance(BankUser bankUser, int aID, double amount, String transType) throws InvalidRequestException {
         AccountBalance accountBalance = new AccountBalance();
         AccountTransaction accountTransaction = new AccountTransaction();
         try {
-            if (!isDepositValid(ammount, transType)) {
+            if (!isDepositValid(amount, transType)) {
                 throw new InvalidRequestException("Invalid Deposit Amount Entered");
             }
 
             if (transType.compareTo("withdraw") == 0) {
-                ammount = -ammount;
+                amount = -amount;
             }
 
             accountBalance.setAcctID(aID);
-            accountBalance.setBalance(ammount);
+            accountBalance.setBalance(amount);
 
             AccountBalance balance = balanceDAO.getBalance(accountBalance);
 
-            double newBalance = balance.getBalance() + ammount;
+            double newBalance = balance.getBalance() + amount;
 
             accountBalance.setAcctID(aID);
             accountBalance.setBalance(newBalance);
@@ -45,7 +45,7 @@ public class DepositWithdrawService {
                 accountBalance.setBalance(balance.getBalance());
                 throw new InvalidRequestException("Invalid transaction amount.");
             }
-            accountTransaction.setTransactionAmt(ammount);
+            accountTransaction.setTransactionAmt(amount);
             accountTransaction.setDescription(transType);
             accountTransaction.setAcctID(aID);
 
@@ -53,6 +53,7 @@ public class DepositWithdrawService {
 
         } catch (InvalidRequestException e) {
             e.printStackTrace();
+            throw new InvalidRequestException(e.getMessage());
         }
         return accountBalance;
     }
