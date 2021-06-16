@@ -157,7 +157,7 @@ public class AccountsController {
             e.printStackTrace();
         }catch(InvalidRequestException e){
             e.printStackTrace();
-            writer.write("sdfdsfd");
+            writer.write("Invalid input data.");
             resp.setStatus(500);
         }
 
