@@ -52,39 +52,58 @@ Fields in *italics* are response-only fields that should not be passed in a requ
 
 ### Bank User 
 *uID*: integer, desc: the user's id
+
 fName: string, desc: the user's first name
+
 lName: string, desc: the user's last name
+
 uName: string, desc: the user's username
+
 email: string, desc: the user's email
+
 password: string. desc: the user's password
 
 ### Credentials
 username: string, desc: the user's username
+
 password: string, desc: the user's password
 
 ### Account
 *aID*: integer, desc: the account id
+
 aName: string, desc: the account name
+
 uID: integer, desc: the user id for the user creating the account
+
 jUID: integer, desc: a separate user id to create a joint account (optional)
+
 tID: integer, desc: the id for the type of account being created
 
 ### Account Balance
 aID: integer, desc: the account id
+
 *balance*: double, desc: the current balance for that account
+
 
 ### Account Transaction
 acctID: integer, desc: the account id
+
 *transactionID*: integer, desc: the id for the account transaction
+
 description: string, desc: a description for the transaction
+
 transactionAmt: double, desc: the amount for the transaction
 
 ### Account Type
 *id*: integer, desc: the id for the account type
+
 monthlyFees: double, desc: the monthly fees associated with this account type
+
 interest: double, desc: the interest rate for this account type
+
 type: string, desc: the name for this account type
 
 ### Withdraw/Deposit
 aID: integer, desc: the id for the account being deposited to or withdrawn from
+
 amount: double, desc: the amount to add to the associated account
