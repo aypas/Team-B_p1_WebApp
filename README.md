@@ -1,5 +1,4 @@
 # Team-B P1: WebApp
-# Project 1 - Custom Object Relational Mapping Framework
 
 ## Description
 
