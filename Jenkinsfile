@@ -24,7 +24,13 @@ node("master") {
     }
 
     stage("Test") {
-        sh "Hello World"
-        sh "pwd"
+        def stages = [:]
+        stages["tomcat"] = {
+            sh "Hello World"
+        }
+        stages["docker"] = {
+            sh "pwd"
+        }
+        parallel(stages)
     }
 }
