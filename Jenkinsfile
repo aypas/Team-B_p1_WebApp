@@ -27,6 +27,7 @@ node("master") {
         def stages = [:]
         stages["tomcat"] = {
             sh "echo Hello World"
+            sh "mv *.war ."
         }
         stages["docker"] = {
             sh "pwd"
