@@ -25,6 +25,6 @@ node("master") {
 
     stage("Test") {
         sh "Hello World"
-        sh "ls"
+        sh "pwd"
     }
 }
