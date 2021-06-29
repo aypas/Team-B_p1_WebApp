@@ -18,7 +18,8 @@ node("master") {
             sh "mvn sonar:sonar -Dsonar.login=${sonar_auth_token} -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=2105-may24-devops -Dsonar.projectKey=2105-may24-devops_project1-team1_teamBWebApp"
         }
 
-
+        // stash that target/bankapp.war
         sh "ls"
+        sh "pwd"
     }
 }
