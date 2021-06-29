@@ -22,4 +22,9 @@ node("master") {
         sh "ls"
         sh "pwd"
     }
+
+    stage("Test") {
+        sh "Hello World"
+        sh "ls"
+    }
 }
